@@ -38,41 +38,51 @@ ANTLR provides for other language targets, such as Java and Python. It contains:
 
 1. Write an ANTLR grammar specification for a language
 
-  `grammar SomeLanguage;`<br>
+   ```
+   grammar SomeLanguage;
    
-   `options {`<br>
-     `language = Dart;    // <- this option must be set to Dart`<br>
-     `output   = AST;`<br>
-   `}`<br>
+   options {
+     language = Dart;    // <- this option must be set to Dart
+     output   = AST;
+   }
    
-   `top: expr ( ',' expr )*;`<br>
+   top: expr ( ',' expr )*
+     ;
     
-   `and so on...`<br>
+   and so on...
+   ```
 
 2. Run the ANTLR tool with the `java -jar path/to/antlr3.jar` command to 
    generate output:
    
-   `java -jar path/to/antlr3.jar SomeLanguage.g`<br>
-   `# creates:`<br>
-   `#   SomeLanguageParser.dart`<br>
-   `#   SomeLanguageLexer.dart`<br>
-   `#   SomeLanguage.tokens`<br>
+   ```
+   java -jar path/to/antlr3.jar SomeLanguage.g
+   # creates:
+   #   SomeLanguageParser.dart
+   #   SomeLanguageLexer.dart
+   #   SomeLanguage.tokens
+   ```
 
    NOTE: Probabily you will need to edit the `#import` directive in the 
 	 lexer and parser generated to reflect your local path.
 
 3. Try out the results directly:
 
- `#import("path/to/DartLRLib.dart");`
+ ```dart
+ #import("path/to/DartLRLib.dart");
 
-  `main() {`<br><br>
-  `  var lexer = new SomeLanguageLexer(charStream);`<br>
-  `  var tokens = new CommonTokenStream(lexer);`<br>
-  `  var parser = new SomeLanguageParser(tokens);`<br><br>
-  `  var result = parser.<entry_rule>();`<br><br>
-  `  ...`<br>
+  main() {
+  
+    var lexer = new SomeLanguageLexer(charStream);
+    var tokens = new CommonTokenStream(lexer);
+    var parser = new SomeLanguageParser(tokens);
+  
+    var result = parser.<entry_rule>();
     
-  `}`<br>
+    ...
+    
+  }
+  ```
 
 # REPORTING BUGS
 
