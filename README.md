@@ -33,6 +33,9 @@ ANTLR provides for other language targets, such as Java and Python. It contains:
   abstract syntax tree construction and manipulation, tree structure recognition,
   and input translation.
 
+# HOW TO BUILD
+
+TODO
 
 # USAGE
 
