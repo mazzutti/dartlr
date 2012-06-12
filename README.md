@@ -2,7 +2,7 @@
   <br>by Tiago Mazzutti (tiagomzt@gmail.com)  
   [https://github.com/tiagomazzutti/dartlr](https://github.com/tiagomazzutti/dartlr)	
 
-# DESCRIPTION:
+# DESCRIPTION
 
 Fully-featured ANTLR 3 parser generation for Dart.
 
@@ -70,8 +70,10 @@ TODO
    #   SomeLanguage.tokens
    ```
 
-   NOTE: Probabily you will need to edit the `#import` directive in the 
-	 lexer and parser generated to reflect your local path.
+   NOTES: * Probabily you will need to edit the `#import` directive in the 
+	    lexer and parser generated to reflect your local path.
+	 
+	  * More samples can be found in the tests folder.
 
 3. Try out the results directly:
 
