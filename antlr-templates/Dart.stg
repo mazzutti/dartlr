@@ -52,11 +52,11 @@ outputFile(LEXER,PARSER,TREE_PARSER, actionScope, actions,
 	   scopes, superClass, literals) ::=
 <<
 // $ANTLR <ANTLRVersion> <name>.g <generatedTimestamp>
-#library('dart:dartlr');
+library '<name>';
 
 <@imports>
-#import('dart:io');
-#import('../../src/DartLRLib.dart');
+import('dart:io');
+import('package:dartlr/dartlr.dart');
 <@end>
 <actions.(actionScope).header>
 <docComment>
@@ -79,7 +79,7 @@ class <grammar.recognizerName> extends <@superClassName><superClass><@end> {
   // delegators
   <grammar.delegators:{g| <g.recognizerName> <g:delegateName()>;}; separator="\n">
   <last(grammar.delegators):{g| <g.recognizerName> gParent;}>
-  List\<<superClass>\> get delegates() => \<<superClass>\>[<grammar.delegates: {g|<g:delegateName()>}; separator = ", ">];
+  List\<<superClass>\> get delegates => \<<superClass>\>[<grammar.delegates: {g|<g:delegateName()>}; separator = ", ">];
 
   <grammar.recognizerName>([CharStream input<grammar.delegators:{g|, <g.recognizerName> <g:
       delegateName()>}>]) 
@@ -119,7 +119,7 @@ class <grammar.recognizerName> extends <@superClassName><superClass><@end> {
 <endif>}>
   }
   
-  String get grammarFileName() => "<grammar.name>.g";
+  String get grammarFileName => "<grammar.name>.g";
   
   String getRecognizerClassName() => "<grammar.recognizerName>";
 <if(filterMode)>
@@ -220,7 +220,7 @@ class <grammar.recognizerName> extends <@superClassName><superClass><@end> {
 <endif>
   <tokens:{it |static final int <it.name> = <it.type>;}; separator="\n">
   <grammar.delegates: {g|<g.recognizerName> <g:delegateName()>;}; separator="\n">  
-  List\<<superClass>\> get delegates() => \<<superClass>\>[<grammar.delegates: {g|<g:delegateName()>}; separator = ", ">]; 
+  List\<<superClass>\> get delegates => \<<superClass>\>[<grammar.delegates: {g|<g:delegateName()>}; separator = ", ">]; 
   <grammar.delegators: {g|<g.recognizerName> <g:delegateName()>;}; separator="\n">  
   <last(grammar.delegators):{g|<g.recognizerName> gParent;}>      
   <scopes:{it |<if(it.isDynamicGlobalScope)><membersForGAScope(it)><endif>}>
@@ -267,9 +267,9 @@ class <grammar.recognizerName> extends <@superClassName><superClass><@end> {
   }    
   <@end>
 
-  List\<String\> get tokenNames() => <grammar.composite.rootGrammar.recognizerName>._tokenNames;
+  List\<String\> get tokenNames => <grammar.composite.rootGrammar.recognizerName>._tokenNames;
   
-  String get grammarFileName() => "<grammar.name>.g";
+  String get grammarFileName => "<grammar.name>.g";
   
   String getRecognizerClassName() => "<grammar.recognizerName>";
   
@@ -1101,7 +1101,7 @@ static final List\<String\> DFA<dfa.decisionNumber>_transitionS = const [
 ];
 
 static List\<int\> _DFA<dfa.decisionNumber>_eot = null; 
-static List\<int\> get DFA<dfa.decisionNumber>_eot() {
+static List\<int\> get DFA<dfa.decisionNumber>_eot {
   if(_DFA<dfa.decisionNumber>_eot == null)
     _DFA<dfa.decisionNumber>_eot = 
       DFA.unpackEncodedString(DFA<dfa.decisionNumber>_eotS);
@@ -1109,7 +1109,7 @@ static List\<int\> get DFA<dfa.decisionNumber>_eot() {
 }
 
 static List\<int\> _DFA<dfa.decisionNumber>_eof = null;
-static List\<int\> get DFA<dfa.decisionNumber>_eof() {
+static List\<int\> get DFA<dfa.decisionNumber>_eof {
   if(_DFA<dfa.decisionNumber>_eof == null)
     _DFA<dfa.decisionNumber>_eof = 
       DFA.unpackEncodedString(DFA<dfa.decisionNumber>_eofS);
@@ -1117,7 +1117,7 @@ static List\<int\> get DFA<dfa.decisionNumber>_eof() {
 }
 
 static List\<int\> _DFA<dfa.decisionNumber>_min = null;
-static List\<int\> get DFA<dfa.decisionNumber>_min() {
+static List\<int\> get DFA<dfa.decisionNumber>_min {
   if(_DFA<dfa.decisionNumber>_min == null)
     _DFA<dfa.decisionNumber>_min = 
       DFA.unpackEncodedStringToUnsignedChars(DFA<dfa.decisionNumber>_minS);
@@ -1125,7 +1125,7 @@ static List\<int\> get DFA<dfa.decisionNumber>_min() {
 }
 
 static List\<int\> _DFA<dfa.decisionNumber>_max = null;
-static List\<int\> get DFA<dfa.decisionNumber>_max() {
+static List\<int\> get DFA<dfa.decisionNumber>_max {
   if(_DFA<dfa.decisionNumber>_max == null)
     _DFA<dfa.decisionNumber>_max = 
       DFA.unpackEncodedStringToUnsignedChars(DFA<dfa.decisionNumber>_maxS);
@@ -1133,7 +1133,7 @@ static List\<int\> get DFA<dfa.decisionNumber>_max() {
 }
 
 static List\<int\> _DFA<dfa.decisionNumber>_accept = null;
-static List\<int\> get DFA<dfa.decisionNumber>_accept() {
+static List\<int\> get DFA<dfa.decisionNumber>_accept {
   if(_DFA<dfa.decisionNumber>_accept == null)
     _DFA<dfa.decisionNumber>_accept = 
       DFA.unpackEncodedString(DFA<dfa.decisionNumber>_acceptS);
@@ -1141,7 +1141,7 @@ static List\<int\> get DFA<dfa.decisionNumber>_accept() {
 }
 
 static List\<int\> _DFA<dfa.decisionNumber>_special = null;
-static List\<int\> get DFA<dfa.decisionNumber>_special() {
+static List\<int\> get DFA<dfa.decisionNumber>_special {
   if(_DFA<dfa.decisionNumber>_special == null)
     _DFA<dfa.decisionNumber>_special = 
       DFA.unpackEncodedString(DFA<dfa.decisionNumber>_specialS);
@@ -1149,7 +1149,7 @@ static List\<int\> get DFA<dfa.decisionNumber>_special() {
 }
 
 static List\<List\<int\>\> _DFA<dfa.decisionNumber>_transition = null;
-static List\<List\<int\>\> get DFA<dfa.decisionNumber>_transition() {
+static List\<List\<int\>\> get DFA<dfa.decisionNumber>_transition {
   if(_DFA<dfa.decisionNumber>_transition == null) {
     int numStates = DFA<dfa.decisionNumber>_transitionS.length;
     _DFA<dfa.decisionNumber>_transition = new List\<List\<int\>\>(numStates);
@@ -1471,7 +1471,7 @@ execForcedAction(action) ::= "<action>"
 
 bitset(name, words64) ::= <<
 static BitSet _<name> = null;
-static BitSet get <name>() {
+static BitSet get <name> {
   if(_<name> == null) 
     _<name> = 
       new BitSet.fromList([<words64:{it |<it>};separator=",">]);
@@ -1501,7 +1501,7 @@ class DFA<dfa.decisionNumber> extends DFA {
     this.transition = <grammar.recognizerName>.DFA<dfa.decisionNumber>_transition;
   }
     
-  String get description() => 
+  String get description => 
         """<dfa.description>""";
   
   <@errorMethod()>

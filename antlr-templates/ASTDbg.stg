@@ -41,7 +41,7 @@ parserMembers() ::= <<
 	<endif><\n>
 	  <grammar.directDelegates:{g|<g:delegateName()>.treeDebugAdaptor = this._debugAdaptor;}>
 	}
-	TreeAdaptor get treeDebugAdaptor() => this._debugAdaptor;<\n>
+	TreeAdaptor get treeDebugAdaptor => this._debugAdaptor;<\n>
 >>
 
 parserCtorBody() ::= <<

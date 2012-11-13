@@ -47,7 +47,7 @@ parserMembers() ::= <<
 	  <grammar.directDelegates:{g|<g:delegateName()>.treeAdaptor = this._adaptor;}>
 	}
 	
-	TreeAdaptor get treeAdaptor() => this._adaptor;
+	TreeAdaptor get treeAdaptor => this._adaptor;
 	
 >>
 
@@ -64,7 +64,7 @@ parserMembers() ::= <<
 @returnScope.ruleReturnMembers() ::= <<
 <ASTLabelType> _tree;
 
-Object get tree() => this._tree;
+Object get tree => this._tree;
 
 void set tree(Object t) {
   this._tree = t;
