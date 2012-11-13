@@ -5,17 +5,15 @@
 /**
  * A simple unit test library for running tests on the VM.
  */
-#library('unittest');
+library dartlr_vmconfig;
 
-#import('dart:io');
-#import('unittest.dart');
+import 'package:dartlr/unittest.dart';
 
 class VmConfiguration extends Configuration {
-  void onDone(int passed, int failed, int errors, List<TestCase> results,
-      String uncaughtError) {
+  void onDone(int passed, int failed, int errors, List<TestCase> results,String uncaughtError) {
     try {
       super.onDone(passed, failed, errors, results, uncaughtError);
-    } catch (Exception ex) {
+    } on Exception catch (ex) {
       // A non-zero exit code is used by the test infrastructure to detect
       // failure.
       exit(1);
