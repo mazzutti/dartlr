@@ -121,13 +121,14 @@
  *       });
  *
  */
-#library('unittest');
+library dartlr_unitest;
 
-#import('dart:isolate');
+import 'dart:isolate';
+import 'dart:io';
 
-#source('config.dart');
-#source('expectation.dart');
-#source('test_case.dart');
+part 'unittest/config.dart';
+part 'unittest/expectation.dart';
+part 'unittest/test_case.dart';
 
 /** [Configuration] used by the unittest library. */
 Configuration _config = null;
@@ -158,23 +159,23 @@ int _currentTest = 0;
 /** Total number of callbacks that have been executed in the current test. */
 int _callbacksCalled = 0;
 
-final _UNINITIALIZED = 0;
-final _READY         = 1;
-final _RUNNING_TEST  = 2;
+const _UNINITIALIZED = 0;
+const _READY         = 1;
+const _RUNNING_TEST  = 2;
 
 /**
  * Whether an undetected error occurred while running the last test. These
  * errors are commonly caused by DOM callbacks that were not guarded in a
  * try-catch block.
  */
-final _UNCAUGHT_ERROR = 3;
+const _UNCAUGHT_ERROR = 3;
 
 int _state = _UNINITIALIZED;
 String _uncaughtErrorMessage = null;
 
-final _PASS  = 'pass';
-final _FAIL  = 'fail';
-final _ERROR = 'error';
+const _PASS  = 'pass';
+const _FAIL  = 'fail';
+const _ERROR = 'error';
 
 /** If set, then all other test cases will be ignored. */
 TestCase _soloTest;
@@ -192,7 +193,7 @@ void expectThrow(function, [bool callback(exception)]) {
   bool threw = false;
   try {
     function();
-  } catch (var e) {
+  } catch (e) {
     threw = true;
 
     // Also let the callback look at it.
