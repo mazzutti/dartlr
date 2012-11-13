@@ -1,0 +1,6 @@
+name: dartlr
+description: Dart code generation for the parser generator antlr.
+
+dependencies:
+  unittest:
+    sdk: unittest
