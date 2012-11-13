@@ -52,11 +52,11 @@ outputFile(LEXER,PARSER,TREE_PARSER, actionScope, actions,
 	   scopes, superClass, literals) ::=
 <<
 // $ANTLR <ANTLRVersion> <name>.g <generatedTimestamp>
-library '<name>';
+library <name>;
 
 <@imports>
-import('dart:io');
-import('package:dartlr/dartlr.dart');
+import 'dart:io';
+import 'package:dartlr/dartlr.dart';
 <@end>
 <actions.(actionScope).header>
 <docComment>
