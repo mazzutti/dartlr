@@ -480,7 +480,7 @@ class DecisionDescriptor {
   int numBacktrackOccurrences;
   int numSemPredEvals;
   
-  int get hashCode => decision + line + pos;
+  int hashCode() => decision + line + pos;
 }
 
 

@@ -69,7 +69,7 @@ class RecognitionException implements Exception {
     if(this.input != null) {
       this.index = this.input.index;
       if (input is TokenStream) {
-        this.token = this.input.dynamic.LT(1);
+        this.token = this.input.LT(1);
         this.line = token.line;
         this.charPositionInLine = token.charPositionInLine;
       }
@@ -77,8 +77,8 @@ class RecognitionException implements Exception {
         this._extractInformationFromTreeNodeStream(input);
       else if (input is CharStream) {
         this.c = this.input.LA(1);
-        this.line = this.input.dynamic.line;
-        this.charPositionInLine = this.input.dynamic.charPositionInLine;
+        this.line = this.input.line;
+        this.charPositionInLine = this.input.charPositionInLine;
       }
       else {
         this.c = this.input.LA(1);
@@ -114,10 +114,10 @@ class RecognitionException implements Exception {
       }
     }
     else if (this.node is Tree) {
-      this.line = this.node.dynamic.line;
-      this.charPositionInLine = this.node.dynamic.charPositionInLine;
+      this.line = this.node.line;
+      this.charPositionInLine = this.node.charPositionInLine;
       if (this.node is CommonTree)
-        this.token = this.node.dynamic.token;     
+        this.token = this.node.token;     
     }
     else {
       int type = adaptor.getType(this.node);

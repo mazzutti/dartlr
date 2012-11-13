@@ -4,17 +4,17 @@ part of dartlr;
 // BSD-style license that can be found in the LICENSE file.
 
 abstract class Token {
-  static final int EOR_TOKEN_TYPE = 1;
+  static const int EOR_TOKEN_TYPE = 1;
 
   /** imaginary tree navigation type; traverse "get child" link */
-  static final int DOWN = 2;
+  static const int DOWN = 2;
   
   /** imaginary tree navigation type; finish with a child list */
-  static final int UP = 3;
+  static const int UP = 3;
 
-  static final int MIN_TOKEN_TYPE = UP + 1;
+  static const int MIN_TOKEN_TYPE = UP + 1;
 
-  static final int EOF = CharStream.EOF;
+  static const int EOF = CharStream.EOF;
   
   static Token _EOF_TOKEN;  
   static Token get EOF_TOKEN {
@@ -40,18 +40,18 @@ abstract class Token {
     return _SKIP_TOKEN;
   }
 
-  static final int INVALID_TOKEN_TYPE = 0;  
+  static const int INVALID_TOKEN_TYPE = 0;  
 
   /** All tokens go to the parser (unless skip() is called in that rule)
    *  on a particular "channel".  The parser tunes to a particular channel
    *  so that whitespace etc... can go to the parser on a "hidden" channel.
    */
-  static final int DEFAULT_CHANNEL = 0;
+  static const int DEFAULT_CHANNEL = 0;
     
   /** Anything on different channel than DEFAULT_CHANNEL is not parsed
    *  by parser.
    */
-  static final int HIDDEN_CHANNEL = 99;
+  static const int HIDDEN_CHANNEL = 99;
 
   /** Get the text of the token */
    String get text;

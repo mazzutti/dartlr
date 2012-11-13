@@ -147,6 +147,6 @@ class CommonToken implements Token {
       "='$txt',<${this.type}>$channelStr,${this.line}:${this.charPositionInLine}]";
   }
   
-  int get hashCode => this._type + this._line + this._charPositionInLine;
+  int  hashCode() => this._type + this._line + this._charPositionInLine;
   
 }

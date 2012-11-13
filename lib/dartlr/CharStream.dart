@@ -4,9 +4,9 @@ part of dartlr;
 // BSD-style license that can be found in the LICENSE file.
 
 /** A source of characters for an ANTLR lexer */
-class CharStream extends IntStream {
+abstract class CharStream extends IntStream {
   
-  static final int EOF = -1;  
+  static const int EOF = -1;  
 
   /** ANTLR tracks the line information automatically */
   int get line;
