@@ -109,7 +109,7 @@ Dart code generation.
   ZERO: '0';
   ```
   
- * Run antlr
+  * Run antlr
 
 Make sure that the antlr jar you've built in the previous steps is on the classpath.
  
