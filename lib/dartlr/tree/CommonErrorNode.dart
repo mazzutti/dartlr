@@ -17,7 +17,7 @@ class CommonErrorNode extends CommonTree {
       this.stop = this.start;  
   }
   
-  int get type() => Token.INVALID_TOKEN_TYPE;
+  int get type => Token.INVALID_TOKEN_TYPE;
 
   bool isNil() => false; 
 

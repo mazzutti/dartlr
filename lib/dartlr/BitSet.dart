@@ -9,9 +9,9 @@ part of dartlr;
  */
 class BitSet implements Cloneable {
   
-  static final int _BITS = 64;
-  static final int _LOG_BITS = 6;
-  static final int _MOD_MASK = _BITS - 1;
+  static const int _BITS = 64;
+  static const int _LOG_BITS = 6;
+  static const int _MOD_MASK = _BITS - 1;
   
   /** The actual data bits */
   List<int> _bits;

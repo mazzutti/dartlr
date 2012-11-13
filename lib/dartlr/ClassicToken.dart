@@ -78,5 +78,5 @@ class ClassicToken implements Token {
       "$channelStr,${this.line}:${this.charPositionInLine}]";
   }
   
-  int hashCode() => this._type + this._line + this._charPositionInLine;
+  int get hashCode => this._type + this._line + this._charPositionInLine;
 }

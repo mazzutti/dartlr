@@ -10,7 +10,7 @@ class MismatchedTokenException extends RecognitionException {
 
   MismatchedTokenException([this._expecting, IntStream input]) : super(input);
   
-  int get expecting() => this._expecting;
+  int get expecting => this._expecting;
 
   String toString() =>
       "MismatchedTokenException(${getUnexpectedType()} != ${this.expecting})";

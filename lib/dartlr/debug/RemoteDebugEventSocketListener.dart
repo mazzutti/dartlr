@@ -394,7 +394,7 @@ class ProxyToken extends Token {
         "${this._line}:${this.charPositionInLine},@${this._index}]";
   }
   
-  int hashCode() => this._type + this._line + this._charPos;
+  int get hashCode => this._type + this._line + this._charPos;
 }
 
 class ProxyTree extends BaseTree {

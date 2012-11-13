@@ -5,8 +5,8 @@ part of dartlr;
 
 class SerializedGrammar {
     
-  static final String COOKIE = @"$ANTLR";
-  static final int FORMAT_VERSION = 1;
+  static const String COOKIE = r"$ANTLR";
+  static const int FORMAT_VERSION = 1;
   String name;
   int type;
   List rules;    

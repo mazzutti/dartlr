@@ -467,7 +467,7 @@ class ProfileStats {
   int numMemoizationCacheEntries;
 }
 
-class DecisionDescriptor implements Hashable {
+class DecisionDescriptor {
   int decision;
   String fileName;
   String ruleName;
@@ -480,9 +480,7 @@ class DecisionDescriptor implements Hashable {
   int numBacktrackOccurrences;
   int numSemPredEvals;
   
-  int hashCode() {
-    return decision + line + pos;
-  }
+  int get hashCode => decision + line + pos;
 }
 
 

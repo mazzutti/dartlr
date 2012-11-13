@@ -3,8 +3,7 @@ part of dartlr;
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-class Token implements Hashable {
-  
+abstract class Token {
   static final int EOR_TOKEN_TYPE = 1;
 
   /** imaginary tree navigation type; traverse "get child" link */
@@ -83,7 +82,5 @@ class Token implements Hashable {
    *  include files etc... on the input.
    */
    CharStream get inputStream;
-   void set inputStream(CharStream input);
-  
-   int hashCode();  
+   void set inputStream(CharStream input);  
 }

@@ -583,7 +583,7 @@ class BaseRecognizer {
    *  error reporting.  The generated parsers implement a method
    *  that overrides this to point to their List<String> tokenNames.
    */
-  List<String> get tokenNames() => null;
+  List<String> get tokenNames => null;
 
   /** For debugging and other purposes, might want the grammar name.
    *  Have ANTLR generate an implementation for this method.

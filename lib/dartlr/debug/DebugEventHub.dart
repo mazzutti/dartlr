@@ -16,7 +16,7 @@ class DebugEventHub implements DebugEventListener {
     this._listeners = new List.from(listeners);
   }
 
-  List get listeners() => this._listeners; 
+  List get listeners => this._listeners; 
 
   /** Add another listener to broadcast events too.*/
   void addListener(DebugEventListener listener) {

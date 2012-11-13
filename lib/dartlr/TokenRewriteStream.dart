@@ -1,4 +1,4 @@
-part of dartlib;
+part of dartlr;
 // Copyright (c) 2012, the ANTLR Dart backend project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
@@ -56,9 +56,9 @@ part of dartlib;
  */
 class TokenRewriteStream extends CommonTokenStream {
   
-  static final String DEFAULT_PROGRAM_NAME = "default";
-  static final int PROGRAM_INIT_SIZE = 100;
-  static final int MIN_TOKEN_INDEX = 0;
+  static const String DEFAULT_PROGRAM_NAME = "default";
+  static const int PROGRAM_INIT_SIZE = 100;
+  static const int MIN_TOKEN_INDEX = 0;
 
   Map _programs = null;
   Map _lastRewriteTokenIndexes = null;
@@ -322,7 +322,7 @@ class _RewriteOperation {
   
   String toString() {
     String opName = "_RewriteOperation";
-    int $index = opName.indexOf(@'$');
+    int $index = opName.indexOf(r'$');
     opName = opName.substring($index+1, opName.length);
     return "<$opName@${this._tokens[this._index]}:'${this._text}'>";
   }
