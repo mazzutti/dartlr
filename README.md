@@ -42,7 +42,7 @@ In order to use dartlr you have to create a custom antlr3 build. In contrast to
 other languages code generation for Dart isn't part of the standard antlr3 code
 repository yet.
 
-## stringtemplate4 jar 
+## Get stringtemplate4 
   * Download the jar file for stringtemplate4
 
   ```
