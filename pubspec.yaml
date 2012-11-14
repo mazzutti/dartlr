@@ -1,6 +1,15 @@
 name: dartlr
-description: Dart code generation for the parser generator antlr.
+version: 0.0.1
+description: >
+  Dart code generation for the parser generator antlr.
+  Generates Dart code compatible with the M1 release.
+  
+authors:
+- Tiago Mazzutti <tiagomzt@gmail.com>
+- Karl Guggisberg <karl.guggisberg@guggis.ch>
 
+homepage: git://github.com/tiagomazzutti/dartlr.git
+  
 dependencies:
   unittest:
     sdk: unittest
