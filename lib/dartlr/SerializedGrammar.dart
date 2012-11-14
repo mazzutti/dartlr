@@ -71,24 +71,24 @@ class SerializedGrammar {
       int cmd = input.readByteSync();
       while (cmd != ';'.charCodeAt(0)) {
           switch (cmd) {
-              case 't'.charCodeAt(0) :
+              case 116: /* t */
                   int ttype = input.readByteSync();
                   alt.add(new TokenRef(ttype));                  
                   break;
-              case 'r'.charCodeAt(0) :
+              case 114  /* r */:
                   int ruleIndex = input.readByteSync();
                   alt.add(new RuleRef(ruleIndex));                 
                   break;
-              case '.'.charCodeAt(0) :
+              case 46 /* . */:
                   break;
-              case '-'.charCodeAt(0) :
+              case 45 /* - */ :
                   int from = input.readByteSync();
                   int to = input.readByteSync();
                   break;
-              case '~'.charCodeAt(0) :
+              case 126 /* ~ */:
                   int notThisTokenType = input.readByteSync();
                   break;
-              case 'B'.charCodeAt(0) : 
+              case 66 /* B */: 
                   Block b = this._readBlock(input);
                   alt.add(b);
                   break;

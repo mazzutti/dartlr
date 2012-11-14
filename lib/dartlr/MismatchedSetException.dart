@@ -5,12 +5,12 @@ part of dartlr;
 
 class MismatchedSetException extends RecognitionException {
   
-  BitSet expecting;
+  final BitSet expecting;
 
   MismatchedSetException([this.expecting, IntStream input]) : super(input);
 
   String toString() => "MismatchedSetException("
-                         "${this.getUnexpectedType()} != ${this.expecting})";
+                         "${this.unexpectedType} != ${this.expecting})";
   
   String get className => "MismatchedSetException";
   

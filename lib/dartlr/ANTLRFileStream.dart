@@ -25,6 +25,5 @@ class ANTLRFileStream extends ANTLRStringStream {
     String data = f.readAsTextSync(encoding);
     this._data = data.charCodes();
     super._n = data.length;   
-  } 
-  
+  }   
 }

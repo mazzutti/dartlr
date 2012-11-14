@@ -12,7 +12,7 @@ class MissingTokenException extends MismatchedTokenException {
  
   MissingTokenException([this.inserted, int expecting, IntStream input]) : super(expecting, input);
 
-  int getMissingType() => this.expecting;
+  int get missingType => this.expecting;
 
   String toString() {
     if (this.inserted != null && this.token != null )

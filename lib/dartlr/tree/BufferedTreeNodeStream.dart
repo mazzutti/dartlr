@@ -18,8 +18,8 @@ part of dartlr;
  */
 class BufferedTreeNodeStream implements TreeNodeStream {
   
-  static final int DEFAULT_INITIAL_BUFFER_SIZE = 100;
-  static final int INITIAL_CALL_STACK_SIZE = 10;
+  static const int DEFAULT_INITIAL_BUFFER_SIZE = 100;
+  static const int INITIAL_CALL_STACK_SIZE = 10;
   
   Object _down;
   Object _up;
@@ -272,9 +272,9 @@ class BufferedTreeNodeStream implements TreeNodeStream {
     if (start == null || stop == null) return null;
     if (this._p == -1) this.fillBuffer();
     if (start is CommonTree )
-      print("toString: ${start.dynamic.token}, ");
+      print("toString: ${start.token}, ");
     else print("$start");
-    if (stop is CommonTree) print("${stop.dynamic.token}");
+    if (stop is CommonTree) print("${stop.token}");
     else print("$stop");    
     if (this._tokens != null) {
       int beginTokenIndex = this._adaptor.getTokenStartIndex(start);

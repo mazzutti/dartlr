@@ -54,7 +54,7 @@ class BitSet implements Cloneable {
   * bit is the element that must fit in set
   */
   void growToInclude(int bit) {
-    int newSize = Math.max(this._bits.length << 1, this._numWordsToHold(bit));
+    int newSize = max(this._bits.length << 1, this._numWordsToHold(bit));
     List<int> newbits = new List<int>(newSize);
     Arrays.copy(this._bits, 0, newbits, 0, this._bits.length);
     this._bits = newbits;
@@ -64,7 +64,7 @@ class BitSet implements Cloneable {
     if (a == null) return;   
     if (a.bits.length > this._bits.length)
       this._setSize(a.bits.length);   
-    int min = Math.min(bits.length, a.bits.length);
+    int min = min(bits.length, a.bits.length);
     for (int i = min - 1; i >= 0; i--)
            this._bits[i] |= a.bits[i];   
   }
@@ -75,7 +75,7 @@ class BitSet implements Cloneable {
   */
   void _setSize(int nwords) {
     List<int> newbits = new List<int>(nwords);
-    int n = Math.min(nwords, this._bits.length);
+    int n = min(nwords, this._bits.length);
     Arrays.copy(this._bits, 0, newbits, 0, n);
     for(int i = this._bits.length; i < newbits.length; i++)
       newbits[i] = 0;
@@ -103,17 +103,17 @@ class BitSet implements Cloneable {
 
   bool equals(Object other) {
     if ( other == null || !(other is BitSet)) return false;
-    int n = Math.min(this.bits.length, other.dynamic.bits.length);    
+    int n = min(this.bits.length, other.bits.length);    
     for (int i = 0; i < n; i++)
-      if (this.bits[i] != other.dynamic.bits[i])
+      if (this.bits[i] != other.bits[i])
         return false;
     if (this.bits.length > n)
       for (int i = n + 1; i < this.bits.length; i++)
         if (this.bits[i] != 0)
           return false;   
-    else if (other.dynamic.bits.length > n)
-      for (i = n + 1; i < other.dynamic.bits.length; i++)
-        if (other.dynamic.bits[i] != 0)
+    else if (other.bits.length > n)
+      for (i = n + 1; i < other.bits.length; i++)
+        if (other.bits[i] != 0)
           return false;    
     return true;
   }
@@ -190,7 +190,7 @@ class BitSet implements Cloneable {
       s.add(a);
       return s;
     } else if (b != null && c == null && d == null){
-      BitSet s = new BitSet(Math.max(a,b) + 1);
+      BitSet s = new BitSet(max(a,b) + 1);
       s.add(a);
       s.add(b);
       return s;

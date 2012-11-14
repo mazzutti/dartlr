@@ -6,7 +6,7 @@ part of dartlr;
 /**  The recognizer did not match anything for a (..)+ loop. */
 class EarlyExitException extends RecognitionException {
   
-  int decisionNumber;
+  final int decisionNumber;
 
   EarlyExitException([this.decisionNumber, input]) : super(input);
   

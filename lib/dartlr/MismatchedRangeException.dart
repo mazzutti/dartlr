@@ -5,7 +5,7 @@ part of dartlr;
 
 class MismatchedRangeException extends RecognitionException {
   
-  int a,b;
+  final int a,b;
 
   MismatchedRangeException([this.a, this.b, IntStream input]) : super(input);
   

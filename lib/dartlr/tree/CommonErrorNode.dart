@@ -28,10 +28,10 @@ class CommonErrorNode extends CommonTree {
       int j = this.stop.tokenIndex;
       if (this.stop.type == Token.EOF)
         j = this.input.size;
-      badText = this.input.dynamic.toRangeString(i, j);
+      badText = this.input.toRangeString(i, j);
     }
     else if (this.start is Tree)
-      badText = this.input.dynamic.toTokenString(this.start, this.stop);
+      badText = this.input.toTokenString(this.start, this.stop);
     else 
       badText = "<unknown>";
     return badText;
@@ -39,9 +39,9 @@ class CommonErrorNode extends CommonTree {
 
   String toString() {
     if (this.trappedException is MissingTokenException)
-      return "<missing type: ${this.trappedException.dynamic.getMissingType()}>";
+      return "<missing type: ${this.trappedException.getMissingType()}>";
     else if (this.trappedException is UnwantedTokenException)
-      return "<extraneous: ${this.trappedException.dynamic.getUnexpectedToken()}, resync=${this.text}>";
+      return "<extraneous: ${this.trappedException.getUnexpectedToken()}, resync=${this.text}>";
     else if (this.trappedException is MismatchedTokenException)
       return "<mismatched token: ${this.trappedException.token}, resync=${this.text}>";
     else if (this.trappedException is NoViableAltException)

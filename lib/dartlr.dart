@@ -6,6 +6,8 @@ library dartlr;
 
 import "dart:coreimpl";
 import "dart:io";
+import "dart:math";
+
 
 part "dartlr/BaseRecognizer.dart";
 part "dartlr/BitSet.dart";

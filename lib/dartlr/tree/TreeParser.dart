@@ -9,10 +9,10 @@ part of dartlr;
 */
 class TreeParser extends BaseRecognizer {
   
-  static final int DOWN = Token.DOWN;
-  static final int UP = Token.UP;
-  static final String dotdot = ".*[^.]\\.\\.[^.].*";
-  static final String doubleEtc = ".*\\.\\.\\.\\s+\\.\\.\\..*";
+  static const int DOWN = Token.DOWN;
+  static const int UP = Token.UP;
+  static const String dotdot = ".*[^.]\\.\\.[^.].*";
+  static const String doubleEtc = ".*\\.\\.\\.\\s+\\.\\.\\..*";
   static RegExp dotdotPattern = const RegExp(dotdot);
   static RegExp doubleEtcPattern = const RegExp(doubleEtc);
   
@@ -42,7 +42,7 @@ class TreeParser extends BaseRecognizer {
   Object _getMissingSymbol(IntStream input, 
       RecognitionException e, int expectedTokenType, BitSet follow) {
     String tokenText = "<missing ${this.tokenNames[expectedTokenType]}>";
-    TreeAdaptor adaptor = e.input.dynamic.treeAdaptor;
+    TreeAdaptor adaptor = e.input.treeAdaptor;
     return adaptor.createTreeNode(new CommonToken(expectedTokenType, tokenText));
   }
 
@@ -94,7 +94,7 @@ class TreeParser extends BaseRecognizer {
    */
   String getErrorMessage(RecognitionException e, List<String> tokenNames) {
     if (this is TreeParser ) {
-      TreeAdaptor adaptor = e.input.dynamic.treeAdaptor;
+      TreeAdaptor adaptor = e.input.treeAdaptor;
       e.token = adaptor.getToken(e.node);
       if (e.token == null)
         e.token = new CommonToken(adaptor.getType(e.node), adaptor.getText(e.node));

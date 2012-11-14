@@ -40,8 +40,8 @@ class CommonToken implements Token {
     this._channel = oldToken.channel;
     this._input = oldToken.inputStream;
     if (oldToken is CommonToken ) {
-      this._start = oldToken.dynamic.start;
-      this._stop = oldToken.dynamic.stop;
+      this._start = oldToken.start;
+      this._stop = oldToken.stop;
     }
   }
 
@@ -147,6 +147,5 @@ class CommonToken implements Token {
       "='$txt',<${this.type}>$channelStr,${this.line}:${this.charPositionInLine}]";
   }
   
-  int  hashCode() => this._type + this._line + this._charPositionInLine;
-  
+  int  hashCode() => this._type + this._line + this._charPositionInLine;  
 }

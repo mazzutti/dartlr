@@ -29,7 +29,7 @@ class TreeFilter extends TreeParser {
       whichRule.rule();
       this.setBacktrackingLevel(0);
     }
-    catch (RecognitionException e) {
+    on RecognitionException catch(e) {
       print(e.toString());
     }
   }

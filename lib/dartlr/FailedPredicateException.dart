@@ -10,11 +10,10 @@ part of dartlr;
  */
 class FailedPredicateException extends RecognitionException {
   
-  String ruleName;
-  String predicateText;
+  final String ruleName;
+  final String predicateText;
 
-  FailedPredicateException([IntStream input, 
-             this.ruleName, this.predicateText]) :super(input);
+  FailedPredicateException([IntStream input, this.ruleName, this.predicateText]) :super(input);
 
   String toString() => "FailedPredicateException(${this.ruleName},{${this.predicateText}}?)";
   

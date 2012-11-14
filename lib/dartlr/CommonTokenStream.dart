@@ -111,7 +111,7 @@ class CommonTokenStream extends BufferedTokenStream {
   }
 
   /** Count EOF just once. */
-  int getNumberOfOnChannelTokens() {
+  int get numberOfOnChannelTokens {
     int n = 0;
     this.fill();
     for(int i = 0; i < this._tokens.length; i++) {
@@ -123,7 +123,7 @@ class CommonTokenStream extends BufferedTokenStream {
   }
 
   /** Reset this token stream by setting its token source. */
-  void setTokenSource(TokenSource tokenSource) {
+  void set tokenSource(TokenSource tokenSource) {
     super.tokenSource = tokenSource;
     this._channel = Token.DEFAULT_CHANNEL;
   }

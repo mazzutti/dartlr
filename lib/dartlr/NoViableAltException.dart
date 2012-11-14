@@ -13,9 +13,9 @@ class NoViableAltException extends RecognitionException {
 
   String toString() {
     if (this.input is CharStream )
-      return "NoViableAltException('${this.getUnexpectedType()}'@[${this.grammarDecisionDescription}])";
+      return "NoViableAltException('${this.unexpectedType}'@[${this.grammarDecisionDescription}])";
     else
-      return "NoViableAltException(${this.getUnexpectedType()}@[${this.grammarDecisionDescription}])";
+      return "NoViableAltException(${this.unexpectedType}@[${this.grammarDecisionDescription}])";
   }
   
   String get className => "NoViableAltException";

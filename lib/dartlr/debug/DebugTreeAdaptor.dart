@@ -94,7 +94,7 @@ class DebugTreeAdaptor implements TreeAdaptor {
     return this._adaptor.rulePostProcessing(root);
   }
 
-  Object create(int tokenType, Dynamic fromToken, [String text]) {
+  Object create(int tokenType, fromToken, [String text]) {
     Object node = this._adaptor.create(tokenType, fromToken, text);
     this._dbg.createNode(node);
     return node;

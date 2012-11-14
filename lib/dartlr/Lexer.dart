@@ -227,13 +227,16 @@ class Lexer extends BaseRecognizer implements TokenSource {
     return msg;
   }
 
+  static const int _CR = 13; /* \n */
+  static const int _TAB = 9; /* \t */
+  static const int _LF = 10; /* \r */
   String getCharErrorDisplay(int c) {
-    String s = "";
+    String s = "";    
     switch(c) {
       case Token.EOF : s = "<EOF>"; break;
-      case '\n'.charCodeAt(0) : s = "\\n"; break;
-      case '\t'.charCodeAt(0) : s = "\\t"; break;
-      case '\r'.charCodeAt(0) : s = "\\r"; break;
+      case _CR: s = "\\n"; break;
+      case _TAB : s = "\\t"; break;
+      case _LF : s = "\\r"; break;
     }
     return (s == "")? "'${new String.fromCharCodes([c])}'": "'$s'";
   }

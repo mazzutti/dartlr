@@ -44,6 +44,8 @@ class ClassicToken implements Token {
     this._text = text;
   }  
 
+  int get charPositionInLine => this._charPositionInLine;
+  
   void set charPositionInLine(int charPositionInLine) {
     this._charPositionInLine = charPositionInLine;
   } 

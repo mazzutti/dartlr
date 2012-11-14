@@ -8,13 +8,13 @@ part of dartlr;
  *  support code essentially; most of it is error recovery stuff and
  *  backtracking.
  */
-class BaseRecognizer {
+abstract class BaseRecognizer {
   
-  static final int MEMO_RULE_FAILED = -2;
-  static final int MEMO_RULE_UNKNOWN = -1;
-  static final int INITIAL_FOLLOW_STACK_SIZE = 100;
-  static final int DEFAULT_TOKEN_CHANNEL = Token.DEFAULT_CHANNEL;
-  static final String NEXT_TOKEN_RULE_NAME = "nextToken";
+  static const int MEMO_RULE_FAILED = -2;
+  static const int MEMO_RULE_UNKNOWN = -1;
+  static const int INITIAL_FOLLOW_STACK_SIZE = 100;
+  static const int DEFAULT_TOKEN_CHANNEL = Token.DEFAULT_CHANNEL;
+  static const String NEXT_TOKEN_RULE_NAME = "nextToken";
 
   /** State of a lexer, parser, or tree parser are collected into a state
    *  object so the state can be shared.  This sharing is needed to
@@ -168,7 +168,7 @@ class BaseRecognizer {
         tokenName = "EOF";
       else
         tokenName = tokenNames[ute.expecting];
-      msg = "extraneous input ${getTokenErrorDisplay(ute.getUnexpectedToken())} expecting $tokenName";
+      msg = "extraneous input ${getTokenErrorDisplay(ute.unexpectedToken)} expecting $tokenName";
     }
     else if (e is MissingTokenException) {
       MissingTokenException mte = e;
@@ -223,7 +223,7 @@ class BaseRecognizer {
    *
    *  See also reportError()
    */
-  int getNumberOfSyntaxErrors() => this._state.syntaxErrors;
+  int get numberOfSyntaxErrors => this._state.syntaxErrors;
 
   /** What is the error header, normally line/character position information? */
   String getErrorHeader(RecognitionException e) {
@@ -592,7 +592,7 @@ class BaseRecognizer {
 
   String get sourceName;
   
-  String getRecognizerClassName();
+  String get recognizerClassName;
 
   /** A convenience method for use most often with template rewrites.
    *  Convert a List<Token> to List<String>
@@ -658,7 +658,7 @@ class BaseRecognizer {
   }
 
   /** return how many rule/input-index pairs there are in total. */
-  int getRuleMemoizationCacheSize() {
+  int get ruleMemoizationCacheSize {
     int n = 0;
     for (int i = 0; this._state.ruleMemo != null && i < this._state.ruleMemo.length; i++) {
       Map ruleMap = this._state.ruleMemo[i];

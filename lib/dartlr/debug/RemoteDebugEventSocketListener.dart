@@ -89,23 +89,23 @@ class RemoteDebugEventSocketListener {
       listener.exitRule(elements[2], elements[1]);
     }
     else if(elements[0] == "enterAlt") {
-      listener.enterAlt(Math.parseInt(elements[1]));
+      listener.enterAlt(int.parse(elements[1]));
     }
     else if(elements[0] == "enterSubRule") {
-      listener.enterSubRule(Math.parseInt(elements[1]));
+      listener.enterSubRule(int.parse(elements[1]));
     }
     else if(elements[0] == "exitSubRule") {
-      listener.exitSubRule(Math.parseInt(elements[1]));
+      listener.exitSubRule(int.parse(elements[1]));
     }
     else if(elements[0] == "enterDecision") {
-      listener.enterDecision(Math.parseInt(elements[1]), elements[2] == "true");
+      listener.enterDecision(int.parse(elements[1]), elements[2] == "true");
     }    
     else if(elements[0] == "exitDecision") {
-      listener.exitDecision(Math.parseInt(elements[1]));
+      listener.exitDecision(int.parse(elements[1]));
     }
     else if(elements[0] == "location") {
-      listener.location(Math.parseInt(elements[1]),
-        Math.parseInt(elements[2]));
+      listener.location(int.parse(elements[1]),
+        int.parse(elements[2]));
     }
     else if(elements[0] == "consumeToken") {
       ProxyToken t = this._deserializeToken(elements, 1);
@@ -125,25 +125,25 @@ class RemoteDebugEventSocketListener {
     }
     else if(elements[0] == "LT") {
       Token t = this._deserializeToken(elements, 2);      
-      listener.LT(Math.parseInt(elements[1]), t);
+      listener.LT(int.parse(elements[1]), t);
     }
     else if(elements[0] == "mark") {
-      listener.mark(Math.parseInt(elements[1]));
+      listener.mark(int.parse(elements[1]));
     }
     else if(elements[0] == "rewind") {
       if(elements[1] != null) {
-        listener.rewind(Math.parseInt(elements[1]));
+        listener.rewind(int.parse(elements[1]));
       }
       else {
         listener.rewind();
       }
     }
     else if(elements[0] == "beginBacktrack") {
-      listener.beginBacktrack(Math.parseInt(elements[1]));
+      listener.beginBacktrack(int.parse(elements[1]));
     }
     else if(elements[0] == "endBacktrack") {
-      int level = Math.parseInt(elements[1]);
-      int successI = Math.parseInt(elements[2]);
+      int level = int.parse(elements[1]);
+      int successI = int.parse(elements[2]);
       listener.endBacktrack(level, (successI == DebugEventListener.TRUE));
     }
     else if(elements[0] == "exception") {
@@ -152,9 +152,9 @@ class RemoteDebugEventSocketListener {
       String lineS = elements[3];
       String posS = elements[4];      
       RecognitionException e = this._createRecognitionException(excName);
-      e.index = Math.parseInt(indexS);
-      e.line = Math.parseInt(lineS);
-      e.charPositionInLine =  Math.parseInt(posS);
+      e.index = int.parse(indexS);
+      e.line = int.parse(lineS);
+      e.charPositionInLine =  int.parse(posS);
       listener.recognitionException(e);      
     }    
     else if(elements[0] == "beginResync") {
@@ -180,58 +180,58 @@ class RemoteDebugEventSocketListener {
       listener.consumeNode(node);
     }
     else if(elements[0] == "LN") {
-      int i = Math.parseInt(elements[1]);
+      int i = int.parse(elements[1]);
       ProxyTree node = this._deserializeNode(elements, 2);
       listener.LT(i, node);
     }
     else if(elements[0] == "createNodeFromTokenElements") {
-      int ID = Math.parseInt(elements[1]);
-      int type = Math.parseInt(elements[2]);
+      int ID = int.parse(elements[1]);
+      int type = int.parse(elements[2]);
       String text = elements[3];
       text = this._unEscapeNewlines(text);
       ProxyTree node = new ProxyTree(ID, type, -1, -1, -1, text);
       listener.createNode(node);
     }
     else if(elements[0] == "createNode") {
-      int ID = Math.parseInt(elements[1]);
-      int tokenIndex = Math.parseInt(elements[2]);
+      int ID = int.parse(elements[1]);
+      int tokenIndex = int.parse(elements[2]);
       ProxyTree node = new ProxyTree(ID);
       ProxyToken token = new ProxyToken(tokenIndex);
       listener.createNode(node, token);
     }
     else if(elements[0] == "nilNode") {
-      int ID = Math.parseInt(elements[1]);
+      int ID = int.parse(elements[1]);
       ProxyTree node = new ProxyTree(ID);
       listener.nilNode(node);
     }
     else if(elements[0] == "errorNode") {
-      int ID = Math.parseInt(elements[1]);
-      int type = Math.parseInt(elements[2]);
+      int ID = int.parse(elements[1]);
+      int type = int.parse(elements[2]);
       String text = elements[3];
       text = this._unEscapeNewlines(text);
       ProxyTree node = new ProxyTree(ID, type, -1, -1, -1, text);
       listener.errorNode(node);
     }
     else if(elements[0] == "becomeRoot") {
-      int newRootID = Math.parseInt(elements[1]);
-      int oldRootID = Math.parseInt(elements[2]);
+      int newRootID = int.parse(elements[1]);
+      int oldRootID = int.parse(elements[2]);
       ProxyTree newRoot = new ProxyTree(newRootID);
       ProxyTree oldRoot = new ProxyTree(oldRootID);
       listener.becomeRoot(newRoot, oldRoot);
     }
     else if(elements[0] == "addChild") {
-      int rootID = Math.parseInt(elements[1]);
-      int childID = Math.parseInt(elements[2]);
+      int rootID = int.parse(elements[1]);
+      int childID = int.parse(elements[2]);
       ProxyTree root = new ProxyTree(rootID);
       ProxyTree child = new ProxyTree(childID);
       listener.addChild(root, child);
     }
     else if(elements[0] == "setTokenBoundaries") {
-      int ID = Math.parseInt(elements[1]);
+      int ID = int.parse(elements[1]);
       ProxyTree node = new ProxyTree(ID);
       listener.setTokenBoundaries(node,
-              Math.parseInt(elements[2]),
-                   Math.parseInt(elements[3]));
+              int.parse(elements[2]),
+                   int.parse(elements[3]));
     }
     else {
       stderr.writeString("unknown debug event: $line");
@@ -239,11 +239,11 @@ class RemoteDebugEventSocketListener {
   }
 
   ProxyTree _deserializeNode(List<String> elements, int offset) {
-    int ID = Math.parseInt(elements[offset+0]);
-    int type = Math.parseInt(elements[offset+1]);
-    int tokenLine = Math.parseInt(elements[offset+2]);
-    int charPositionInLine = Math.parseInt(elements[offset+3]);
-    int tokenIndex = Math.parseInt(elements[offset+4]);
+    int ID = int.parse(elements[offset+0]);
+    int type = int.parse(elements[offset+1]);
+    int tokenLine = int.parse(elements[offset+2]);
+    int charPositionInLine = int.parse(elements[offset+3]);
+    int tokenIndex = int.parse(elements[offset+4]);
     String text = elements[offset+5];
     text = this._unEscapeNewlines(text);
     return new ProxyTree(ID, type, 
@@ -258,13 +258,13 @@ class RemoteDebugEventSocketListener {
     String posS = elements[offset+4];
     String text = elements[offset+5];
     text = this._unEscapeNewlines(text);
-    int index = Math.parseInt(indexS);
+    int index = int.parse(indexS);
     ProxyToken t =
       new ProxyToken(index,
-               Math.parseInt(typeS),
-               Math.parseInt(channelS),
-               Math.parseInt(lineS),
-               Math.parseInt(posS),
+               int.parse(typeS),
+               int.parse(channelS),
+               int.parse(lineS),
+               int.parse(posS),
                text);
     return t;
   }

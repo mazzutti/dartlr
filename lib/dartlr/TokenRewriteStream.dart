@@ -121,7 +121,7 @@ class TokenRewriteStream extends CommonTokenStream {
     this.replace(from, null, to, programName);
   }
 
-  int getLastRewriteTokenIndex() => this._getLastRewriteTokenIndex(DEFAULT_PROGRAM_NAME);
+  int get lastRewriteTokenIndex => this._getLastRewriteTokenIndex(DEFAULT_PROGRAM_NAME);
   
 
   int _getLastRewriteTokenIndex(String programName) => this._lastRewriteTokenIndexes[programName];
@@ -200,7 +200,8 @@ class TokenRewriteStream extends CommonTokenStream {
         _InsertBeforeOp iop = inserts[j];
         if (iop.index == rop.index ) {          
           rewrites[iop.instructionIndex] = null;
-          rop.text = iop.text.toString() + (rop.text != null ? rop.text.toString() : "");
+          rop.text = '${iop.text.toString()}'
+                     '${(rop.text != null ? rop.text.toString() : "")}';
         } else if (iop.index > rop.index && iop.index <= rop.lastIndex )
           rewrites[iop.instructionIndex] = null;       
       }
@@ -215,8 +216,8 @@ class TokenRewriteStream extends CommonTokenStream {
         bool same = prevRop.index == rop.index && prevRop.lastIndex == rop.lastIndex;
         if (prevRop.text == null && rop.text == null && !disjoint) {
           rewrites[prevRop.instructionIndex] =  null;
-          rop.index = Math.min(prevRop.index, rop.index);
-          rop.lastIndex = Math.max(prevRop.lastIndex, rop.lastIndex);
+          rop.index = min(prevRop.index, rop.index);
+          rop.lastIndex = max(prevRop.lastIndex, rop.lastIndex);
         }
         else if (!disjoint && !same)
           throw new IllegalArgumentException("replace op "
@@ -273,7 +274,7 @@ class TokenRewriteStream extends CommonTokenStream {
     for (int i = 0; i < before && i < rewrites.length; i++) {
       _RewriteOperation op = rewrites[i];
       if (op == null) continue;
-      if (op.getClassName() == kind) ops.add(op);
+      if (op.className == kind) ops.add(op);
     }   
     return ops;
   }
@@ -308,7 +309,7 @@ class _RewriteOperation {
   
   Object get text => this._text;
   
-  String getClassName() => "_RewriteOperation";
+  String get className => "_RewriteOperation";
   
   void set text(Object o) {
     this._text = o;
@@ -332,8 +333,8 @@ class _InsertBeforeOp extends _RewriteOperation {
   
   _InsertBeforeOp(List<Token> tokens, 
     int index, Object text) : super(tokens, index, text);
-  
-  String getClassName() => "_InsertBeforeOp";
+    
+  @override String get className => "_InsertBeforeOp";
   
   int execute(StringBuffer buf) {    
     buf.add(this._text);
@@ -352,7 +353,7 @@ class _ReplaceOp extends _RewriteOperation {
   
   int get lastIndex => this._lastIndex;
   
-  String getClassName() => "_ReplaceOp";
+  @override String get className => "_ReplaceOp";
   
   void set lastIndex(int li) {
     this._lastIndex = li;

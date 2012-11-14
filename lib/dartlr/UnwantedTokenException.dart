@@ -9,7 +9,7 @@ class UnwantedTokenException extends MismatchedTokenException {
   UnwantedTokenException
      ([int expecting, IntStream input]) : super(expecting, input);
 
-  Token getUnexpectedToken() => this.token;
+  Token get unexpectedToken => this.token;
 
   String toString() {
     String exp = ", expected $expecting";
@@ -20,7 +20,7 @@ class UnwantedTokenException extends MismatchedTokenException {
     return "UnwantedTokenException(found=${token.text}$exp)";
   }  
   
-  String get className => "UnwantedTokenException";
+  @override String get className => "UnwantedTokenException";
   
 }
 

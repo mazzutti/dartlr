@@ -42,7 +42,7 @@ class Parser extends BaseRecognizer {
     }
   }
   
-  String getRecognizerClassName() => "Parser";
+  @Override String get recognizerClassName => "Parser";
 
   Object _getCurrentInputSymbol(IntStream input) => this._input.LT(1);
 

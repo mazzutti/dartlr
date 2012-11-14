@@ -84,10 +84,10 @@ class TreePatternParser {
     if (treeNodeType == Token.INVALID_TOKEN_TYPE) return null;
     Object node;
     node = this._adaptor.createFromTokenType(treeNodeType, text);
-    if (label != null && node.dynamic.className ==  new TreePattern().className)
-      node.dynamic.label = label;
-    if (arg != null && node.dynamic.className == new TreePattern().className)
-      node.dynamic.hasTextArg = true;
+    if (label != null && node.className ==  new TreePattern().className)
+      node.label = label;
+    if (arg != null && node.className == new TreePattern().className)
+      node.hasTextArg = true;
     return node;
   }
 }

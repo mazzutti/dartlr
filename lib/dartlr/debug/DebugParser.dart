@@ -31,7 +31,7 @@ class DebugParser extends Parser {
   */
   void set debugListener(DebugEventListener dbg) {
     if (input is DebugTokenStream )
-      this._input.dynamic.debugListener = dbg;
+      this._input.debugListener = dbg;
     this._dbg = dbg;
   }
 
@@ -42,7 +42,7 @@ class DebugParser extends Parser {
     this._reportError(exception);
   }
   
-  void _reportError(Dynamic  e) {
+  void _reportError(  e) {
     if(e is RecognitionException) {
       super.reportError(e);
       this._dbg.recognitionException(e);

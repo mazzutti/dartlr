@@ -17,7 +17,7 @@ class CommonTreeAdaptor extends BaseTreeAdaptor {
   Object dupNode(Object t) {
     if (t == null) 
       return null;
-    return t.dynamic.dupNode();
+    return t.dupNode();
   }
 
   Object createTreeNode(Token payload) {
@@ -65,28 +65,28 @@ class CommonTreeAdaptor extends BaseTreeAdaptor {
     int stop = 0;
     if (startToken != null) start = startToken.tokenIndex;
     if (stopToken != null) stop = stopToken.tokenIndex;
-    t.dynamic.tokenStartIndex = start;
-    t.dynamic.tokenStopIndex = stop;
+    t.tokenStartIndex = start;
+    t.tokenStopIndex = stop;
   }
 
   int getTokenStartIndex(Object t) {
     if (t == null) return -1;
-    return t.dynamic.tokenStartIndex;
+    return t.tokenStartIndex;
   }
 
   int getTokenStopIndex(Object t) {
     if (t == null) return -1;
-    return t.dynamic.tokenStopIndex;
+    return t.tokenStopIndex;
   }
 
   String getText(Object t) {
     if (t == null) return null;
-    return t.dynamic.text;
+    return t.text;
   }
 
   int getType(Object t) {
     if (t == null) return Token.INVALID_TOKEN_TYPE;
-    return t.dynamic.type;
+    return t.type;
   }
   
   /** What is the Token associated with this node?  If
@@ -94,40 +94,40 @@ class CommonTreeAdaptor extends BaseTreeAdaptor {
    *  override this in your own adaptor.
    */
   Token getToken(Object t) {
-    if (t is CommonTree) return t.dynamic.token;
+    if (t is CommonTree) return t.token;
     return null;
   }
 
   Object getChild(Object t, int i) {
     if (t == null) return null;
-        return t.dynamic.getChild(i);
+        return t.getChild(i);
     }
 
   int getChildCount(Object t) {
     if (t == null) return 0;
-    return t.dynamic.getChildCount();
+    return t.getChildCount();
   }
 
   Object getParent(Object t) {
     if (t == null) return null;
-    return t.dynamic.parent;
+    return t.parent;
   }
 
   void setParent(Object t, Object parent) {
-    if (t != null) t.dynamic.parent = parent;
+    if (t != null) t.parent = parent;
   }
 
   int getChildIndex(Object t) {
     if (t == null) return 0;
-    return t.dynamic.childIndex;
+    return t.childIndex;
   }
 
   void setChildIndex(Object t, int index) {
-    if (t != null) t.dynamic.childIndex = index;
+    if (t != null) t.childIndex = index;
   }
 
   void replaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t) {
     if (parent != null )
-      parent.dynamic.replaceChildren(startChildIndex, stopChildIndex, t);
+      parent.replaceChildren(startChildIndex, stopChildIndex, t);
   }
 }

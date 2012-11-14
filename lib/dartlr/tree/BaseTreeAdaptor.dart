@@ -27,7 +27,7 @@ class BaseTreeAdaptor implements TreeAdaptor {
     return t;
   }
 
-  bool isNil(Object tree) => tree.dynamic.isNil();
+  bool isNil(Object tree) => tree.isNil();
 
   /** This is generic in the sense that it will work with any kind of
    *  tree (not just [Tree] interface).  It invokes the adaptor routines
@@ -56,7 +56,7 @@ class BaseTreeAdaptor implements TreeAdaptor {
   */
   void addChild(Object t, Object child) {
     if (t!= null && child != null)
-      t.dynamic.addChild(child);
+      t.addChild(child);
   }
 
   /** If oldRoot is a nil root, just copy or move the children to newRoot.
@@ -146,30 +146,30 @@ class BaseTreeAdaptor implements TreeAdaptor {
     return t;
   }
 
-  int getType(Object t) => t.dynamic.type;
+  int getType(Object t) => t.type;
 
   void setType(Object t, int type) {
     throw new Exception("don't know enough about Tree node");
   }
 
-  String getText(Object t) => t.dynamic.text;
+  String getText(Object t) => t.text;
 
   void setText(Object t, String text) {
     throw new Exception("don't know enough about Tree node");
   }
 
-  Object getChild(Object t, int i) => t.dynamic.getChild(i);
+  Object getChild(Object t, int i) => t.getChild(i);
 
   void setChild(Object t, int i, Object child) {
-    t.dynamic.setChild(i, child);
+    t.setChild(i, child);
   }
 
   Object deleteChild(Object t, int i) {
-    return t.dynamic.deleteChild(i);
+    return t.deleteChild(i);
   }
 
   int getChildCount(Object t) {
-    return t.dynamic.getChildCount();
+    return t.getChildCount();
   }
 
   int getUniqueID(Object node) {

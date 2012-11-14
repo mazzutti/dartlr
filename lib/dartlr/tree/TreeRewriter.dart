@@ -55,7 +55,7 @@ class TreeRewriter extends TreeParser {
   }
 
   void reportTransformation(Object oldTree, Object newTree) {
-    print("${oldTree.dynamic.toStringTree()} -> ${newTree.dynamic.toStringTree()}");
+    print("${oldTree.toStringTree()} -> ${newTree.toStringTree()}");
   }
 
   Object topdown() =>  null;

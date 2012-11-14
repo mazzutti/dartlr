@@ -136,13 +136,13 @@ class LegacyCommonTokenStream implements TokenStream {
    *  the token type [BitSet].  Return null if no tokens were found.  This
    *  method looks at both on and off channel tokens.
    */
-  List getTokens() {
+  List get tokens {
     if (this._p == -1) 
       this._fillBuffer();
     return this._tokens;
   }
 
-  List getTokensRange(int start, int stop, [Dynamic types]) {   
+  List getTokensRange(int start, int stop, [types]) {   
     if (this._p == -1 )
       this._fillBuffer();   
     if (stop >= this._tokens.length)

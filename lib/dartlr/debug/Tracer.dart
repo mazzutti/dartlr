@@ -29,7 +29,7 @@ class Tracer extends BlankDebugEventListener {
   }
 
   Object getInputSymbol(int k) {
-    return (input is TokenStream ) ? input.dynamic.LT(k) :
+    return (input is TokenStream ) ? input.LT(k) :
       new String.fromCharCodes([input.LA(k)]);
   }
 }

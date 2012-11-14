@@ -127,7 +127,7 @@ class RecognitionException implements Exception {
   }
 
   /** Return the token type or char of the unexpected input element */
-  int getUnexpectedType() {
+  int get unexpectedType {
     if (input is TokenStream )
       return token.type;   
     else if (input is TreeNodeStream) {

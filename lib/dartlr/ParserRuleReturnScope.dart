@@ -8,9 +8,9 @@ class ParserRuleReturnScope extends RuleReturnScope {
   Token _start, _stop;
   Object _tree;
   
-  Object get start => this._start;
+  Token get start => this._start;
   
-  Object get stop => this._stop;
+  Token get stop => this._stop;
   
   Object get tree => this._tree;
   

@@ -31,13 +31,13 @@ class DebugTreeParser extends TreeParser {
   */
   void set debugListener(DebugEventListener dbg) {
     if (input is DebugTreeNodeStream )
-      this.input.dynamic.debugListener = dbg;
+      this.input.debugListener = dbg;
     this._dbg = dbg;
   }
 
   DebugEventListener get debugListener => this._dbg;
 
-  void reportError(Dynamic e, [var stackTrace]) {
+  void reportError( e, [var stackTrace]) {
     if(e is RecognitionException)
       this._dbg.recognitionException(e);
     else {
