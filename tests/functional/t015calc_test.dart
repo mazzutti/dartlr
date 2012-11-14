@@ -2,13 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t015calc_test");
+library t015calc_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t015calcParser.dart");
-#import("../out/t015calcLexer.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t015calcParser.dart";
+import "../out/t015calcLexer.dart";
 
 main() {  
   useVmConfiguration();
@@ -20,9 +21,9 @@ main() {
     t015calcParser parser = new t015calcParser(tstream);
 
     var result = parser.evaluate();
-    expect(result).equals(expected);
+    expect(result, equals(expected));
     if(errors.length > 0) {
-      expect(parser.reportedErrors).equalsCollection(errors);
+      expect(parser.reportedErrors, equals(errors));
     }
   }
 

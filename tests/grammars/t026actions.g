@@ -29,7 +29,7 @@ this.xlog.add("after;");
     :   IDENTIFIER EOF
     ;
     
-    catch [ var exc ] {
+    catch [ exc ] {
         this.xlog.add("catch;");
         throw new Exception();       
     }

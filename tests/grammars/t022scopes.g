@@ -10,6 +10,10 @@ scope aScope {
 List names
 }
 
+@header {
+import 'dart:math';
+}
+
 a
 scope aScope;
     :   {$aScope::names = new List();} ID*
@@ -102,7 +106,7 @@ int a
 @after {
 $res = $e::a;
 }
-    : NUM { $e[0]::a = Math.parseInt($NUM.text); }
+    : NUM { $e[0]::a = int.parse($NUM.text); }
     | '{' e '}'
     ;
 
@@ -116,7 +120,7 @@ int a
 @after {
 $res = $f::a;
 }
-    : NUM { var len = $f.length-2; $f[len >= 0 ? len : 0]::a = Math.parseInt($NUM.text); }
+    : NUM { var len = $f.length-2; $f[len >= 0 ? len : 0]::a = int.parse($NUM.text); }
     | '{' f '}'
     ;
 

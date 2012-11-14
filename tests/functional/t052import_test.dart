@@ -2,25 +2,26 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t052import_test");
+library t052import_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t052importM1Lexer.dart");
-#import("../out/t052importM1Parser.dart");
-#import("../out/t052importM2Lexer.dart");
-#import("../out/t052importM2Parser.dart");
-#import("../out/t052importM3Lexer.dart");
-#import("../out/t052importM3Parser.dart");
-#import("../out/t052importM4Lexer.dart");
-#import("../out/t052importM4Parser.dart");
-#import("../out/t052importM5Lexer.dart");
-#import("../out/t052importM5Parser.dart");
-#import("../out/t052importM6Lexer.dart");
-#import("../out/t052importM6Parser.dart");
-#import("../out/t052importM7.dart");
-#import("../out/t052importM8.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t052importM1Lexer.dart";
+import "../out/t052importM1Parser.dart";
+import "../out/t052importM2Lexer.dart";
+import "../out/t052importM2Parser.dart";
+import "../out/t052importM3Lexer.dart";
+import "../out/t052importM3Parser.dart";
+import "../out/t052importM4Lexer.dart";
+import "../out/t052importM4Parser.dart";
+import "../out/t052importM5Lexer.dart";
+import "../out/t052importM5Parser.dart";
+import "../out/t052importM6Lexer.dart";
+import "../out/t052importM6Parser.dart";
+import "../out/t052importM7.dart";
+import "../out/t052importM8.dart";
 
 main() {  
   useVmConfiguration();
@@ -31,7 +32,7 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t052importM1Parser parser = new t052importM1Parser(tstream);
     parser.s();    
-    expect(parser.output).equals("S.a");
+    expect(parser.output, equals("S.a"));
   });
   
   test("testDelegatorInvokesDelegateRuleWithArgs_t052import", () {
@@ -40,7 +41,7 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t052importM2Parser parser = new t052importM2Parser(tstream);
     parser.s();    
-    expect(parser.output).equals("S.a1000");
+    expect(parser.output, equals("S.a1000"));
   });
   
   test("testDelegatorAccessesDelegateMembers_t052import", () {
@@ -49,7 +50,7 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t052importM3Parser parser = new t052importM3Parser(tstream);
     parser.s();    
-    expect(parser.output).equals("foo");
+    expect(parser.output, equals("foo"));
   });
   
   test("testDelegatorInvokesFirstVersionOfDelegateRule_t052import", () {
@@ -58,7 +59,7 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t052importM4Parser parser = new t052importM4Parser(tstream);
     parser.s();    
-    expect(parser.output).equals("S.a");
+    expect(parser.output, equals("S.a"));
   });
   
   test("testDelegatesSeeSameTokenType_t052import", () {
@@ -67,7 +68,7 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t052importM5Parser parser = new t052importM5Parser(tstream);
     parser.s();    
-    expect(parser.output).equals("S.x T.y");
+    expect(parser.output, equals("S.x T.y"));
   });
   
   test("testDelegatorRuleOverridesDelegate_t052import", () {
@@ -76,7 +77,7 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t052importM6Parser parser = new t052importM6Parser(tstream);
     parser.a();    
-    expect(parser.output).equals("S.a");
+    expect(parser.output, equals("S.a"));
   });
   
   test("testDelegatorRuleOverridesDelegate_t052import", () {
@@ -89,7 +90,7 @@ main() {
           break;
       lexer.capture(token.text);
     }
-    expect(lexer.output).equals("S.A abc");
+    expect(lexer.output, equals("S.A abc"));
   });
   
   test("testLexerDelegatorRuleOverridesDelegate_t052import", () {
@@ -102,6 +103,6 @@ main() {
           break;
       lexer.capture(token.text);
     }
-    expect(lexer.output).equals("M.A a");
+    expect(lexer.output, equals("M.A a"));
   });
 }

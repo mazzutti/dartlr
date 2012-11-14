@@ -2,13 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t034tokenLabelPropertyRef_test");
+library t034tokenLabelPropertyRef_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t034tokenLabelPropertyRefLexer.dart");
-#import("../out/t034tokenLabelPropertyRefParser.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t034tokenLabelPropertyRefLexer.dart";
+import "../out/t034tokenLabelPropertyRefParser.dart";
 
 main() {  
   useVmConfiguration();
@@ -20,7 +21,7 @@ main() {
     t034tokenLabelPropertyRefParser parser = new t034tokenLabelPropertyRefParser(tstream);  
     
     parser.a();
-    expect(["a",4,1,3,0,1]).equalsCollection(parser.xlog);
+    expect(["a",4,1,3,0,1], equals(parser.xlog));
   });
   
 }

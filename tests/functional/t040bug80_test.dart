@@ -2,12 +2,13 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t040bug80_test");
+library t040bug80_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t040bug80.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t040bug80.dart";
 
 main() {  
   useVmConfiguration();
@@ -23,7 +24,7 @@ main() {
       if (token.type === Token.EOF)
           break;
     } 
-    expect(lexer.reportedErrors.length).equals(expected);
+    expect(lexer.reportedErrors.length, equals(expected));
   });
   
 }

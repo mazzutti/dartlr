@@ -2,35 +2,37 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t059debug_test");
+library t059debug_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t059debug1Lexer.dart");
-#import("../out/t059debug1Parser.dart");
-#import("../out/t059debug2Lexer.dart");
-#import("../out/t059debug2Parser.dart");
-#import("../out/t059debug3Lexer.dart");
-#import("../out/t059debug3Parser.dart");
-#import("../out/t059debug4Lexer.dart");
-#import("../out/t059debug4Parser.dart");
-#import("../out/t059debug5Lexer.dart");
-#import("../out/t059debug5Parser.dart");
-#import("../out/t059debug6Lexer.dart");
-#import("../out/t059debug6Parser.dart");
-#import("../out/t059debug7Lexer.dart");
-#import("../out/t059debug7Parser.dart");
-#import("../out/t059debug8Lexer.dart");
-#import("../out/t059debug8Parser.dart");
-#import("../out/t059debug9Lexer.dart");
-#import("../out/t059debug9Parser.dart");
-#import("../out/t059debug10Lexer.dart");
-#import("../out/t059debug10Parser.dart");
-#import("../out/t059debug11Lexer.dart");
-#import("../out/t059debug11Parser.dart", prefix: "d11");
-#import("../out/t059debug12Lexer.dart");
-#import("../out/t059debug12Parser.dart", prefix: "d12");
-#import("../../src/DartLRLib.dart");
+
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t059debug1Lexer.dart";
+import "../out/t059debug1Parser.dart";
+import "../out/t059debug2Lexer.dart";
+import "../out/t059debug2Parser.dart";
+import "../out/t059debug3Lexer.dart";
+import "../out/t059debug3Parser.dart";
+import "../out/t059debug4Lexer.dart";
+import "../out/t059debug4Parser.dart";
+import "../out/t059debug5Lexer.dart";
+import "../out/t059debug5Parser.dart";
+import "../out/t059debug6Lexer.dart";
+import "../out/t059debug6Parser.dart";
+import "../out/t059debug7Lexer.dart";
+import "../out/t059debug7Parser.dart";
+import "../out/t059debug8Lexer.dart";
+import "../out/t059debug8Parser.dart";
+import "../out/t059debug9Lexer.dart";
+import "../out/t059debug9Parser.dart";
+import "../out/t059debug10Lexer.dart";
+import "../out/t059debug10Parser.dart";
+import "../out/t059debug11Lexer.dart";
+import "../out/t059debug11Parser.dart" as d11;
+import "../out/t059debug12Lexer.dart";
+import "../out/t059debug12Parser.dart" as d12;
 
 main() {   
   useVmConfiguration();
@@ -59,7 +61,7 @@ main() {
     RecordDebugEventListener listener = new RecordDebugEventListener();
     t059debug1Parser parser = new t059debug1Parser(tstream, listener);
     parser.a();
-    expect(listener.events).equalsCollection(expected);
+    expect(listener.events, equals(expected));
   }); 
   
   asyncTest("testSocketProxy_t059debug", 1, () { 
@@ -88,7 +90,7 @@ main() {
     var listener = new RecordDebugEventListener();
     var remoteListener = new RemoteDebugEventSocketListener(
       listener, "127.0.0.1", callback:() {
-         expect(listener.events).equalsCollection(expected);
+         expect(listener.events, equals(expected));
          callbackDone();
       });
   }); 
@@ -128,7 +130,7 @@ main() {
     var listener = new RecordDebugEventListener();
     var remoteListener = new RemoteDebugEventSocketListener(
       listener, "127.0.0.1", callback:() {
-        expect(listener.events).equalsCollection(expected);
+        expect(listener.events, equals(expected));
         callbackDone();
       });
   }); 
@@ -161,7 +163,7 @@ main() {
     var listener = new RecordDebugEventListener();
     var remoteListener = new RemoteDebugEventSocketListener(
       listener, "127.0.0.1", callback:() {
-        expect(listener.events).equalsCollection(expected);
+        expect(listener.events, equals(expected));
         callbackDone();
       });
   });
@@ -234,7 +236,7 @@ main() {
     var listener = new RecordDebugEventListener();
     var remoteListener = new RemoteDebugEventSocketListener(
       listener, "127.0.0.1", callback:() {
-        expect(listener.events).equalsCollection(expected);
+        expect(listener.events, equals(expected));
         callbackDone();
       });
   });
@@ -307,7 +309,7 @@ main() {
     var listener = new RecordDebugEventListener();
     var remoteListener = new RemoteDebugEventSocketListener(
       listener, "127.0.0.1", callback:() {
-        expect(listener.events).equalsCollection(expected);
+        expect(listener.events, equals(expected));
         callbackDone();
       });
   });
@@ -343,7 +345,7 @@ main() {
     var listener = new RecordDebugEventListener();
     var remoteListener = new RemoteDebugEventSocketListener(
       listener, "127.0.0.1", callback:() {
-        expect(listener.events).equalsCollection(expected);
+        expect(listener.events, equals(expected));
         callbackDone();
       });
   });
@@ -392,7 +394,7 @@ main() {
     var listener = new RecordDebugEventListener();
     var remoteListener = new RemoteDebugEventSocketListener(
       listener, "127.0.0.1", callback:() {        
-        expect(listener.events).equalsCollection(expected);
+        expect(listener.events, equals(expected));
         callbackDone();
       });
   });
@@ -435,7 +437,7 @@ main() {
     var listener = new RecordDebugEventListener();
     var remoteListener = new RemoteDebugEventSocketListener(
       listener, "127.0.0.1", callback:() {
-        expect(listener.events).equalsCollection(expected);
+        expect(listener.events, equals(expected));
         callbackDone();
       });
   });
@@ -471,7 +473,7 @@ main() {
     var listener = new RecordDebugEventListener();
     var remoteListener = new RemoteDebugEventSocketListener(
       listener, "127.0.0.1", callback:() {
-        expect(listener.events).equalsCollection(expected);
+        expect(listener.events, equals(expected));
         callbackDone();
       });
   });
@@ -504,7 +506,7 @@ main() {
     var listener = new RecordDebugEventListener();
     var remoteListener = new RemoteDebugEventSocketListener(
       listener, "127.0.0.1", callback:() {
-        expect(listener.events).equalsCollection(expected);
+        expect(listener.events, equals(expected));
         callbackDone();
       });
   });
@@ -540,7 +542,7 @@ main() {
     var remoteListener = new RemoteDebugEventSocketListener(
       listener, "127.0.0.1", callback:() {
         //print(listener.events);
-        expect(listener.events).equalsCollection(expected);
+        expect(listener.events, equals(expected));
         callbackDone();
       });
   });
@@ -604,7 +606,7 @@ main() {
     var remoteListener = new RemoteDebugEventSocketListener(
       listener, "127.0.0.1", callback:() {
         //print(listener.events);
-        expect(listener.events).equalsCollection(expected);
+        expect(listener.events, equals(expected));
         callbackDone();
       });
   });
@@ -673,7 +675,6 @@ main() {
     RecordDebugEventListener listener = new RecordDebugEventListener();
     d12.t059debug12Parser parser = new d12.t059debug12Parser(tstream, listener);
     parser.a();
-    expect(listener.events).equalsCollection(expected);
-    
+    expect(listener.events, equals(expected));    
   });
 }

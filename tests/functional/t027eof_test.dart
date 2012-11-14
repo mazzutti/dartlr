@@ -2,13 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t027eof_test");
+library t027eof_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t027eof.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
 
-#import("../../src/DartLRLib.dart");
+import "../out/t027eof.dart";
+
 
 main() {  
   useVmConfiguration();
@@ -18,12 +19,12 @@ main() {
     t027eof lexer = new t027eof(stream);
     
     Token token = lexer.nextToken();
-    expect(token.type).equals(t027eof.SPACE);
+    expect(token.type, equals(t027eof.SPACE));
 
     token = lexer.nextToken();
-    expect(token.type).equals(t027eof.END);
+    expect(token.type, equals(t027eof.END));
     
     token = lexer.nextToken();
-    expect(token.type).equals(t027eof.EOF);
+    expect(token.type, equals(t027eof.EOF));
   });
 }

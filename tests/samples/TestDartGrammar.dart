@@ -2,13 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("try_dartlr"); 
-#import("dart:io");
-#import("dart:builtin");
+library try_dartlr;
 
-#import("../out/DartLexer.dart");
-#import("../out/DartParser.dart");
-#import("../../src/DartLRLib.dart");
+import "dart:io";
+import 'package:dartlr/dartlr.dart';
+
+import "../out/DartLexer.dart";
+import "../out/DartParser.dart";
+
 
 
 main() {
@@ -22,5 +23,7 @@ main() {
   parser.compilationUnit();
   if (lexer.hasErrors || parser.hasErrors) {
     throw new Exception("Parse errors...");
+  } else {
+    print("successfully parsed '${sampleFilePath}!'");
   }
 }

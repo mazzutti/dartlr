@@ -11,9 +11,6 @@ tokens { ROOT; }
 static List<String> get namesOfTokens() => _tokenNames;
 }
 
-@header {
-#source("v15_common_tree.dart");
-}
 a : ID -> ROOT<V15> ID
   ;
 

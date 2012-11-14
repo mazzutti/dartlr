@@ -38,8 +38,85 @@ ANTLR provides for other language targets, such as Java and Python. It contains:
 TODO
 
 # HOW TO BUILD
+In order to use dartlr you have to create a custom antlr3 build. In contrast to
+other languages code generation for Dart isn't part of the standard antlr3 code
+repository yet.
 
-TODO
+## Get stringtemplate4 
+  * Download the jar file for stringtemplate4
+
+  ```
+  wget http://www.stringtemplate.org/download/ST-4.0.6.jar
+  ```
+
+  * Add it to the classpath, i.e. add the following line to your .bashrc
+
+  ```
+  # replace /path/to with the local path where you put ST-{x,y,y}.jar
+  export CLASSPATH=/path/to/ST-4.0.6.jar:$CLASSPATH
+  ```
+
+## Get antlr3 and build it 
+  * Clone it from github
+
+  ``` 
+  git clone git://github.com/antlr/antlr3.git
+  ```
+
+  * Prepare build environment 
+
+  Build relies on maven. If not installed yet, you have to install it first. On Ubuntu do
+  ```
+  sudo apt-get install maven
+  ```
+
+  * Build antlr
+
+  ```
+  cd antlr 
+  mvn -N install
+  mvn -Dmaven.test.skip=true
+  ```
+  If the third step fails, run it again. 
+
+## Create symbolic links to the files supplied by dartlr
+
+   ```
+   cd antlr3
+
+   # /path/to/dartlr is the full path to your local dartlr repository 
+   ln -s /path/to/dartlr/antlr-templates tool/target/classes/org/antlr/codegen/templates/Dart  
+   ln -s /path/to/dartlr/antlr-codegen/DartTarget.java tool/src/main/java/org/antlr/codegen/DartTarget.java
+   ```
+
+## Build again
+
+   ```
+   mvn -Dmaven.test.skip=true
+   ```    
+
+This should create the file tool/target/antlr-3.4.1-SNAPSHOT.jar which includes support for
+Dart code generation.
+
+## Test it
+  * Create a trivial grammar in the file trivial.g
+
+  ```
+  lexer grammar trivial;
+  options {
+    language = Dart;
+  }
+  ZERO: '0';
+  ```
+  
+  * Run antlr
+
+Make sure that the antlr jar you've built in the previous steps is on the classpath.
+ 
+```
+java org.antlr.Tool trivial.g
+```
+This should create the files trivial.dart and trivial.tokens.
 
 # USAGE
 
@@ -74,11 +151,23 @@ TODO
 	  lexer and parser generated to reflect your local path.
 	 
 	  More samples can be found in the tests folder.
+	 
+3. Make sure your pubspec.yaml includes a dependency to 'dartlr'
 
-3. Try out the results directly:
+   ```
+   dependencies:
+   	 dartlr:
+   	   # temporary url. This is going to change as soon tiagomzt
+   	   # has integrated the latest updates in his repository 
+   	   git: git@github.com:Gubaer/dartlr.git 	 
+   ```	 
+
+4. Try out the results directly:
 
  ```dart
- #import("path/to/DartLRLib.dart");
+ import "package:dartlr/dartlr.dart";
+ import "SomeLanguageLexer.dart";
+ import "SomeLanguageParser.dart";
 
   main() {
   

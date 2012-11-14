@@ -2,13 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t045dfabug_test");
+library t045dfabug_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t045dfabugLexer.dart");
-#import("../out/t045dfabugParser.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t045dfabugLexer.dart";
+import "../out/t045dfabugParser.dart";
 
 main() {  
   useVmConfiguration();
@@ -21,6 +22,6 @@ main() {
     
     int expected = parser.reportedErrors.length;
     parser.r();
-    expect(parser.reportedErrors.length).equals(expected);
+    expect(parser.reportedErrors.length, equals(expected));
   });
 }

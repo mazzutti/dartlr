@@ -2,13 +2,15 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t033backtracking_test");
+library t033backtracking_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t033backtrackingLexer.dart");
-#import("../out/t033backtrackingParser.dart");
-#import("../../src/DartLRLib.dart");
+
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t033backtrackingLexer.dart";
+import "../out/t033backtrackingParser.dart";
 
 main() {  
   useVmConfiguration();
@@ -21,6 +23,6 @@ main() {
     
     int expected = parser.reportedErrors.length;
     parser.translation_unit();
-    expect(parser.reportedErrors.length).equals(expected);
+    expect(parser.reportedErrors.length, equals(expected));
   });
 }

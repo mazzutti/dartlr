@@ -2,13 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t037rulePropertyRef_test");
+library t037rulePropertyRef_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t037rulePropertyRefLexer.dart");
-#import("../out/t037rulePropertyRefParser.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t037rulePropertyRefLexer.dart";
+import "../out/t037rulePropertyRefParser.dart";
 
 main() {  
   useVmConfiguration();
@@ -20,9 +21,9 @@ main() {
     t037rulePropertyRefParser parser = new t037rulePropertyRefParser(tstream); 
     
     var ret = parser.a().bla;
-    expect(ret[0].tokenIndex).equals(1);
-    expect(ret[1].tokenIndex).equals(7);
-    expect(ret[2]).equals("a a a a");   
+    expect(ret[0].tokenIndex, equals(1));
+    expect(ret[1].tokenIndex, equals(7));
+    expect(ret[2], equals("a a a a"));   
   });
   
 }

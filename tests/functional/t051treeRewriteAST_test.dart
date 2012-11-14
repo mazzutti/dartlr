@@ -2,101 +2,100 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t051treeRewriteAST_test");
+library t051treeRewriteAST_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t051treeRewriteASTaLexer.dart");
-#import("../out/t051treeRewriteASTaParser.dart");
-#import("../out/t051treeRewriteASTaWalker.dart");
-#import("../out/t051treeRewriteASTbLexer.dart");
-#import("../out/t051treeRewriteASTbParser.dart");
-#import("../out/t051treeRewriteASTbWalker.dart");
-#import("../out/t051treeRewriteASTcLexer.dart");
-#import("../out/t051treeRewriteASTcParser.dart");
-#import("../out/t051treeRewriteASTcWalker.dart");
-#import("../out/t051treeRewriteASTdLexer.dart");
-#import("../out/t051treeRewriteASTdParser.dart");
-#import("../out/t051treeRewriteASTdWalker.dart");
-#import("../out/t051treeRewriteASTeLexer.dart");
-#import("../out/t051treeRewriteASTeParser.dart");
-#import("../out/t051treeRewriteASTeWalker.dart");
-#import("../out/t051treeRewriteASTfLexer.dart");
-#import("../out/t051treeRewriteASTfParser.dart");
-#import("../out/t051treeRewriteASTfWalker.dart");
-#import("../out/t051treeRewriteASTgLexer.dart");
-#import("../out/t051treeRewriteASTgParser.dart");
-#import("../out/t051treeRewriteASTgWalker.dart");
-#import("../out/t051treeRewriteASThLexer.dart");
-#import("../out/t051treeRewriteASThParser.dart");
-#import("../out/t051treeRewriteASThWalker.dart");
-#import("../out/t051treeRewriteASTiLexer.dart");
-#import("../out/t051treeRewriteASTiParser.dart");
-#import("../out/t051treeRewriteASTiWalker.dart");
-#import("../out/t051treeRewriteASTjLexer.dart");
-#import("../out/t051treeRewriteASTjParser.dart");
-#import("../out/t051treeRewriteASTjWalker.dart");
-#import("../out/t051treeRewriteASTkLexer.dart");
-#import("../out/t051treeRewriteASTkParser.dart");
-#import("../out/t051treeRewriteASTkWalker.dart");
-#import("../out/t051treeRewriteASTlLexer.dart");
-#import("../out/t051treeRewriteASTlParser.dart");
-#import("../out/t051treeRewriteASTlWalker.dart");
-#import("../out/t051treeRewriteASTmLexer.dart");
-#import("../out/t051treeRewriteASTmParser.dart");
-#import("../out/t051treeRewriteASTmWalker.dart");
-#import("../out/t051treeRewriteASTnLexer.dart");
-#import("../out/t051treeRewriteASTnParser.dart");
-#import("../out/t051treeRewriteASTnWalker.dart");
-#import("../out/t051treeRewriteASToLexer.dart");
-#import("../out/t051treeRewriteASToParser.dart");
-#import("../out/t051treeRewriteASToWalker.dart");
-#import("../out/t051treeRewriteASTpLexer.dart");
-#import("../out/t051treeRewriteASTpParser.dart");
-#import("../out/t051treeRewriteASTpWalker.dart");
-#import("../out/t051treeRewriteASTqLexer.dart");
-#import("../out/t051treeRewriteASTqParser.dart");
-#import("../out/t051treeRewriteASTqWalker.dart");
-#import("../out/t051treeRewriteASTrLexer.dart");
-#import("../out/t051treeRewriteASTrParser.dart");
-#import("../out/t051treeRewriteASTrWalker.dart");
-#import("../out/t051treeRewriteASTsLexer.dart");
-#import("../out/t051treeRewriteASTsParser.dart");
-#import("../out/t051treeRewriteASTsWalker.dart");
-#import("../out/t051treeRewriteASTtLexer.dart");
-#import("../out/t051treeRewriteASTtParser.dart");
-#import("../out/t051treeRewriteASTtWalker.dart");
-#import("../out/t051treeRewriteASTuLexer.dart");
-#import("../out/t051treeRewriteASTuParser.dart");
-#import("../out/t051treeRewriteASTuWalker.dart");
-#import("../out/t051treeRewriteASTvLexer.dart");
-#import("../out/t051treeRewriteASTvParser.dart");
-#import("../out/t051treeRewriteASTvWalker.dart");
-#import("../out/t051treeRewriteASTwLexer.dart");
-#import("../out/t051treeRewriteASTwParser.dart");
-#import("../out/t051treeRewriteASTwWalker.dart");
-#import("../out/t051treeRewriteASTyLexer.dart");
-#import("../out/t051treeRewriteASTyParser.dart");
-#import("../out/t051treeRewriteASTyWalker.dart");
-#import("../out/t051treeRewriteASTyLexer.dart");
-#import("../out/t051treeRewriteASTyParser.dart");
-#import("../out/t051treeRewriteASTyWalker.dart");
-#import("../out/t051treeRewriteASTxLexer.dart");
-#import("../out/t051treeRewriteASTxParser.dart");
-#import("../out/t051treeRewriteASTxWalker.dart");
-#import("../out/t051treeRewriteASTzLexer.dart");
-#import("../out/t051treeRewriteASTzParser.dart");
-#import("../out/t051treeRewriteASTzWalker.dart");
-#import("../out/t051treeRewriteASTaaLexer.dart");
-#import("../out/t051treeRewriteASTaaParser.dart");
-#import("../out/t051treeRewriteASTaaWalker.dart");
-#import("../out/t051treeRewriteASTabLexer.dart");
-#import("../out/t051treeRewriteASTabParser.dart");
-#import("../out/t051treeRewriteASTabWalker.dart");
-#import("../out/t051treeRewriteASTacLexer.dart");
-#import("../out/t051treeRewriteASTacParser.dart");
-#import("../out/t051treeRewriteASTacWalker.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t051treeRewriteASTaLexer.dart";
+import "../out/t051treeRewriteASTaParser.dart";
+import "../out/t051treeRewriteASTaWalker.dart";
+import "../out/t051treeRewriteASTbLexer.dart";
+import "../out/t051treeRewriteASTbParser.dart";
+import "../out/t051treeRewriteASTbWalker.dart";
+import "../out/t051treeRewriteASTcLexer.dart";
+import "../out/t051treeRewriteASTcParser.dart";
+import "../out/t051treeRewriteASTcWalker.dart";
+import "../out/t051treeRewriteASTdLexer.dart";
+import "../out/t051treeRewriteASTdParser.dart";
+import "../out/t051treeRewriteASTdWalker.dart";
+import "../out/t051treeRewriteASTeLexer.dart";
+import "../out/t051treeRewriteASTeParser.dart";
+import "../out/t051treeRewriteASTeWalker.dart";
+import "../out/t051treeRewriteASTfLexer.dart";
+import "../out/t051treeRewriteASTfParser.dart";
+import "../out/t051treeRewriteASTfWalker.dart";
+import "../out/t051treeRewriteASTgLexer.dart";
+import "../out/t051treeRewriteASTgParser.dart";
+import "../out/t051treeRewriteASTgWalker.dart";
+import "../out/t051treeRewriteASThLexer.dart";
+import "../out/t051treeRewriteASThParser.dart";
+import "../out/t051treeRewriteASThWalker.dart";
+import "../out/t051treeRewriteASTiLexer.dart";
+import "../out/t051treeRewriteASTiParser.dart";
+import "../out/t051treeRewriteASTiWalker.dart";
+import "../out/t051treeRewriteASTjLexer.dart";
+import "../out/t051treeRewriteASTjParser.dart";
+import "../out/t051treeRewriteASTjWalker.dart";
+import "../out/t051treeRewriteASTkLexer.dart";
+import "../out/t051treeRewriteASTkParser.dart";
+import "../out/t051treeRewriteASTkWalker.dart";
+import "../out/t051treeRewriteASTlLexer.dart";
+import "../out/t051treeRewriteASTlParser.dart";
+import "../out/t051treeRewriteASTlWalker.dart";
+import "../out/t051treeRewriteASTmLexer.dart";
+import "../out/t051treeRewriteASTmParser.dart";
+import "../out/t051treeRewriteASTmWalker.dart";
+import "../out/t051treeRewriteASTnLexer.dart";
+import "../out/t051treeRewriteASTnParser.dart";
+import "../out/t051treeRewriteASTnWalker.dart";
+import "../out/t051treeRewriteASToLexer.dart";
+import "../out/t051treeRewriteASToParser.dart";
+import "../out/t051treeRewriteASToWalker.dart";
+import "../out/t051treeRewriteASTpLexer.dart";
+import "../out/t051treeRewriteASTpParser.dart";
+import "../out/t051treeRewriteASTpWalker.dart";
+import "../out/t051treeRewriteASTqLexer.dart";
+import "../out/t051treeRewriteASTqParser.dart";
+import "../out/t051treeRewriteASTqWalker.dart";
+import "../out/t051treeRewriteASTrLexer.dart";
+import "../out/t051treeRewriteASTrParser.dart";
+import "../out/t051treeRewriteASTrWalker.dart";
+import "../out/t051treeRewriteASTsLexer.dart";
+import "../out/t051treeRewriteASTsParser.dart";
+import "../out/t051treeRewriteASTsWalker.dart";
+import "../out/t051treeRewriteASTtLexer.dart";
+import "../out/t051treeRewriteASTtParser.dart";
+import "../out/t051treeRewriteASTtWalker.dart";
+import "../out/t051treeRewriteASTuLexer.dart";
+import "../out/t051treeRewriteASTuParser.dart";
+import "../out/t051treeRewriteASTuWalker.dart";
+import "../out/t051treeRewriteASTvLexer.dart";
+import "../out/t051treeRewriteASTvParser.dart";
+import "../out/t051treeRewriteASTvWalker.dart";
+import "../out/t051treeRewriteASTwLexer.dart";
+import "../out/t051treeRewriteASTwParser.dart";
+import "../out/t051treeRewriteASTwWalker.dart";
+import "../out/t051treeRewriteASTyLexer.dart";
+import "../out/t051treeRewriteASTyParser.dart";
+import "../out/t051treeRewriteASTyWalker.dart";
+import "../out/t051treeRewriteASTxLexer.dart";
+import "../out/t051treeRewriteASTxParser.dart";
+import "../out/t051treeRewriteASTxWalker.dart";
+import "../out/t051treeRewriteASTzLexer.dart";
+import "../out/t051treeRewriteASTzParser.dart";
+import "../out/t051treeRewriteASTzWalker.dart";
+import "../out/t051treeRewriteASTaaLexer.dart";
+import "../out/t051treeRewriteASTaaParser.dart";
+import "../out/t051treeRewriteASTaaWalker.dart";
+import "../out/t051treeRewriteASTabLexer.dart";
+import "../out/t051treeRewriteASTabParser.dart";
+import "../out/t051treeRewriteASTabWalker.dart";
+import "../out/t051treeRewriteASTacLexer.dart";
+import "../out/t051treeRewriteASTacParser.dart";
+import "../out/t051treeRewriteASTacWalker.dart";
+
 
 main() {  
   useVmConfiguration();
@@ -111,7 +110,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTaWalker walker = new t051treeRewriteASTaWalker(nodes);
     var w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("34 abc");
+    expect(w.tree.toStringTree(), equals("34 abc"));
   });
   
   test("testSimpleTree_t051treeRewriteAST", () {
@@ -124,7 +123,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTbWalker walker = new t051treeRewriteASTbWalker(nodes);
     var w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("(34 abc)");
+    expect(w.tree.toStringTree(), equals("(34 abc)"));
   });
   
   test("testCombinedRewriteAndAuto_t051treeRewriteAST", () {
@@ -137,7 +136,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTcWalker walker = new t051treeRewriteASTcWalker(nodes);
     var w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("(34 abc)");
+    expect(w.tree.toStringTree(), equals("(34 abc)"));
     
     cstream = new ANTLRStringStream("34");
     lexer = new t051treeRewriteASTcLexer(cstream);
@@ -148,7 +147,7 @@ main() {
     nodes.tokenStream = tstream;
     walker = new t051treeRewriteASTcWalker(nodes);
     w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("34");
+    expect(w.tree.toStringTree(), equals("34"));
   });
   
   test("testAvoidDup_t051treeRewriteAST", () {
@@ -161,7 +160,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTdWalker walker = new t051treeRewriteASTdWalker(nodes);
     var w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("(abc abc)");
+    expect(w.tree.toStringTree(), equals("(abc abc)"));
   });
   
   test("testLoop_t051treeRewriteAST", () {
@@ -174,7 +173,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTeWalker walker = new t051treeRewriteASTeWalker(nodes);
     var w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("3 4 5 a b c");
+    expect(w.tree.toStringTree(), equals("3 4 5 a b c"));
   });
   
   test("testAutoDup_t051treeRewriteAST", () {
@@ -187,7 +186,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTfWalker walker = new t051treeRewriteASTfWalker(nodes);
     var w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("abc");
+    expect(w.tree.toStringTree(), equals("abc"));
   });
   
   test("testAutoDupRule_t051treeRewriteAST", () {
@@ -200,7 +199,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTgWalker walker = new t051treeRewriteASTgWalker(nodes);
     var w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("a 1");
+    expect(w.tree.toStringTree(), equals("a 1"));
   });
   
   test("testAutoDupMultiple_t051treeRewriteAST", () {
@@ -213,7 +212,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASThWalker walker = new t051treeRewriteASThWalker(nodes);
     var w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("a b 3");
+    expect(w.tree.toStringTree(), equals("a b 3"));
   });
   
   test("testAutoDupTree_t051treeRewriteAST", () {
@@ -226,7 +225,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTiWalker walker = new t051treeRewriteASTiWalker(nodes);
     var w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("(a 3)");
+    expect(w.tree.toStringTree(), equals("(a 3)"));
   });
   
   test("testAutoDupTreeWithLabels_t051treeRewriteAST", () {
@@ -239,7 +238,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTjWalker walker = new t051treeRewriteASTjWalker(nodes);
     var w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("(a 3)");
+    expect(w.tree.toStringTree(), equals("(a 3)"));
   });
   
   test("testAutoDupTreeWithLabels_t051treeRewriteAST", () {
@@ -252,7 +251,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTkWalker walker = new t051treeRewriteASTkWalker(nodes);
     var w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("(a 3)");
+    expect(w.tree.toStringTree(), equals("(a 3)"));
   });
   
   test("testAutoDupTreeWithRuleRoot_t051treeRewriteAST", () {
@@ -265,7 +264,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTlWalker walker = new t051treeRewriteASTlWalker(nodes);
     var w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("(a 3)");
+    expect(w.tree.toStringTree(), equals("(a 3)"));
   });
   
   test("testAutoDupTreeWithRuleRootAndLabels_t051treeRewriteAST", () {
@@ -278,7 +277,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTmWalker walker = new t051treeRewriteASTmWalker(nodes);
     var w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("(a 3)");
+    expect(w.tree.toStringTree(), equals("(a 3)"));
   });
   
   test("testAutoDupTreeWithRuleRootAndListLabels_t051treeRewriteAST", () {
@@ -291,7 +290,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTnWalker walker = new t051treeRewriteASTnWalker(nodes);
     var w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("(a 3)");
+    expect(w.tree.toStringTree(), equals("(a 3)"));
   });
   
   test("testAutoDupNestedTree_t051treeRewriteAST", () {
@@ -304,7 +303,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASToWalker walker = new t051treeRewriteASToWalker(nodes);
     var w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("(a (b 3))");
+    expect(w.tree.toStringTree(), equals("(a (b 3))"));
   });
   
   test("testDelete_t051treeRewriteAST", () {
@@ -317,7 +316,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTpWalker walker = new t051treeRewriteASTpWalker(nodes);
     var w = walker.a();
-    expect(w.tree).isNull();
+    expect(w.tree, equals(null));
   });
   
   test("testSetMatchNoRewrite_t051treeRewriteAST", () {
@@ -330,7 +329,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTqWalker walker = new t051treeRewriteASTqWalker(nodes);
     var w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("abc 34");
+    expect(w.tree.toStringTree(), equals("abc 34"));
   });
   
   test("testSetMatchNoRewriteLevel2_t051treeRewriteAST", () {
@@ -343,7 +342,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTrWalker walker = new t051treeRewriteASTrWalker(nodes);
     var w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("(abc 34)");
+    expect(w.tree.toStringTree(), equals("(abc 34)"));
   });
   
   test("testSetMatchNoRewriteLevel2Root_t051treeRewriteAST", () {
@@ -356,7 +355,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTsWalker walker = new t051treeRewriteASTsWalker(nodes);
     var w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("(abc 34)");
+    expect(w.tree.toStringTree(), equals("(abc 34)"));
   });
   
   test("testRewriteModeCombinedRewriteAndAuto_t051treeRewriteAST", () {
@@ -369,7 +368,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTtWalker walker = new t051treeRewriteASTtWalker(nodes);
     var w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("(ick 34)");
+    expect(w.tree.toStringTree(), equals("(ick 34)"));
     
     cstream = new ANTLRStringStream("34");
     lexer = new t051treeRewriteASTtLexer(cstream);
@@ -380,7 +379,7 @@ main() {
     nodes.tokenStream = tstream;
     walker = new t051treeRewriteASTtWalker(nodes);
     w = walker.a();
-    expect(w.tree.dynamic.toStringTree()).equals("34");
+    expect(w.tree.toStringTree(), equals("34"));
   });
   
   test("testRewriteModeFlatTree_t051treeRewriteAST", () {
@@ -393,7 +392,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTuWalker walker = new t051treeRewriteASTuWalker(nodes);
     var w = walker.s();
-    expect(w.tree.dynamic.toStringTree()).equals("abc 1");
+    expect(w.tree.toStringTree(), equals("abc 1"));
   });
   
   test("testRewriteModeChainRuleFlatTree_t051treeRewriteAST", () {
@@ -406,7 +405,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTvWalker walker = new t051treeRewriteASTvWalker(nodes);
     var w = walker.s();
-    expect(w.tree.dynamic.toStringTree()).equals("34 abc");
+    expect(w.tree.toStringTree(), equals("34 abc"));
   });
   
   test("testRewriteModeChainRuleTree_t051treeRewriteAST", () {
@@ -419,7 +418,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTwWalker walker = new t051treeRewriteASTwWalker(nodes);
     var w = walker.s();
-    expect(w.tree.dynamic.toStringTree()).equals("34");
+    expect(w.tree.toStringTree(), equals("34"));
   });
   
   test("testRewriteModeChainRuleTree2_t051treeRewriteAST", () {
@@ -432,7 +431,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTxWalker walker = new t051treeRewriteASTxWalker(nodes);
     var w = walker.s();
-    expect(w.tree.dynamic.toStringTree()).equals("34");
+    expect(w.tree.toStringTree(), equals("34"));
   });
   
   test("testRewriteModeChainRuleTree3_t051treeRewriteAST", () {
@@ -445,7 +444,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTyWalker walker = new t051treeRewriteASTyWalker(nodes);
     var w = walker.s();
-    expect(w.tree.dynamic.toStringTree()).equals("boo 34");
+    expect(w.tree.toStringTree(), equals("boo 34"));
   });
   
   test("testRewriteModeChainRuleTree4_t051treeRewriteAST", () {
@@ -458,7 +457,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTzWalker walker = new t051treeRewriteASTzWalker(nodes);
     var w = walker.s();
-    expect(w.tree.dynamic.toStringTree()).equals("(boo 34)");
+    expect(w.tree.toStringTree(), equals("(boo 34)"));
   });
   
   test("testRewriteModeChainRuleTree5_t051treeRewriteAST", () {
@@ -471,7 +470,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTaaWalker walker = new t051treeRewriteASTaaWalker(nodes);
     var w = walker.s();
-    expect(w.tree.dynamic.toStringTree()).equals("(boo 34)");
+    expect(w.tree.toStringTree(), equals("(boo 34)"));
   });
   
   test("testRewriteModeWithPredicatedRewrites_t051treeRewriteAST", () {
@@ -484,7 +483,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTabWalker walker = new t051treeRewriteASTabWalker(nodes);
     var w = walker.s();
-    expect(w.tree.dynamic.toStringTree()).equals("(root (ick 34))");
+    expect(w.tree.toStringTree(), equals("(root (ick 34))"));
   });
   
   test("testWildcard_t051treeRewriteAST", () {
@@ -497,7 +496,7 @@ main() {
     nodes.tokenStream = tstream;
     t051treeRewriteASTacWalker walker = new t051treeRewriteASTacWalker(nodes);
     var w = walker.s();
-    expect(w.tree.dynamic.toStringTree()).equals("34");
+    expect(w.tree.toStringTree(), equals("34"));
   });
 }
 

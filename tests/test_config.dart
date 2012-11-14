@@ -1,7 +1,7 @@
 // Copyright (c) 2012, the ANTLR Dart backend project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-
+library dartlr_testconfig;
 class TestConfig {
   
   static final String _JAVACODIRFLAG = "-d";
@@ -38,7 +38,7 @@ class TestConfig {
     return new Directory(path.concat('/../../../'));
   }
   
-  static List<String> get javaSourceDirPaths() => _javaSourceDirPaths;
+  static List<String> get javaSourceDirPaths => _javaSourceDirPaths;
   
   static ProcessOptions javacOptions() {
     ProcessOptions options = new ProcessOptions();
@@ -53,7 +53,7 @@ class TestConfig {
     return params;
   }
   
-  static List<Dynamic> antlrProcessParams() {
+  static List antlrProcessParams() {
     return [_CPFLAG, _CPANTLR, _ANTLRMAIN, _ANTLRODIRFLAG, _ANTLRODIR];    
   }
   
@@ -65,7 +65,7 @@ class TestConfig {
     return options;
   }
   
-  static Map<String, List<String>> get testGrammars() {
+  static Map<String, List<String>> get testGrammars {
     Map<String, List<String>> grammars = new Map<String, List<String>>();
     List<String> keys = _testGrammars.getKeys();
     List<String> grammarNames;

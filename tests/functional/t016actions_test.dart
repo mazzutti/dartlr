@@ -2,13 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t016actions_test");
+library t016actions_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t016actionsParser.dart");
-#import("../out/t016actionsLexer.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t016actionsParser.dart";
+import "../out/t016actionsLexer.dart";
 
 main() {  
   useVmConfiguration();
@@ -20,7 +21,7 @@ main() {
     t016actionsParser parser = new t016actionsParser(tstream);
 
     String result = parser.declaration();
-    expect("foo").equals(result);
+    expect("foo", equals(result));
   });
 
 }
