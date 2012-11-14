@@ -33,9 +33,6 @@ ANTLR provides for other language targets, such as Java and Python. It contains:
   abstract syntax tree construction and manipulation, tree structure recognition,
   and input translation.
 
-# STRUCTURE
-
-TODO
 
 # HOW TO BUILD
 In order to use dartlr you have to create a custom antlr3 build. In contrast to
