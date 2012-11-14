@@ -182,8 +182,7 @@ This should create the files trivial.dart and trivial.tokens.
 # REPORTING BUGS
 
 Please send bug reports to the <br>
-[https://github.com/tiagomazzutti/dartlr/issues/new](https://github.com/tiagomazzutti/dartlr/issues/new) or
-tiagomzt@gmail.com.  Direct e-mail is preferable.
+[https://github.com/tiagomazzutti/dartlr/issues/new](https://github.com/tiagomazzutti/dartlr/issues/new) 
 
 # LICENSE
 
