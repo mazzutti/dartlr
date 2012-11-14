@@ -5,9 +5,7 @@ options {
     tokenVocab=t053heteroT;
 }
 tokens { ROOT; }
-@header {
-#source("vx_common_tree.dart");
-}
+
 a : ID<VX> ';'<VX>
   ;
 

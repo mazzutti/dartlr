@@ -9,14 +9,14 @@ var start = this.input.LT(1);
 }
     :   method+
         {
-        this.input.dynamic.insertBefore(start,"public class Wrapper {\n");
-        this.input.dynamic.insertAfter($method.stop, "\n}\n");
+        this.input.insertBefore(start,"public class Wrapper {\n");
+        this.input.insertAfter($method.stop, "\n}\n");
         }
     ;
 
 method
     :   m='method' ID '(' ')' body
-        {this.input.dynamic.replace($m, "public void");}
+        {this.input.replace($m, "public void");}
     ; 
 
 body
@@ -30,7 +30,7 @@ $body::decls = new Map();
         {
         var it;
         for (it in $body::decls.getKeys()) {
-            this.input.dynamic.insertAfter($lcurly, "\nint \$it;");
+            this.input.insertAfter($lcurly, "\nint \$it;");
         }
         }
     ;

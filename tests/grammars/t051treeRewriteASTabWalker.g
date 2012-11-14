@@ -12,7 +12,7 @@ options {
 String buf = "";
 }
 
-s : ^(ID a) { this.buf = "\${this.buf}\${$s.start.dynamic.toStringTree()}"; };
+s : ^(ID a) { this.buf = "\${this.buf}\${$s.start.toStringTree()}"; };
 a : ^(ID INT) -> {true}? ^(ID["ick"] INT)
               -> INT
   ;
