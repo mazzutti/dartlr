@@ -2,12 +2,13 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t025lexerRulePropertyRef_test");
+library t025lexerRulePropertyRef_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t025lexerRulePropertyRef.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t025lexerRulePropertyRef.dart";
 
 main() {  
   useVmConfiguration();
@@ -23,7 +24,7 @@ main() {
         break;
     }
 
-    expect(lexer.properties.length).equals(3);
+    expect(lexer.properties.length, equals(3));
 
     List p1 = [
         "foobar",
@@ -36,7 +37,7 @@ main() {
         5
     ];
     
-    expect(lexer.properties[0]).equalsCollection(p1);
+    expect(lexer.properties[0], equals(p1));
 
     List p2 = [
         "_Ab98",
@@ -48,7 +49,7 @@ main() {
         7,
         11
     ];
-    expect(lexer.properties[1]).equalsCollection(p2);
+    expect(lexer.properties[1], equals(p2));
 
     List p3 = [
         "A12sdf",
@@ -60,7 +61,7 @@ main() {
         15,
         20
     ];
-    expect(lexer.properties[2]).equalsCollection(p3);
+    expect(lexer.properties[2], equals(p3));
   });
   
 }

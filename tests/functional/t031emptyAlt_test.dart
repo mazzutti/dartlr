@@ -2,14 +2,15 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t031emptyAlt_test");
+library t031emptyAlt_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t031emptyAltLexer.dart");
-#import("../out/t031emptyAltParser.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
 
-#import("../../src/DartLRLib.dart");
+import "../out/t031emptyAltLexer.dart";
+import "../out/t031emptyAltParser.dart";
+
 
 main() {  
   useVmConfiguration();
@@ -22,7 +23,7 @@ main() {
     int expected = parser.reportedErrors.length;
     parser.cond = false;
     parser.r();
-    expect(parser.reportedErrors.length).equals(expected);
+    expect(parser.reportedErrors.length, equals(expected));
   });
   
   test("testValid2_t031emptyAlt", () {
@@ -33,7 +34,7 @@ main() {
     int expected = parser.reportedErrors.length;
     parser.cond = true;
     parser.r();
-    expect(parser.reportedErrors.length).equals(expected);
+    expect(parser.reportedErrors.length, equals(expected));
   });
   
   test("testValid3_t031emptyAlt", () {
@@ -44,7 +45,7 @@ main() {
     List expected = ["line 1:3 no viable alternative at input ' '"];
     parser.cond = false;
     parser.r();
-    expect(parser.reportedErrors).equalsCollection(expected);
+    expect(parser.reportedErrors, equals(expected));
   });
 }
 

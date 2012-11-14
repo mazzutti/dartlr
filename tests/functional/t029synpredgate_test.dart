@@ -2,13 +2,15 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t029synpredgate_test");
+library t029synpredgate_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t029synpredgate.dart");
 
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t029synpredgate.dart";
+
 
 main() {  
   useVmConfiguration();
@@ -18,8 +20,8 @@ main() {
     t029synpredgate lexer = new t029synpredgate(stream);
     
     Token token = lexer.nextToken();
-    expect(token.type).equals(6);
-    expect(token.text).equals('a');
+    expect(token.type, equals(6));
+    expect(token.text, equals('a'));
     token = lexer.nextToken();
   });
 }

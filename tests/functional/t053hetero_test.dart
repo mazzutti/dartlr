@@ -2,58 +2,58 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t053hetero_test");
+library t053hetero_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../out/t053heteroT1Lexer.dart");
-#import("../out/t053heteroT1Parser.dart", prefix:"t1");
-#import("../out/t053heteroT2Lexer.dart");
-#import("../out/t053heteroT2Parser.dart", prefix:"t2");
-#import("../out/t053heteroT3Lexer.dart");
-#import("../out/t053heteroT3Parser.dart", prefix:"t3");
-#import("../out/t053heteroT4Lexer.dart");
-#import("../out/t053heteroT4Parser.dart", prefix:"t4");
-#import("../out/t053heteroT5Lexer.dart");
-#import("../out/t053heteroT5Parser.dart", prefix:"t5");
-#import("../out/t053heteroT6Lexer.dart");
-#import("../out/t053heteroT6Parser.dart", prefix:"t6");
-#import("../out/t053heteroT7Lexer.dart");
-#import("../out/t053heteroT7Parser.dart", prefix:"t7");
-#import("../out/t053heteroT8Lexer.dart");
-#import("../out/t053heteroT8Parser.dart", prefix:"t8");
-#import("../out/t053heteroT9Lexer.dart");
-#import("../out/t053heteroT9Parser.dart", prefix:"t9");
-#import("../out/t053heteroT10Lexer.dart");
-#import("../out/t053heteroT10Parser.dart", prefix:"t10");
-#import("../out/t053heteroT11Lexer.dart");
-#import("../out/t053heteroT11Parser.dart", prefix:"t11");
-#import("../out/t053heteroT12Lexer.dart");
-#import("../out/t053heteroT12Parser.dart", prefix:"t12");
-#import("../out/t053heteroT13Lexer.dart");
-#import("../out/t053heteroTP13.dart", prefix:"tp13");
-#import("../out/t053heteroT13Parser.dart", prefix:"t13");
-#import("../out/t053heteroT14Lexer.dart");
-#import("../out/t053heteroTP14.dart", prefix:"tp14");
-#import("../out/t053heteroT14Parser.dart", prefix:"t14");
-#import("../out/t053heteroT15Lexer.dart");
-#import("../out/t053heteroTP15.dart", prefix:"tp15");
-#import("../out/t053heteroT15Parser.dart", prefix:"t15");
-#import("../out/t053heteroT16Lexer.dart");
-#import("../out/t053heteroTP16.dart", prefix:"tp16");
-#import("../out/t053heteroT16Parser.dart", prefix:"t16");
-#import("../out/t053heteroT17Lexer.dart");
-#import("../out/t053heteroTP17.dart", prefix:"tp17");
-#import("../out/t053heteroT17Parser.dart", prefix:"t17");
-#import("../out/t053heteroT18Lexer.dart");
-#import("../out/t053heteroTP18.dart", prefix:"tp18");
-#import("../out/t053heteroT18Parser.dart", prefix:"t18");
-#import("../out/t053heteroTLexer.dart");
-#import("../out/t053heteroTP.dart", prefix:"tp");
-#import("../out/t053heteroTParser.dart", prefix:"t");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
 
-#import("../../lib/unittest/vm_config.dart");
+import "../out/t053heteroT1Lexer.dart";
+import "../out/t053heteroT1Parser.dart" as t1;
+import "../out/t053heteroT2Lexer.dart";
+import "../out/t053heteroT2Parser.dart" as t2;
+import "../out/t053heteroT3Lexer.dart";
+import "../out/t053heteroT3Parser.dart" as t3;
+import "../out/t053heteroT4Lexer.dart";
+import "../out/t053heteroT4Parser.dart" as t4;
+import "../out/t053heteroT5Lexer.dart";
+import "../out/t053heteroT5Parser.dart" as t5;
+import "../out/t053heteroT6Lexer.dart";
+import "../out/t053heteroT6Parser.dart" as t6;
+import "../out/t053heteroT7Lexer.dart";
+import "../out/t053heteroT7Parser.dart" as t7;
+import "../out/t053heteroT8Lexer.dart";
+import "../out/t053heteroT8Parser.dart" as t8;
+import "../out/t053heteroT9Lexer.dart";
+import "../out/t053heteroT9Parser.dart" as t9;
+import "../out/t053heteroT10Lexer.dart";
+import "../out/t053heteroT10Parser.dart" as t10;
+import "../out/t053heteroT11Lexer.dart";
+import "../out/t053heteroT11Parser.dart" as t11;
+import "../out/t053heteroT12Lexer.dart";
+import "../out/t053heteroT12Parser.dart" as t12;
+import "../out/t053heteroT13Lexer.dart";
+import "../out/t053heteroTP13.dart" as tp13;
+import "../out/t053heteroT13Parser.dart" as t13;
+import "../out/t053heteroT14Lexer.dart";
+import "../out/t053heteroTP14.dart" as tp14;
+import "../out/t053heteroT14Parser.dart" as t14;
+import "../out/t053heteroT15Lexer.dart";
+import "../out/t053heteroTP15.dart" as tp15;
+import "../out/t053heteroT15Parser.dart" as t15;
+import "../out/t053heteroT16Lexer.dart";
+import "../out/t053heteroTP16.dart" as tp16;
+import "../out/t053heteroT16Parser.dart" as t16;
+import "../out/t053heteroT17Lexer.dart";
+import "../out/t053heteroTP17.dart" as tp17;
+import "../out/t053heteroT17Parser.dart" as t17;
+import "../out/t053heteroT18Lexer.dart";
+import "../out/t053heteroTP18.dart" as tp18;
+import "../out/t053heteroT18Parser.dart" as t18;
+import "../out/t053heteroTLexer.dart";
+import "../out/t053heteroTP.dart" as tp;
+import "../out/t053heteroTParser.dart" as t;
 
-#import("../../src/DartLRLib.dart");
 
 main() {  
   useVmConfiguration();
@@ -64,7 +64,7 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t1.t053heteroT1Parser parser = new t1.t053heteroT1Parser(tstream);
     var ret = parser.a();    
-    expect(ret.tree.dynamic.toStringTree()).equals("a<V>");
+    expect(ret.tree.toStringTree(), equals("a<V>"));
   });
   
   test("testTokenWithLabel_t053hetero", () {
@@ -73,7 +73,7 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t2.t053heteroT2Parser parser = new t2.t053heteroT2Parser(tstream);
     var ret = parser.a();    
-    expect(ret.tree.dynamic.toStringTree()).equals("a<V>");
+    expect(ret.tree.toStringTree(), equals("a<V>"));
   });
   
   test("testTokenWithListLabel_t053hetero", () {
@@ -82,7 +82,7 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t3.t053heteroT3Parser parser = new t3.t053heteroT3Parser(tstream);
     var ret = parser.a();    
-    expect(ret.tree.dynamic.toStringTree()).equals("a<V>");
+    expect(ret.tree.toStringTree(), equals("a<V>"));
   });
   
   test("testTokenRoot_t053hetero", () {
@@ -91,7 +91,7 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t4.t053heteroT4Parser parser = new t4.t053heteroT4Parser(tstream);
     var ret = parser.a();    
-    expect(ret.tree.dynamic.toStringTree()).equals("a<V>");
+    expect(ret.tree.toStringTree(), equals("a<V>"));
   });
   
   test("testTokenRootWithListLabel_t053hetero", () {
@@ -100,7 +100,7 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t5.t053heteroT5Parser parser = new t5.t053heteroT5Parser(tstream);
     var ret = parser.a();    
-    expect(ret.tree.dynamic.toStringTree()).equals("a<V>");
+    expect(ret.tree.toStringTree(), equals("a<V>"));
   }); 
   
   test("testString_t053hetero", () {
@@ -109,7 +109,7 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t6.t053heteroT6Parser parser = new t6.t053heteroT6Parser(tstream);
     var ret = parser.a();    
-    expect(ret.tree.dynamic.toStringTree()).equals("begin<V>");
+    expect(ret.tree.toStringTree(), equals("begin<V>"));
   });
   
   test("testStringRoot_t053hetero", () {
@@ -118,7 +118,7 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t7.t053heteroT7Parser parser = new t7.t053heteroT7Parser(tstream);
     var ret = parser.a();    
-    expect(ret.tree.dynamic.toStringTree()).equals("begin<V>");
+    expect(ret.tree.toStringTree(), equals("begin<V>"));
   });
   
   test("testRewriteToken_t053hetero", () {
@@ -127,7 +127,7 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t8.t053heteroT8Parser parser = new t8.t053heteroT8Parser(tstream);
     var ret = parser.a();    
-    expect(ret.tree.dynamic.toStringTree()).equals("a<V>");
+    expect(ret.tree.toStringTree(), equals("a<V>"));
   });
   
   test("testrewritetokenwithargs_t053hetero", () {
@@ -136,7 +136,7 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t9.t053heteroT9Parser parser = new t9.t053heteroT9Parser(tstream);
     var ret = parser.a();    
-    expect(ret.tree.dynamic.toStringTree()).equals("<V>;421930 a<V>;9900");
+    expect(ret.tree.toStringTree(), equals("<V>;421930 a<V>;9900"));
   });
   
   test("testRewriteTokenRoot_t053hetero", () {
@@ -145,7 +145,7 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t10.t053heteroT10Parser parser = new t10.t053heteroT10Parser(tstream);
     var ret = parser.a();    
-    expect(ret.tree.dynamic.toStringTree()).equals("(a<V> 2)");
+    expect(ret.tree.toStringTree(), equals("(a<V> 2)"));
   });
   
   test("testRewriteString_t053hetero", () {
@@ -154,7 +154,7 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t11.t053heteroT11Parser parser = new t11.t053heteroT11Parser(tstream);
     var ret = parser.a();    
-    expect(ret.tree.dynamic.toStringTree()).equals("begin<V>");
+    expect(ret.tree.toStringTree(), equals("begin<V>"));
   });
   
   test("testRewriteStringRoot_t053hetero", () {
@@ -163,7 +163,7 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t12.t053heteroT12Parser parser = new t12.t053heteroT12Parser(tstream);
     var ret = parser.a();    
-    expect(ret.tree.dynamic.toStringTree()).equals("(begin<V> 2)");
+    expect(ret.tree.toStringTree(), equals("(begin<V> 2)"));
   });
   
   test("testTreeParserRewriteFlatList_t053hetero", () {
@@ -176,7 +176,7 @@ main() {
     nodes.tokenStream = tstream;
     tp13.t053heteroTP13 walker = new tp13.t053heteroTP13(nodes);
     ret = walker.a();
-    expect(ret.tree.dynamic.toStringTree()).equals("34<V> abc<W>");
+    expect(ret.tree.toStringTree(), equals("34<V> abc<W>"));
   });
   
   test("testTreeParserRewriteTree_t053hetero", () {
@@ -189,7 +189,7 @@ main() {
     nodes.tokenStream = tstream;
     tp14.t053heteroTP14 walker = new tp14.t053heteroTP14(nodes);
     ret = walker.a();
-    expect(ret.tree.dynamic.toStringTree()).equals("(34<V> abc<W>)");
+    expect(ret.tree.toStringTree(), equals("(34<V> abc<W>)"));
   });
   
   test("testTreeParserRewriteImaginary_t053hetero", () {
@@ -202,7 +202,7 @@ main() {
     nodes.tokenStream = tstream;
     tp15.t053heteroTP15 walker = new tp15.t053heteroTP15(nodes);
     ret = walker.a();
-    expect(ret.tree.dynamic.toStringTree()).equals("ROOT<V> abc");
+    expect(ret.tree.toStringTree(), equals("ROOT<V> abc"));
   });
   
   test("testTreeParserRewriteImaginaryWithArgs_t053hetero", () {
@@ -215,7 +215,7 @@ main() {
     nodes.tokenStream = tstream;
     tp16.t053heteroTP16 walker = new tp16.t053heteroTP16(nodes);
     ret = walker.a();
-    expect(ret.tree.dynamic.toStringTree()).equals("ROOT<V>;42 abc");
+    expect(ret.tree.toStringTree(), equals("ROOT<V>;42 abc"));
   });
   
   test("testTreeParserRewriteImaginaryRoot_t053hetero", () {
@@ -228,7 +228,7 @@ main() {
     nodes.tokenStream = tstream;
     tp17.t053heteroTP17 walker = new tp17.t053heteroTP17(nodes);
     ret = walker.a();
-    expect(ret.tree.dynamic.toStringTree()).equals("(ROOT<V> abc)");
+    expect(ret.tree.toStringTree(), equals("(ROOT<V> abc)"));
   });
   
   test("testTreeParserRewriteImaginaryFromReal_t053hetero", () {
@@ -241,7 +241,7 @@ main() {
     nodes.tokenStream = tstream;
     tp18.t053heteroTP18 walker = new tp18.t053heteroTP18(nodes);
     ret = walker.a();
-    expect(ret.tree.dynamic.toStringTree()).equals("ROOT<V>@1");
+    expect(ret.tree.toStringTree(), equals("ROOT<V>@1"));
   });
   
   test("testTreeParserAutoHeteroAST_t053hetero", () {
@@ -254,7 +254,7 @@ main() {
     nodes.tokenStream = tstream;
     tp.t053heteroTP walker = new tp.t053heteroTP(nodes);
     ret = walker.a();
-    expect(ret.tree.dynamic.toStringTree()).equals("abc<V> ;<V>");
+    expect(ret.tree.toStringTree(), equals("abc<V> ;<V>"));
   });
   
 }

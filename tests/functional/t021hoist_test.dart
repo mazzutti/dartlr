@@ -2,13 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t021hoist_test");
+library t021hoist_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t021hoistLexer.dart");
-#import("../out/t021hoistParser.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t021hoistLexer.dart";
+import "../out/t021hoistParser.dart";
 
 main() {  
   useVmConfiguration();
@@ -22,7 +23,7 @@ main() {
     parser.enableEnum = true;
     var enumIs = parser.stat();
     
-    expect(enumIs).equals("keyword");
+    expect(enumIs, equals("keyword"));
   });
   
   test("testValid2_t021hoist", () {
@@ -34,6 +35,6 @@ main() {
     parser.enableEnum = false;
     var enumIs = parser.stat();
     
-    expect(enumIs).equals("ID");
+    expect(enumIs, equals("ID"));
   });
 }

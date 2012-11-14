@@ -1,14 +1,16 @@
 // Copyright (c) 2012, the Dart project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-#library("dart:t030specialStates_test");
+library t030specialStates_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t030specialStatesLexer.dart");
-#import("../out/t030specialStatesParser.dart");
 
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t030specialStatesLexer.dart";
+import "../out/t030specialStatesParser.dart";
+
 
 main() {  
   useVmConfiguration();
@@ -20,7 +22,7 @@ main() {
     t030specialStatesParser parser = new t030specialStatesParser(tstream);
     int expected = parser.reportedErrors.length;
     parser.r();
-    expect(parser.reportedErrors.length).equals(expected);
+    expect(parser.reportedErrors.length, equals(expected));
   });
   
   test("testValid2_t030specialStates", () {
@@ -30,7 +32,7 @@ main() {
     t030specialStatesParser parser = new t030specialStatesParser(tstream);
     int expected = parser.reportedErrors.length;
     parser.r();
-    expect(parser.reportedErrors.length).equals(expected);
+    expect(parser.reportedErrors.length, equals(expected));
   });
   
   test("testValid3_t030specialStates", () {
@@ -41,7 +43,7 @@ main() {
     int expected = parser.reportedErrors.length;
     parser.cond = false;
     parser.r();
-    expect(parser.reportedErrors.length).equals(expected);
+    expect(parser.reportedErrors.length, equals(expected));
   });
   
   test("testValid4_t030specialStates", () {
@@ -52,6 +54,6 @@ main() {
     int expected = parser.reportedErrors.length;
     parser.cond = false;
     parser.r();
-    expect(parser.reportedErrors.length).equals(expected);
+    expect(parser.reportedErrors.length, equals(expected));
   });
 }

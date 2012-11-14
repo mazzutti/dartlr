@@ -2,13 +2,15 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t032subrulePredict_test");
+library t032subrulePredict_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t032subrulePredictLexer.dart");
-#import("../out/t032subrulePredictParser.dart");
-#import("../../src/DartLRLib.dart");
+
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t032subrulePredictLexer.dart";
+import "../out/t032subrulePredictParser.dart";
 
 main() {  
   useVmConfiguration();
@@ -21,6 +23,6 @@ main() {
     
     int expected = parser.reportedErrors.length;
     parser.a();
-    expect(parser.reportedErrors.length).equals(expected);
+    expect(parser.reportedErrors.length, equals(expected));
   });
 }

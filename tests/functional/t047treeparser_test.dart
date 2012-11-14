@@ -2,14 +2,15 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t047treeparser_test");
+library t047treeparser_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t047treeparserLexer.dart");
-#import("../out/t047treeparserParser.dart");
-#import("../out/t047treeparserWalker.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t047treeparserLexer.dart";
+import "../out/t047treeparserParser.dart";
+import "../out/t047treeparserWalker.dart";
 
 main() {  
   useVmConfiguration();
@@ -68,13 +69,13 @@ main() {
     t047treeparserParser parser = new t047treeparserParser(tstream); 
     
     var ret = parser.program();
-    expect(ret.tree.dynamic.toStringTree()).equals(xoutput);
+    expect(ret.tree.toStringTree(), equals(xoutput));
     
     var nodes = new CommonTreeNodeStream(ret.tree);
     nodes.tokenStream = tstream;
     var walker = new TWalker(nodes);
     walker.program();
-    expect(walker.traces).equalsCollection(traces);     
+    expect(walker.traces, equals(traces));     
   });
  
   test("testRuleLabelPropertyRefText_t047treeparser", () {
@@ -88,7 +89,7 @@ main() {
     nodes.tokenStream = tstream;
     var walker = new TWalker(nodes);
     var r = walker.variable();  
-    expect('c').equals(r);
+    expect('c', equals(r));
   });
 }
   

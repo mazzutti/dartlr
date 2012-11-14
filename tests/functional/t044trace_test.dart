@@ -2,13 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t044trace_test");
+library t044trace_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t044traceLexer.dart");
-#import("../out/t044traceParser.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t044traceLexer.dart";
+import "../out/t044traceParser.dart";
 
 main() {  
   useVmConfiguration();
@@ -32,8 +33,10 @@ main() {
     TParser parser = new TParser(tstream); 
     
     parser.a();
-    expect(lexer.traces).equalsCollection(lexerTraces);
-    expect(parser.traces).equalsCollection(parserTraces);  
+    print(lexerTraces);
+    print(lexer.traces);
+    expect(lexer.traces, equals(lexerTraces));
+    expect(parser.traces, equals(parserTraces));  
   });
   
 }
@@ -63,7 +66,7 @@ class TLexer extends t044traceLexer {
     this.traces = new List<String>();
   }
   
-  void traceIn(ruleName, ruleIndex, [Object inputSymbol]) {
+  @override void traceIn(ruleName, ruleIndex, [Object inputSymbol]) {
     this.traces.add(">$ruleName");
   }
   

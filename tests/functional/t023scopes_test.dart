@@ -2,13 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t023scopes_test");
+library t023scopes_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t023scopesLexer.dart");
-#import("../out/t023scopesParser.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t023scopesLexer.dart";
+import "../out/t023scopesParser.dart";
 
 main() {  
   useVmConfiguration();
@@ -21,7 +22,7 @@ main() {
 
     int expected = parser.reportedErrors.length;
     parser.prog();
-    expect(parser.reportedErrors.length).equals(expected);
+    expect(parser.reportedErrors.length, equals(expected));
   });
   
 }

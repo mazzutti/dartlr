@@ -2,13 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t017parser_test");
+library t017parser_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t017parserParser.dart");
-#import("../out/t017parserLexer.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t017parserParser.dart";
+import "../out/t017parserLexer.dart";
 
 main() {  
   useVmConfiguration();
@@ -20,7 +21,7 @@ main() {
     t017parserParser parser = new t017parserParser(tstream);
     
     parser.program();
-    expect(parser.reportedErrors.length).equals(0);    
+    expect(parser.reportedErrors.length,equals(0));    
   });
 
   test("testMalformedInput1_t017parser", () {
@@ -30,8 +31,8 @@ main() {
     t017parserParser parser = new t017parserParser(tstream);
 
     parser.program();
-    expect(parser.reportedErrors.length).equals(1);
-    expect(parser.reportedErrors[0].indexOf("line 1:16")).equals(0);
+    expect(parser.reportedErrors.length, equals(1));
+    expect(parser.reportedErrors[0].indexOf("line 1:16"), equals(0));
   });
   
 
@@ -42,10 +43,8 @@ main() {
     t017parserParser parser = new t017parserParser(tstream);
     
     parser.program();
-    expect(parser.reportedErrors.length).equals(2);
-    expect(parser.reportedErrors[0].indexOf("line 1:14")).equals(0);
-    expect(parser.reportedErrors[1].indexOf("line 1:20")).equals(0);
+    expect(parser.reportedErrors.length, equals(2));
+    expect(parser.reportedErrors[0].indexOf("line 1:14"), equals(0));
+    expect(parser.reportedErrors[1].indexOf("line 1:20"), equals(0));
   });
-  
- 
 }
