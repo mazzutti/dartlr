@@ -121,7 +121,7 @@ class <grammar.recognizerName> extends <@superClassName><superClass><@end> {
   
   String get grammarFileName => "<grammar.name>.g";
   
-  String getRecognizerClassName() => "<grammar.recognizerName>";
+  String get recognizerClassName => "<grammar.recognizerName>";
 <if(filterMode)>
   <filteringNextToken()>
 <endif>  
@@ -201,7 +201,7 @@ actionGate() ::= "this.state.backtracking == 0"
 
 filteringActionGate() ::= "this.state.backtracking == 1"
 
-delegatorImport(fileName) ::= "#import('<fileName>.dart');" 
+delegatorImport(fileName) ::= "import '<fileName>.dart';" 
 
 /** How to generate a parser */
 genericParser(grammar, name, scopes, tokens, tokenNames, rules, numRules,
@@ -954,7 +954,7 @@ this.matchSymbol(this.input, Token.UP, null);
 validateSemanticPredicate(pred,description) ::= <<
 if(!(<evalPredicate(pred,description)>)) {
   <ruleBacktrackFailure()>
-  throw new FailedPredicateException(input, "<ruleName>", @"<description>");
+  throw new FailedPredicateException(input, "<ruleName>", r"<description>");
 }
 >>
 
