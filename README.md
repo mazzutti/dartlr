@@ -151,11 +151,23 @@ This should create the files trivial.dart and trivial.tokens.
 	  lexer and parser generated to reflect your local path.
 	 
 	  More samples can be found in the tests folder.
+	 
+3. Make sure your pubspec.yaml includes a dependency to 'dartlr'
 
-3. Try out the results directly:
+   ```
+   dependencies:
+   	 dartlr:
+   	   # temporary url. This is going to change as soon tiagomzt
+   	   # has integrated the latest updates in his repository 
+   	   git: git@github.com:Gubaer/dartlr.git 	 
+   ```	 
+
+4. Try out the results directly:
 
  ```dart
- #import("path/to/DartLRLib.dart");
+ import "package:dartlr/dartlr.dart";
+ import "SomeLanguageLexer.dart";
+ import "SomeLanguageParser.dart";
 
   main() {
   
