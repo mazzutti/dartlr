@@ -176,7 +176,7 @@ Token nextToken() {
         this.emit();
         return this.state.token;
       }
-		}catch(RecognitionException re) {
+		} on RecognitionException catch(re) {
 		   this.reportError(re);
 		   this.recover(re);
 		}
@@ -364,7 +364,7 @@ bool <name>() {
   int start = this.input.mark();
   try {
     this.<name>_fragment(); // can never throw exception
-  } catch (RecognitionException re) {
+  } on RecognitionException catch(re) {
     print("impossible: $re");
   }
   bool success = !this.state.failed;
@@ -431,7 +431,7 @@ rule(ruleName,ruleDescriptor,block,emptyRule,description,exceptions,finally,memo
 <if(actions.(actionScope).rulecatch)>
   <actions.(actionScope).rulecatch>
 <else>
-  catch (RecognitionException re) {
+  on RecognitionException catch(re) {
     this.reportError(re);
     this.recover(re, this.input);
 	  <@setErrorReturnValue()>
@@ -1165,15 +1165,15 @@ static List\<List\<int\>\> get DFA<dfa.decisionNumber>_transition {
  *  state.
  */
 cyclicDFAState(decisionNumber,stateNumber,edges,needErrorClause,semPredState) ::= <<
-int LA<decisionNumber>_<stateNumber> = this.recognizer.dynamic.input.LA(1);<\n>
+int LA<decisionNumber>_<stateNumber> = this.recognizer.input.LA(1);<\n>
 <if(semPredState)> <! get next lookahead symbol to test edges, then rewind !>
-int index<decisionNumber>_<stateNumber> = this.recognizer.dynamic.input.index;
-this.recognizer.dynamic.input.rewind();<\n>
+int index<decisionNumber>_<stateNumber> = this.recognizer.input.index;
+this.recognizer.input.rewind();<\n>
 <endif>
 s = -1;
 <edges; separator="\nelse ">
 <if(semPredState)> <! return input cursor to state before we rewound !>
-this.recognizer.dynamic.input.seek(index<decisionNumber>_<stateNumber>);<\n>
+this.recognizer.input.seek(index<decisionNumber>_<stateNumber>);<\n>
 <endif>
 if(s>=0) return s;
 break;
@@ -1521,13 +1521,13 @@ class DFA<dfa.decisionNumber> extends DFA {
       <dfa.specialStateSTs:{state |case <i0> :<state>}; separator="\n">
     }
 <if(backtracking)>
-    if(this.recognizer.dynamic.state.backtracking > 0) {
-      this.recognizer.dynamic.state.failed = true; 
+    if(this.recognizer.state.backtracking > 0) {
+      this.recognizer.state.failed = true; 
       return -1;
     }
 <endif>
-    NoViableAltException nvae = new NoViableAltException(this.description, <dfa.decisionNumber>, _s, this.recognizer.dynamic.input);
-    this.recognizer.dynamic.error(nvae);
+    NoViableAltException nvae = new NoViableAltException(this.description, <dfa.decisionNumber>, _s, this.recognizer.input);
+    this.recognizer.error(nvae);
     throw nvae;
   }<\n>
 <endif>
