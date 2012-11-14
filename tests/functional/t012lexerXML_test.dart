@@ -2,12 +2,13 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t012lexerXML_test");
+library t012lexerXML_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t012lexerXML.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t012lexerXML.dart";
 
 main() {  
   useVmConfiguration();
@@ -86,7 +87,7 @@ main() {
       token = lexer.nextToken();
       if (token.type == Token.EOF) break;
     }
-    expect(lexer.output).equals(xmlOutput);
+    expect(lexer.output, equals(xmlOutput));
   });
   
   test("testMalformedInput1_t012lexerXML", () {
@@ -103,7 +104,7 @@ main() {
         break;
     }
     String expected = "line 4:0 no viable alternative at character '<EOF>'";
-    expect(lexer.reportedErrors.last()).equals(expected);
+    expect(lexer.reportedErrors.last(), equals(expected));
   });
   
   test("testMalformedInput2_t012lexerXML", () {
@@ -120,7 +121,7 @@ main() {
         break;
     }
     String expected = "line 1:20 no viable alternative at character '>'";
-    expect(lexer.reportedErrors.last()).equals(expected);
+    expect(lexer.reportedErrors.last(), equals(expected));
   });
 
   test("testMalformedInput3_t012lexerXML", () {
@@ -137,7 +138,7 @@ main() {
           break;
     }
     String expected = "line 4:0 no viable alternative at character '<EOF>'";
-    expect(lexer.reportedErrors.last()).equals(expected);
+    expect(lexer.reportedErrors.last(), equals(expected));
   });
 }
   

@@ -2,13 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t013parser_test");
+library t013parser_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t013parserParser.dart");
-#import("../out/t013parserLexer.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t013parserParser.dart";
+import "../out/t013parserLexer.dart";
 
 main() {  
   useVmConfiguration();
@@ -20,8 +21,8 @@ main() {
     t013parserParser parser = new t013parserParser(tstream);
    
     parser.document();
-    expect(0).equals(parser.reportedErrors.length);
-    expect(1).equals(parser.identifiers.length);    
+    expect(0, equals(parser.reportedErrors.length));
+    expect(1, equals(parser.identifiers.length));    
   });
   
   test('testMalformedInput_t013parser', () {
