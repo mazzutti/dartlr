@@ -2,12 +2,13 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t001lexer_test");
+library t001lexer_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t001lexer.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t001lexer.dart";
 
 main() {  
   useVmConfiguration();
@@ -17,10 +18,11 @@ main() {
     Lexer lexer = new t001lexer(stream);
     
     Token token = lexer.nextToken();   
-    expect(token.type).equals(t001lexer.ZERO);
+    print(token.text);
+    expect(token.type,equals(t001lexer.ZERO));
     
     token = lexer.nextToken();
-    expect(token.type).equals(t001lexer.EOF);
+    expect(token.type, equals(t001lexer.EOF));
   });
   
   test('testMalformedInput_t001lexer', () {
@@ -28,6 +30,6 @@ main() {
     Lexer lexer = new t001lexer(stream);
     Token token = lexer.nextToken();
     String expected = "line 1:0 mismatched character '1' expecting '0'";
-    expect(lexer.reportedErrors.last()).equals(expected);     
+    expect(lexer.reportedErrors.last(),equals(expected));     
   });
 }

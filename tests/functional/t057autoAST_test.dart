@@ -2,119 +2,120 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t057autoAST_test");
+library t057autoAST_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t057autoAST1Lexer.dart");
-#import("../out/t057autoAST1Parser.dart");
-#import("../out/t057autoAST2Lexer.dart");
-#import("../out/t057autoAST2Parser.dart");
-#import("../out/t057autoAST3Lexer.dart");
-#import("../out/t057autoAST3Parser.dart");
-#import("../out/t057autoAST4Lexer.dart");
-#import("../out/t057autoAST4Parser.dart");
-#import("../out/t057autoAST5Lexer.dart");
-#import("../out/t057autoAST5Parser.dart");
-#import("../out/t057autoAST6Lexer.dart");
-#import("../out/t057autoAST6Parser.dart");
-#import("../out/t057autoAST7Lexer.dart");
-#import("../out/t057autoAST7Parser.dart");
-#import("../out/t057autoAST8Lexer.dart");
-#import("../out/t057autoAST8Parser.dart");
-#import("../out/t057autoAST9Lexer.dart");
-#import("../out/t057autoAST9Parser.dart");
-#import("../out/t057autoAST10Lexer.dart");
-#import("../out/t057autoAST10Parser.dart");
-#import("../out/t057autoAST11Lexer.dart");
-#import("../out/t057autoAST11Parser.dart");
-#import("../out/t057autoAST12Lexer.dart");
-#import("../out/t057autoAST12Parser.dart");
-#import("../out/t057autoAST13Lexer.dart");
-#import("../out/t057autoAST13Parser.dart");
-#import("../out/t057autoAST14Lexer.dart");
-#import("../out/t057autoAST14Parser.dart");
-#import("../out/t057autoAST15Lexer.dart");
-#import("../out/t057autoAST15Parser.dart");
-#import("../out/t057autoAST16Lexer.dart");
-#import("../out/t057autoAST16Parser.dart");
-#import("../out/t057autoAST17Lexer.dart");
-#import("../out/t057autoAST17Parser.dart");
-#import("../out/t057autoAST18Lexer.dart");
-#import("../out/t057autoAST18Parser.dart");
-#import("../out/t057autoAST19Lexer.dart");
-#import("../out/t057autoAST19Parser.dart");
-#import("../out/t057autoAST20Lexer.dart");
-#import("../out/t057autoAST20Parser.dart");
-#import("../out/t057autoAST21Lexer.dart");
-#import("../out/t057autoAST21Parser.dart");
-#import("../out/t057autoAST22Lexer.dart");
-#import("../out/t057autoAST22Parser.dart");
-#import("../out/t057autoAST23Lexer.dart");
-#import("../out/t057autoAST23Parser.dart");
-#import("../out/t057autoAST24Lexer.dart");
-#import("../out/t057autoAST24Parser.dart");
-#import("../out/t057autoAST25Lexer.dart");
-#import("../out/t057autoAST25Parser.dart");
-#import("../out/t057autoAST26Lexer.dart");
-#import("../out/t057autoAST26Parser.dart");
-#import("../out/t057autoAST27Lexer.dart");
-#import("../out/t057autoAST27Parser.dart");
-#import("../out/t057autoAST28Lexer.dart");
-#import("../out/t057autoAST28Parser.dart");
-#import("../out/t057autoAST29Lexer.dart");
-#import("../out/t057autoAST29Parser.dart");
-#import("../out/t057autoAST30Lexer.dart");
-#import("../out/t057autoAST30Parser.dart");
-#import("../out/t057autoAST31Lexer.dart");
-#import("../out/t057autoAST31Parser.dart");
-#import("../out/t057autoAST32Lexer.dart");
-#import("../out/t057autoAST32Parser.dart");
-#import("../out/t057autoAST33Lexer.dart");
-#import("../out/t057autoAST33Parser.dart");
-#import("../out/t057autoAST34Lexer.dart");
-#import("../out/t057autoAST34Parser.dart");
-#import("../out/t057autoAST35Lexer.dart");
-#import("../out/t057autoAST35Parser.dart");
-#import("../out/t057autoAST36Lexer.dart");
-#import("../out/t057autoAST36Parser.dart");
-#import("../out/t057autoAST37Lexer.dart");
-#import("../out/t057autoAST37Parser.dart");
-#import("../out/t057autoAST38Lexer.dart");
-#import("../out/t057autoAST38Parser.dart");
-#import("../out/t057autoAST39Lexer.dart");
-#import("../out/t057autoAST39Parser.dart");
-#import("../out/t057autoAST40Lexer.dart");
-#import("../out/t057autoAST40Parser.dart");
-#import("../out/t057autoAST41Lexer.dart");
-#import("../out/t057autoAST41Parser.dart");
-#import("../out/t057autoAST42Lexer.dart");
-#import("../out/t057autoAST42Parser.dart");
-#import("../out/t057autoAST43Lexer.dart");
-#import("../out/t057autoAST43Parser.dart");
-#import("../out/t057autoAST44Lexer.dart");
-#import("../out/t057autoAST44Parser.dart");
-#import("../out/t057autoAST45Lexer.dart");
-#import("../out/t057autoAST45Parser.dart");
-#import("../out/t057autoAST46Lexer.dart");
-#import("../out/t057autoAST46Parser.dart");
-#import("../out/t057autoAST47Lexer.dart");
-#import("../out/t057autoAST47Parser.dart");
-#import("../out/t057autoAST48Lexer.dart");
-#import("../out/t057autoAST48Parser.dart");
-#import("../out/t057autoAST49Lexer.dart");
-#import("../out/t057autoAST49Parser.dart");
-#import("../out/t057autoAST50Lexer.dart");
-#import("../out/t057autoAST50Parser.dart");
-#import("../out/t057autoAST51Lexer.dart");
-#import("../out/t057autoAST51Parser.dart");
-#import("../out/t057autoAST52Lexer.dart");
-#import("../out/t057autoAST52Parser.dart");
-#import("../out/t057autoAST53Lexer.dart");
-#import("../out/t057autoAST53Parser.dart");
-#import("../out/t057autoAST54Lexer.dart");
-#import("../out/t057autoAST54Parser.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t057autoAST1Lexer.dart";
+import "../out/t057autoAST1Parser.dart";
+import "../out/t057autoAST2Lexer.dart";
+import "../out/t057autoAST2Parser.dart";
+import "../out/t057autoAST3Lexer.dart";
+import "../out/t057autoAST3Parser.dart";
+import "../out/t057autoAST4Lexer.dart";
+import "../out/t057autoAST4Parser.dart";
+import "../out/t057autoAST5Lexer.dart";
+import "../out/t057autoAST5Parser.dart";
+import "../out/t057autoAST6Lexer.dart";
+import "../out/t057autoAST6Parser.dart";
+import "../out/t057autoAST7Lexer.dart";
+import "../out/t057autoAST7Parser.dart";
+import "../out/t057autoAST8Lexer.dart";
+import "../out/t057autoAST8Parser.dart";
+import "../out/t057autoAST9Lexer.dart";
+import "../out/t057autoAST9Parser.dart";
+import "../out/t057autoAST10Lexer.dart";
+import "../out/t057autoAST10Parser.dart";
+import "../out/t057autoAST11Lexer.dart";
+import "../out/t057autoAST11Parser.dart";
+import "../out/t057autoAST12Lexer.dart";
+import "../out/t057autoAST12Parser.dart";
+import "../out/t057autoAST13Lexer.dart";
+import "../out/t057autoAST13Parser.dart";
+import "../out/t057autoAST14Lexer.dart";
+import "../out/t057autoAST14Parser.dart";
+import "../out/t057autoAST15Lexer.dart";
+import "../out/t057autoAST15Parser.dart";
+import "../out/t057autoAST16Lexer.dart";
+import "../out/t057autoAST16Parser.dart";
+import "../out/t057autoAST17Lexer.dart";
+import "../out/t057autoAST17Parser.dart";
+import "../out/t057autoAST18Lexer.dart";
+import "../out/t057autoAST18Parser.dart";
+import "../out/t057autoAST19Lexer.dart";
+import "../out/t057autoAST19Parser.dart";
+import "../out/t057autoAST20Lexer.dart";
+import "../out/t057autoAST20Parser.dart";
+import "../out/t057autoAST21Lexer.dart";
+import "../out/t057autoAST21Parser.dart";
+import "../out/t057autoAST22Lexer.dart";
+import "../out/t057autoAST22Parser.dart";
+import "../out/t057autoAST23Lexer.dart";
+import "../out/t057autoAST23Parser.dart";
+import "../out/t057autoAST24Lexer.dart";
+import "../out/t057autoAST24Parser.dart";
+import "../out/t057autoAST25Lexer.dart";
+import "../out/t057autoAST25Parser.dart";
+import "../out/t057autoAST26Lexer.dart";
+import "../out/t057autoAST26Parser.dart";
+import "../out/t057autoAST27Lexer.dart";
+import "../out/t057autoAST27Parser.dart";
+import "../out/t057autoAST28Lexer.dart";
+import "../out/t057autoAST28Parser.dart";
+import "../out/t057autoAST29Lexer.dart";
+import "../out/t057autoAST29Parser.dart";
+import "../out/t057autoAST30Lexer.dart";
+import "../out/t057autoAST30Parser.dart";
+import "../out/t057autoAST31Lexer.dart";
+import "../out/t057autoAST31Parser.dart";
+import "../out/t057autoAST32Lexer.dart";
+import "../out/t057autoAST32Parser.dart";
+import "../out/t057autoAST33Lexer.dart";
+import "../out/t057autoAST33Parser.dart";
+import "../out/t057autoAST34Lexer.dart";
+import "../out/t057autoAST34Parser.dart";
+import "../out/t057autoAST35Lexer.dart";
+import "../out/t057autoAST35Parser.dart";
+import "../out/t057autoAST36Lexer.dart";
+import "../out/t057autoAST36Parser.dart";
+import "../out/t057autoAST37Lexer.dart";
+import "../out/t057autoAST37Parser.dart";
+import "../out/t057autoAST38Lexer.dart";
+import "../out/t057autoAST38Parser.dart";
+import "../out/t057autoAST39Lexer.dart";
+import "../out/t057autoAST39Parser.dart";
+import "../out/t057autoAST40Lexer.dart";
+import "../out/t057autoAST40Parser.dart";
+import "../out/t057autoAST41Lexer.dart";
+import "../out/t057autoAST41Parser.dart";
+import "../out/t057autoAST42Lexer.dart";
+import "../out/t057autoAST42Parser.dart";
+import "../out/t057autoAST43Lexer.dart";
+import "../out/t057autoAST43Parser.dart";
+import "../out/t057autoAST44Lexer.dart";
+import "../out/t057autoAST44Parser.dart";
+import "../out/t057autoAST45Lexer.dart";
+import "../out/t057autoAST45Parser.dart";
+import "../out/t057autoAST46Lexer.dart";
+import "../out/t057autoAST46Parser.dart";
+import "../out/t057autoAST47Lexer.dart";
+import "../out/t057autoAST47Parser.dart";
+import "../out/t057autoAST48Lexer.dart";
+import "../out/t057autoAST48Parser.dart";
+import "../out/t057autoAST49Lexer.dart";
+import "../out/t057autoAST49Parser.dart";
+import "../out/t057autoAST50Lexer.dart";
+import "../out/t057autoAST50Parser.dart";
+import "../out/t057autoAST51Lexer.dart";
+import "../out/t057autoAST51Parser.dart";
+import "../out/t057autoAST52Lexer.dart";
+import "../out/t057autoAST52Parser.dart";
+import "../out/t057autoAST53Lexer.dart";
+import "../out/t057autoAST53Parser.dart";
+import "../out/t057autoAST54Lexer.dart";
+import "../out/t057autoAST54Parser.dart";
 
 main() {  
   useVmConfiguration();
@@ -125,8 +126,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST1Parser parser = new t057autoAST1Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("abc 34");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("abc 34"));
   });
   
   test("testTokenListInSingleAltBlock_t057autoAST", () {
@@ -135,8 +136,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST2Parser parser = new t057autoAST2Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("abc 34");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("abc 34"));
   });
   
   test("testSimpleRootAtOuterLevel_t057autoAST", () {
@@ -145,8 +146,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST3Parser parser = new t057autoAST3Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(abc 34)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(abc 34)"));
   });
   
   test("testSimpleRootAtOuterLevelReverse_t057autoAST", () {
@@ -155,8 +156,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST4Parser parser = new t057autoAST4Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(abc 34)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(abc 34)"));
   });
   
   test("testBang_t057autoAST", () {
@@ -165,8 +166,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST5Parser parser = new t057autoAST5Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("abc 4532");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("abc 4532"));
   });
   
   test("testOptionalThenRoot_t057autoAST", () {
@@ -175,8 +176,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST6Parser parser = new t057autoAST6Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(b a 1)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(b a 1)"));
   });
   
   test("testLabeledStringRoot_t057autoAST", () {
@@ -185,8 +186,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST7Parser parser = new t057autoAST7Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(void foo ;)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(void foo ;)"));
   });
   
   test("testWildcard_t057autoAST", () {
@@ -195,8 +196,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST8Parser parser = new t057autoAST8Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(void foo ;)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(void foo ;)"));
   });
   
   test("testWildcardRoot_t057autoAST", () {
@@ -205,8 +206,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST9Parser parser = new t057autoAST9Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(foo void ;)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(foo void ;)"));
   });
   
   test("testWildcardRootWithLabel_t057autoAST", () {
@@ -215,8 +216,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST10Parser parser = new t057autoAST10Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(foo void ;)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(foo void ;)"));
   });
   
   test("testWildcardRootWithListLabel_t057autoAST", () {
@@ -225,8 +226,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST11Parser parser = new t057autoAST11Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(foo void ;)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(foo void ;)"));
   });
   
   test("testRootRoot_t057autoAST", () {
@@ -235,8 +236,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST12Parser parser = new t057autoAST12Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(34 a c)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(34 a c)"));
   });
   
   test("testRootRoot2_t057autoAST", () {
@@ -245,8 +246,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST13Parser parser = new t057autoAST13Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(c (34 a))");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(c (34 a))"));
   });
   
   test("testRootThenRootInLoop_t057autoAST", () {
@@ -255,8 +256,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST14Parser parser = new t057autoAST14Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(* (* (a 34) b 9) c)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(* (* (a 34) b 9) c)"));
   });
   
   test("testNestedSubrule_t057autoAST", () {
@@ -265,8 +266,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST15Parser parser = new t057autoAST15Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("void a b ;");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("void a b ;"));
   });
   
   test("testInvokeRule_t057autoAST", () {
@@ -275,8 +276,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST16Parser parser = new t057autoAST16Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("int a");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("int a"));
   });
   
   test("testInvokeRuleAsRoot_t057autoAST", () {
@@ -285,8 +286,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST17Parser parser = new t057autoAST17Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(int a)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(int a)"));
   });
   
   test("testInvokeRuleAsRootWithLabel_t057autoAST", () {
@@ -295,8 +296,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST18Parser parser = new t057autoAST18Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(int a)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(int a)"));
   });
   
   test("testInvokeRuleAsRootWithListLabel_t057autoAST", () {
@@ -305,8 +306,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST19Parser parser = new t057autoAST19Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(int a)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(int a)"));
   });
   
   test("testRuleRootInLoop_t057autoAST", () {
@@ -315,8 +316,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST20Parser parser = new t057autoAST20Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(+ (+ (+ a b) c) d)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(+ (+ (+ a b) c) d)"));
   });
   
   test("testRuleInvocationRuleRootInLoop_t057autoAST", () {
@@ -325,8 +326,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST21Parser parser = new t057autoAST21Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(- (+ (+ a b) c) d)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(- (+ (+ a b) c) d)"));
   });
   
   test("testTailRecursion_t057autoAST", () {
@@ -335,8 +336,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST22Parser parser = new t057autoAST22Parser(tstream);
     var ret = parser.s();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(exp 3 (exp 4 5))");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(exp 3 (exp 4 5))"));
   });
   
   test("testSet_t057autoAST", () {
@@ -345,8 +346,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST23Parser parser = new t057autoAST23Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("abc");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("abc"));
   });
   
   test("testSetRoot_t057autoAST", () {
@@ -355,8 +356,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST24Parser parser = new t057autoAST24Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(+ abc)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(+ abc)"));
   });
   
   test("testSetRootWithLabel_t057autoAST", () {
@@ -365,8 +366,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST25Parser parser = new t057autoAST25Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(+ abc)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(+ abc)"));
   });
   
   test("testSetAsRuleRootInLoop_t057autoAST", () {
@@ -375,8 +376,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST26Parser parser = new t057autoAST26Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(- (+ a b) c)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(- (+ a b) c)"));
   });
   
   test("testNotSet_t057autoAST", () {
@@ -385,8 +386,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST27Parser parser = new t057autoAST27Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("34 + 2");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("34 + 2"));
   });
   
 
@@ -396,8 +397,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST28Parser parser = new t057autoAST28Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("34 + 2");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("34 + 2"));
   });
   
   test("testNotSetWithListLabel_t057autoAST", () {
@@ -406,8 +407,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST29Parser parser = new t057autoAST29Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("34 + 2");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("34 + 2"));
   });
   
   test("testNotSetRoot_t057autoAST", () {
@@ -416,8 +417,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST30Parser parser = new t057autoAST30Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(34 55)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(34 55)"));
   });
   
   test("testNotSetRootWithLabel_t057autoAST", () {
@@ -426,8 +427,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST31Parser parser = new t057autoAST31Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(34 55)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(34 55)"));
   });
   
   test("testNotSetRootWithListLabel_t057autoAST", () {
@@ -436,8 +437,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST32Parser parser = new t057autoAST32Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(34 55)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(34 55)"));
   });
   
   test("testNotSetRuleRootInLoop_t057autoAST", () {
@@ -446,8 +447,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST33Parser parser = new t057autoAST33Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(+ (+ 3 4) 5)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(+ (+ 3 4) 5)"));
   });
   
   test("testTokenLabelReuse_t057autoAST", () {
@@ -456,8 +457,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST34Parser parser = new t057autoAST34Parser(tstream);
     var ret = parser.a();
-    String out = "${ret.result}${ret.tree.dynamic.toStringTree()}";
-    expect(out).equals("2nd id=b;a b");
+    String out = "${ret.result}${ret.tree.toStringTree()}";
+    expect(out, equals("2nd id=b;a b"));
   });
   
   test("testTokenLabelReuse2_t057autoAST", () {
@@ -466,8 +467,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST35Parser parser = new t057autoAST35Parser(tstream);
     var ret = parser.a();
-    String out = "${ret.result}${ret.tree.dynamic.toStringTree()}";
-    expect(out).equals("2nd id=b,(b a)");
+    String out = "${ret.result}${ret.tree.toStringTree()}";
+    expect(out, equals("2nd id=b,(b a)"));
   });
   
   test("testTokenListLabelReuse_t057autoAST", () {
@@ -476,8 +477,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST36Parser parser = new t057autoAST36Parser(tstream);
     var ret = parser.a();
-    String out = "${ret.result}${ret.tree.dynamic.toStringTree()}";
-    expect(out).equals("id list=[a,b,],a b");
+    String out = "${ret.result}${ret.tree.toStringTree()}";
+    expect(out, equals("id list=[a,b,],a b"));
   });
   
   test("testTokenListLabelReuse2_t057autoAST", () {
@@ -486,8 +487,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST37Parser parser = new t057autoAST37Parser(tstream);
     var ret = parser.a();
-    String out = "${ret.result}${ret.tree.dynamic.toStringTree()}";
-    expect(out).equals("id list=[a,b,],(a b)");
+    String out = "${ret.result}${ret.tree.toStringTree()}";
+    expect(out, equals("id list=[a,b,],(a b)"));
   });
   
   test("testTokenListLabelReuse2_t057autoAST", () {
@@ -496,8 +497,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST38Parser parser = new t057autoAST38Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("a");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("a"));
   });
   
   test("testTokenListLabelBang_t057autoAST", () {
@@ -506,7 +507,7 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST39Parser parser = new t057autoAST39Parser(tstream);
     var ret = parser.a();
-    expect(ret.tree).isNull();
+    expect(ret.tree, equals(null));
   });
   
   test("testRuleListLabel_t057autoAST", () {
@@ -515,8 +516,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST40Parser parser = new t057autoAST40Parser(tstream);
     var ret = parser.a();
-    String out = "${ret.result}${ret.tree.dynamic.toStringTree()}";
-    expect(out).equals("2nd x=b,a b");
+    String out = "${ret.result}${ret.tree.toStringTree()}";
+    expect(out, equals("2nd x=b,a b"));
   });
   
   test("testRuleListLabelRuleRoot_t057autoAST", () {
@@ -525,8 +526,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST41Parser parser = new t057autoAST41Parser(tstream);
     var ret = parser.a();
-    String out = "${ret.result}${ret.tree.dynamic.toStringTree()}";
-    expect(out).equals("x=(b a),(b a)");
+    String out = "${ret.result}${ret.tree.toStringTree()}";
+    expect(out, equals("x=(b a),(b a)"));
   });
   
   test("testRuleListLabelBang_t057autoAST", () {
@@ -535,8 +536,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST42Parser parser = new t057autoAST42Parser(tstream);
     var ret = parser.a();
-    String out = "${ret.result}${ret.tree.dynamic.toStringTree()}";
-    expect(out).equals("1st x=a,b");
+    String out = "${ret.result}${ret.tree.toStringTree()}";
+    expect(out, equals("1st x=a,b"));
   });
   
   test("testComplicatedMelange_t057autoAST", () {
@@ -545,8 +546,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST43Parser parser = new t057autoAST43Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("a b b c c d");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("a b b c c d"));
   });
   
   test("testReturnValueWithAST_t057autoAST", () {
@@ -555,8 +556,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST44Parser parser = new t057autoAST44Parser(tstream);
     var ret = parser.a();
-    String out = "${ret.result}${ret.tree.dynamic.toStringTree()}";
-    expect(out).equals("34\nabc 34");
+    String out = "${ret.result}${ret.tree.toStringTree()}";
+    expect(out, equals("34\nabc 34"));
   });
   
   test("testReturnValueWithAST_t057autoAST", () {
@@ -565,8 +566,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST44Parser parser = new t057autoAST44Parser(tstream);
     var ret = parser.a();
-    String out = "${ret.result}${ret.tree.dynamic.toStringTree()}";
-    expect(out).equals("34\nabc 34");
+    String out = "${ret.result}${ret.tree.toStringTree()}";
+    expect(out, equals("34\nabc 34"));
   });
   
   test("testSetLoop_t057autoAST", () {
@@ -575,8 +576,8 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST45Parser parser = new t057autoAST45Parser(tstream);
     var ret = parser.r();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("abc 34 d");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("abc 34 d"));
   });
   
   test("testExtraTokenInSimpleDecl_t057autoAST", () {
@@ -585,10 +586,10 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST46Parser parser = new t057autoAST46Parser(tstream);
     var ret = parser.decl();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(int x 1)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(int x 1)"));
     List<String> expected = ["line 1:4 extraneous input '34' expecting ID"];
-    expect(parser.reportedErrors).equalsCollection(expected);
+    expect(parser.reportedErrors, equals(expected));
   });
   
   test("testMissingIDInSimpleDecl_t057autoAST", () {
@@ -597,10 +598,10 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST47Parser parser = new t057autoAST47Parser(tstream);
     var ret = parser.decl();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(int <missing ID> 1)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(int <missing ID> 1)"));
     List<String> expected = ["line 1:4 missing ID at '='"];
-    expect(parser.reportedErrors).equalsCollection(expected);
+    expect(parser.reportedErrors, equals(expected));
   });
   
   test("testMissingSetInSimpleDecl_t057autoAST", () {
@@ -609,10 +610,10 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST48Parser parser = new t057autoAST48Parser(tstream);
     var ret = parser.decl();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("(<error: x> x 1)");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("(<error: x> x 1)"));
     List<String> expected = ["line 1:0 mismatched input 'x' expecting set null"];
-    expect(parser.reportedErrors).equalsCollection(expected);
+    expect(parser.reportedErrors, equals(expected));
   });
   
   test("testMissingTokenGivesErrorNode_t057autoAST", () {
@@ -621,10 +622,10 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST49Parser parser = new t057autoAST49Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("abc <missing INT>");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("abc <missing INT>"));
     List<String> expected = ["line 1:3 missing INT at '<EOF>'"];
-    expect(parser.reportedErrors).equalsCollection(expected);
+    expect(parser.reportedErrors, equals(expected));
   });
   
   test("testMissingTokenGivesErrorNodeInInvokedRule_t057autoAST", () {
@@ -633,10 +634,10 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST50Parser parser = new t057autoAST50Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("<mismatched token: [@1,3:3='<EOF>',<-1>,1:3], resync=abc>");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("<mismatched token: [@1,3:3='<EOF>',<-1>,1:3], resync=abc>"));
     List<String> expected = ["line 1:3 mismatched input '<EOF>' expecting INT"];
-    expect(parser.reportedErrors).equalsCollection(expected);
+    expect(parser.reportedErrors, equals(expected));
   });
   
   test("testExtraTokenGivesErrorNode_t057autoAST", () {
@@ -645,10 +646,10 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST51Parser parser = new t057autoAST51Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("abc 34");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("abc 34"));
     List<String> expected = ["line 1:4 extraneous input 'ick' expecting INT"];
-    expect(parser.reportedErrors).equalsCollection(expected);
+    expect(parser.reportedErrors, equals(expected));
   });
   
   test("testMissingFirstTokenGivesErrorNode_t057autoAST", () {
@@ -657,10 +658,10 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST52Parser parser = new t057autoAST52Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("<missing ID> 34");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("<missing ID> 34"));
     List<String> expected = ["line 1:0 missing ID at '34'"];
-    expect(parser.reportedErrors).equalsCollection(expected);
+    expect(parser.reportedErrors, equals(expected));
   });
   
   test("testMissingFirstTokenGivesErrorNode2_t057autoAST", () {
@@ -669,10 +670,10 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST53Parser parser = new t057autoAST53Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("<missing ID> 34");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("<missing ID> 34"));
     List<String> expected = ["line 1:0 missing ID at '34'"];
-    expect(parser.reportedErrors).equalsCollection(expected);
+    expect(parser.reportedErrors, equals(expected));
   });
   
   test("testNoViableAltGivesErrorNode_t057autoAST", () {
@@ -681,10 +682,10 @@ main() {
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t057autoAST54Parser parser = new t057autoAST54Parser(tstream);
     var ret = parser.a();
-    String out = ret.tree.dynamic.toStringTree();
-    expect(out).equals("<unexpected: [@0,0:0='*',<6>,1:0], resync=*>");
+    String out = ret.tree.toStringTree();
+    expect(out, equals("<unexpected: [@0,0:0='*',<6>,1:0], resync=*>"));
     List<String> expected = ["line 1:0 no viable alternative at input '*'"];
-    expect(parser.reportedErrors).equalsCollection(expected);
+    expect(parser.reportedErrors, equals(expected));
   });
   
 }

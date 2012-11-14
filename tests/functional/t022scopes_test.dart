@@ -2,13 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t022scopes_test");
+library t022scopes_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t022scopesLexer.dart");
-#import("../out/t022scopesParser.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t022scopesLexer.dart";
+import "../out/t022scopesParser.dart";
 
 main() {  
   useVmConfiguration();
@@ -31,7 +32,7 @@ main() {
     
     parser.b(false);
     String expected = "line 1:0 no viable alternative at input 'foobar'";
-    expect(parser.reportedErrors.last()).equals(expected);
+    expect(parser.reportedErrors.last(), equals(expected));
   });
 
   test("testb2_t022scopes", () {
@@ -42,7 +43,7 @@ main() {
     
     int expected = parser.reportedErrors.length;
     parser.b(true);
-    expect(parser.reportedErrors.length).equals(expected);
+    expect(parser.reportedErrors.length, equals(expected));
   });
 
   test("testc1_t022scopes", () {
@@ -60,8 +61,8 @@ main() {
     t022scopesParser parser = new t022scopesParser(tstream);
 
     Map symbols = parser.c();
-    expect(symbols["i"]).isTrue();
-    expect(symbols["j"]).isTrue();
+    expect(symbols["i"], equals(true));
+    expect(symbols["j"], equals(true));
   });
 
   test("testc2_t022scopes", () {
@@ -81,8 +82,8 @@ main() {
     try {
       parser.c();
       Expect.fail("shouldn't get here");
-    } catch(var e) {
-      expect(e.toString()).equals("Exception: x");      
+    } catch(e) {
+      expect(e.toString(), equals("Exception: x"));      
     }
   });
 
@@ -106,8 +107,8 @@ main() {
     t022scopesParser parser = new t022scopesParser(tstream);
 
     Map symbols = parser.d();
-    expect(symbols["i"]).isTrue();
-    expect(symbols["j"]).isTrue();
+    expect(symbols["i"], equals(true));
+    expect(symbols["j"], equals(true));
   });
 
   test("teste1_t022scopes", () {
@@ -118,7 +119,7 @@ main() {
     t022scopesParser parser = new t022scopesParser(tstream);
 
     int res = parser.e();
-    expect(res).equals(12);
+    expect(res, equals(12));
   });
 
   test("testf1_t022scopes", () {
@@ -129,7 +130,7 @@ main() {
     t022scopesParser parser = new t022scopesParser(tstream);
 
     var res = parser.f();
-    expect(res).isNull();
+    expect(res, equals(null));
   });
   
   test("testf2_t022scopes", () {
@@ -140,6 +141,6 @@ main() {
     t022scopesParser parser = new t022scopesParser(tstream);
 
     var res = parser.f();
-    expect(res).isNull();
+    expect(res, equals(null));
   });
 }

@@ -45,7 +45,7 @@
 	];<\n>
 <if(grammar.grammarIsRoot)> <! grammar imports other grammar(s) !>
   int _ruleLevel = 0;
-  int get ruleLevel() => this._ruleLevel;
+  int get ruleLevel => this._ruleLevel;
   void incRuleLevel() { this._ruleLevel++; }
   void decRuleLevel() {this._ruleLevel--;}<\n>
 <if(profile)>
@@ -55,7 +55,7 @@
 <endif>
 <ctorForPredefinedListener()>
 <else> <! imported grammar !>
-  int get ruleLevel() =>  <grammar.delegators:{g| <g:delegateName()>}>.ruleLevel;
+  int get ruleLevel =>  <grammar.delegators:{g| <g:delegateName()>}>.ruleLevel;
   void incRuleLevel() {<grammar.delegators:{g| <g:delegateName()>}>.incRuleLevel();}
   void decRuleLevel() {<grammar.delegators:{g| <g:delegateName()>}>.decRuleLevel();}
   <ctorForDelegateGrammar()>
@@ -90,7 +90,7 @@ ctorForRootGrammar() ::= <<
   <createListenerAndHandshake()>
   <if(cyclicDFAs)>this.dfas = new Map\<String, DFA\>();<endif>
   <cyclicDFAs:createDFA()>
-  this.debugListener.dynamic.handshake();
+  this.debugListener.handshake();
 }<\n><\n>
 >>
 
@@ -223,8 +223,7 @@ dfaDecision(decisionNumber,description) ::= <<
 try {
   isCyclicDecision = true;
   <super.dfaDecision(...)>
-}
-catch (NoViableAltException nvae) {
+} on NoViableAltException catch(nvae) {
   this.debugListener.recognitionException(nvae);
   throw nvae;
 }
@@ -238,5 +237,5 @@ void error(NoViableAltException nvae) {
 
 /** Force predicate validation to trigger an event */
 evalPredicate(pred,description) ::= <<
-this._evalPredicate(<pred>,@"<description>")
+this._evalPredicate(<pred>,r"<description>")
 >>

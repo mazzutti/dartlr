@@ -2,13 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t035ruleLabelPropertyRef_test");
+library t035ruleLabelPropertyRef_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t035ruleLabelPropertyRefLexer.dart");
-#import("../out/t035ruleLabelPropertyRefParser.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t035ruleLabelPropertyRefLexer.dart";
+import "../out/t035ruleLabelPropertyRefParser.dart";
 
 main() {  
   useVmConfiguration();
@@ -20,9 +21,9 @@ main() {
     t035ruleLabelPropertyRefParser parser = new t035ruleLabelPropertyRefParser(tstream); 
     
     List a = parser.a();
-    expect(a[0].tokenIndex).equals(1);
-    expect(a[1].tokenIndex).equals(7);
-    expect(a[2]).equals("a a a a");
+    expect(a[0].tokenIndex, equals(1));
+    expect(a[1].tokenIndex, equals(7));
+    expect(a[2], equals("a a a a"));
   });
   
 }

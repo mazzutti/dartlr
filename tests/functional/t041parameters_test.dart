@@ -2,13 +2,15 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t041parameters_test");
+library t041parameters_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t041parametersLexer.dart");
-#import("../out/t041parametersParser.dart");
-#import("../../src/DartLRLib.dart");
+
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t041parametersLexer.dart";
+import "../out/t041parametersParser.dart";
 
 main() {  
   useVmConfiguration();
@@ -20,7 +22,7 @@ main() {
     t041parametersParser parser = new t041parametersParser(tstream); 
     
     var ret = parser.a("foo", "bar");
-    expect(ret).equalsCollection(["foo", "bar"]);   
+    expect(ret, equals(["foo", "bar"]));   
   });
   
 }

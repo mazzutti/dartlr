@@ -2,13 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t039labels_test");
+library t039labels_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t039labelsLexer.dart");
-#import("../out/t039labelsParser.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t039labelsLexer.dart";
+import "../out/t039labelsParser.dart";
 
 main() {  
   useVmConfiguration();
@@ -25,8 +26,8 @@ main() {
     List<String> a = new List<String>();
     for(Token t in ids)
       a.add(t.text);
-    expect(a).equalsCollection(["a", "b", "c", "1", "2", "A"]);
-    expect(w.text).equals("GNU1");
+    expect(a, equals(["a", "b", "c", "1", "2", "A"]));
+    expect(w.text, equals("GNU1"));
     
   });
 

@@ -9,7 +9,7 @@ prog returns [List events]
 @after {events.add('after');}
     :   ID {throw new Exception("quux");}
     ;
-    catch [var e] {events.add('catch');}
+    catch [e] {events.add('catch');}
     finally {events.add('finally');}
 
 ID  :   ('a'..'z')+

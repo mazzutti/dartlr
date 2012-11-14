@@ -2,13 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t018llstar_test");
+library t018llstar_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t018llstarParser.dart");
-#import("../out/t018llstarLexer.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t018llstarParser.dart";
+import "../out/t018llstarLexer.dart";
 
 main() {  
   useVmConfiguration();
@@ -39,7 +40,7 @@ main() {
     t018llstarParser parser = new t018llstarParser(tstream);
 
     parser.program();
-    expect(xoutput).equalsCollection(xoutput);
+    expect(xoutput, equals(xoutput));
   });
  
 }

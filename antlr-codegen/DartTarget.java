@@ -92,10 +92,10 @@ public class DartTarget extends Target {
 			st.remove("predicates");
 			predicates = ((String) predicates).replaceFirst("this.", "");
 			if(((String) predicates).charAt(0) == '!')
-				predicates = "!this.recognizer.dynamic." + 
+				predicates = "!this.recognizer." + 
 			                          ((String) predicates).substring(1);
 			else
-				predicates  = "this.recognizer.dynamic." + predicates;
+				predicates  = "this.recognizer." + predicates;
 			st.add("predicates", predicates);
 		}
 	}
@@ -120,10 +120,10 @@ public class DartTarget extends Target {
 				String str = p.toString();
 				str = str.replaceFirst("this.", "");
 				if(str.charAt(0) == '!')
-					newPreds.add("!this.recognizer.dynamic." 
+					newPreds.add("!this.recognizer." 
 				                               + str.substring(1));
 				else
-					newPreds.add("this.recognizer.dynamic." + str);										
+					newPreds.add("this.recognizer." + str);										
 			}					
 			st.remove("pred");
 			st.add("pred", newPreds);

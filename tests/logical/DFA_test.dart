@@ -2,11 +2,11 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:DFA_test");
+library DFA_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
 
 main() {  
   useVmConfiguration();
@@ -137,7 +137,7 @@ main() {
     Iterator<List<int>> it = expectedIntLists.iterator();
     for(String encodedString in  encodedStrings) {
       List<int> unpackedList = DFA.unpackEncodedString(encodedString);
-      expect(unpackedList).equalsCollection(it.next());
+      expect(unpackedList, equals(it.next()));
     }
   });
   
@@ -146,8 +146,7 @@ main() {
     for(String encodedString in  encodedStrings) {
       List<int> unpackedList = 
           DFA.unpackEncodedStringToUnsignedChars(encodedString);
-      expect(unpackedList).equalsCollection(it.next());
+      expect(unpackedList, equals(it.next()));
     }
-  }); 
- 
+  });  
 }

@@ -2,13 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t036multipleReturnValues_test");
+library t036multipleReturnValues_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t036multipleReturnValuesLexer.dart");
-#import("../out/t036multipleReturnValuesParser.dart");
-#import("../../src/DartLRLib.dart");
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t036multipleReturnValuesLexer.dart";
+import "../out/t036multipleReturnValuesParser.dart";
 
 main() {  
   useVmConfiguration();
@@ -20,8 +21,8 @@ main() {
     t036multipleReturnValuesParser parser = new t036multipleReturnValuesParser(tstream); 
     
     var ret = parser.a();
-    expect(ret.foo).equals("foo");
-    expect(ret.bar).equals("bar");
+    expect(ret.foo, equals("foo"));
+    expect(ret.bar, equals("bar"));
   });
   
 }

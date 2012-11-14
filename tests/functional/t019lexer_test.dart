@@ -2,12 +2,14 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-#library("dart:t019lexer_test");
+library t019lexer_test;
 
-#import("../../lib/unittest/unittest.dart");
-#import("../../lib/unittest/vm_config.dart");
-#import("../out/t019lexer.dart");
-#import("../../src/DartLRLib.dart");
+
+import "package:unittest/unittest.dart";
+import "package:dartlr/vm_config.dart";
+import "package:dartlr/dartlr.dart";
+
+import "../out/t019lexer.dart";
 
 main() {  
   useVmConfiguration();
@@ -34,6 +36,6 @@ main() {
     ANTLRStringStream cstream = new ANTLRStringStream(xinput);
     t019lexer lexer = new t019lexer(cstream);
     CommonTokenStream tstream = new CommonTokenStream(lexer);
-    expect(tstream.getNumberOfOnChannelTokens()).equals(42);
+    expect(tstream.numberOfOnChannelTokens, equals(42));
   }); 
 }
