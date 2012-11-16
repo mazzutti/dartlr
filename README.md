@@ -39,19 +39,6 @@ In order to use dartlr you have to create a custom antlr3 build. In contrast to
 other languages code generation for Dart isn't part of the standard antlr3 code
 repository yet.
 
-## Get stringtemplate4 
-  * Download the jar file for stringtemplate4
-
-  ```
-  wget http://www.stringtemplate.org/download/ST-4.0.6.jar
-  ```
-
-  * Add it to the classpath, i.e. add the following line to your .bashrc
-
-  ```
-  # replace /path/to with the local path where you put ST-{x,y,y}.jar
-  export CLASSPATH=/path/to/ST-4.0.6.jar:$CLASSPATH
-  ```
 
 ## Get antlr3 and build it 
   * Clone it from github
@@ -72,7 +59,7 @@ repository yet.
   ```
   cd antlr 
   mvn -N install
-  mvn -Dmaven.test.skip=true
+  mvn -Dmaven.test.skip=true package assembly:assembly
   ```
   If the third step fails, run it again. 
 
@@ -89,10 +76,10 @@ repository yet.
 ## Build again
 
    ```
-   mvn -Dmaven.test.skip=true
+   mvn -Dmaven.test.skip=true package assembly:assembly
    ```    
 
-This should create the file tool/target/antlr-3.4.1-SNAPSHOT.jar which includes support for
+This should create the file tool/target/antlr-master-3.4.1-SNAPSHOT-completejar.jar which includes support for
 Dart code generation.
 
 ## Test it
@@ -137,26 +124,31 @@ This should create the files trivial.dart and trivial.tokens.
    generate output:
    
    ```
-   java -jar path/to/antlr3.jar SomeLanguage.g
+   $ java -jar path/to/antlr-3.4.1-with-dart.jar [OPTIONS] lang.g
    # creates:
-   #   SomeLanguageParser.dart
-   #   SomeLanguageLexer.dart
-   #   SomeLanguage.tokens
+   #   langParser.dart
+   #   langLexer.dart
+   #   lang.tokens
    ```
+   
+   alternatively, you can do:
+   
+   ``` 
+   $ export CLASSPATH=path/to/antlr-3.4.1-with-dart.jar:$CLASSPATH
+   
+   $ java org.antlr.Tool [OPTIONS] $grammar
 
-   NOTES: Probably you will need to edit the `#import` directive in the 
+   NOTES: Probably you will need to edit the `import` `part` and `part of` directives in the 
 	  lexer and parser generated to reflect your local path.
 	 
-	  More samples can be found in the tests folder.
+	  More samples can be found in the test folder.
 	 
 3. Make sure your pubspec.yaml includes a dependency to 'dartlr'
 
    ```
    dependencies:
    	 dartlr:
-   	   # temporary url. This is going to change as soon tiagomzt
-   	   # has integrated the latest updates in his repository 
-   	   git: git@github.com:Gubaer/dartlr.git 	 
+   	   git: git@github.com:tiagomazzutti/dartlr.git 	 
    ```	 
 
 4. Try out the results directly:

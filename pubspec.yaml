@@ -8,8 +8,11 @@ authors:
 - Tiago Mazzutti <tiagomzt@gmail.com>
 - Karl Guggisberg <karl.guggisberg@guggis.ch>
 
-homepage: git://github.com/tiagomazzutti/dartlr.git
+homepage: https://github.com/tiagomazzutti/dartlr.git
   
 dependencies:
   unittest:
     sdk: unittest
+  meta:
+    sdk: meta
+    
