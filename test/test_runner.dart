@@ -61,6 +61,7 @@ import "functional/t056lexer_test.dart" as t056lexer;
 import "functional/t057autoAST_test.dart" as t057autoAST;
 import "functional/t058rewriteAST_test.dart" as t058rewriteAST;
 import "functional/t059debug_test.dart" as t059debug;
+import "functional/t100parser.dart" as t100parser;
 
 //logical tests
 import "logical/dfa_test.dart" as dfa;
@@ -123,6 +124,7 @@ class TestRunner {
     t057autoAST.main();
     t058rewriteAST.main();
     t059debug.main();
+    t100parser.main();
     
     dfa.main();
     bitSet.main();    

@@ -124,12 +124,12 @@ public class DartTarget extends Target {
 	@SuppressWarnings({ "rawtypes"})
 	private void adjustePred(ST st, Grammar grammar) {
 		List preds;
-		this.adjustLeftRigthEvalPred((ST) st.getAttribute("left"), grammar);
-		this.adjustLeftRigthEvalPred((ST) st.getAttribute("right"), grammar);
 		if(st != null) {
+			adjustLeftRigthEvalPred((ST) st.getAttribute("left"), grammar);
+			adjustLeftRigthEvalPred((ST) st.getAttribute("right"), grammar);
+
 			preds = (List) st.getAttribute("pred");									
-			if(preds != null)
-				this.replacePred(preds, st, grammar);			
+			if(preds != null) replacePred(preds, st, grammar);			
 		}
 	}
 	
