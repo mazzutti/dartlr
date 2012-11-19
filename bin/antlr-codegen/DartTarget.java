@@ -219,6 +219,14 @@ public class DartTarget extends Target {
 		return name;
     }
     
+    public String getTargetStringLiteralFromANTLRStringLiteral(CodeGenerator generator, String literal) {       	
+        String ret = super.getTargetStringLiteralFromANTLRStringLiteral(generator, literal);
+        // in Dart we have to escape '$' in order to disable expression evaluation
+        // in strings 
+        ret = ret.replace("$", "\\$");
+        return ret;
+    }
+
     public String getTargetStringLiteralFromString
                                       (String s, boolean quoted) {
 		if(s == null) return null;		
