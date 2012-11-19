@@ -72,3 +72,4 @@ _adaptor = new CommonTreeAdaptor();
 >>
 
 @rewriteElement.pregen() ::= "debugListener.location(<e.line>,<e.pos>);"
+

@@ -217,8 +217,8 @@ class TokenRewriteStream extends CommonTokenStream {
         bool same = prevRop.index == rop.index && prevRop.lastIndex == rop.lastIndex;
         if (prevRop.text == null && rop.text == null && !disjoint) {
           rewrites[prevRop.instructionIndex] =  null;
-          rop.index = min(prevRop.index, rop.index);
-          rop.lastIndex = max(prevRop.lastIndex, rop.lastIndex);
+          rop.index = math.min(prevRop.index, rop.index);
+          rop.lastIndex = math.max(prevRop.lastIndex, rop.lastIndex);
         }
         else if (!disjoint && !same)
           throw new ArgumentError("replace op "

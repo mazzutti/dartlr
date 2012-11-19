@@ -49,7 +49,7 @@ class Profiler extends BlankDebugEventListener {
     stats.numRuleInvocations++;
     _uniqueRules.add("$grammarFileName:$ruleName");
     stats.maxRuleInvocationDepth = 
-        max(stats.maxRuleInvocationDepth, _ruleLevel);
+        math.max(stats.maxRuleInvocationDepth, _ruleLevel);
     _currentGrammarFileName.add( grammarFileName );
     _currentRuleName.add( ruleName );
   }
@@ -124,7 +124,7 @@ class Profiler extends BlankDebugEventListener {
     int numHidden = getNumberOfHiddenTokens(d.startIndex, lastTokenIndex);
     int depth = lastTokenIndex - d.startIndex - numHidden + 1;
     d.k = depth;
-    d.decision.maxk = max(d.decision.maxk, depth);
+    d.decision.maxk = math.max(d.decision.maxk, depth);
 
     if(dump) 
       print("exitDecision $decisionNumber in ${d.decision.ruleName}"

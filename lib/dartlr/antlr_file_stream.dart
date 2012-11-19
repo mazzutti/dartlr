@@ -23,8 +23,7 @@ class ANTLRFileStream extends ANTLRStringStream {
   void load([Encoding encoding]) {
     if (_fileName == null ) return;
     File f = new File(_fileName);   
-    String data = f.readAsTextSync(encoding);
-    _data = data.charCodes;
-    _n = data.length;   
+    _data = f.readAsBytesSync();
+    _n = _data.length;   
   }   
 }

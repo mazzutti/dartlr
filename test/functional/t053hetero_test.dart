@@ -53,14 +53,14 @@ part "../out/t053heteroTLexer.dart";
 part "../out/t053heteroTP.dart";
 part "../out/t053heteroTParser.dart";
 
-part "../out/v15_common_tree.dart";
-part "../out/v16_common_tree.dart";
-part "../out/v17_common_tree.dart";
-part "../out/v18_common_tree.dart";
-part "../out/v2_common_tree.dart";
-part "../out/vx_common_tree.dart";
-part "../out/v_common_tree.dart";
-part "../out/w_common_tree.dart";
+part "../test-data/v15_common_tree.dart";
+part "../test-data/v16_common_tree.dart";
+part "../test-data/v17_common_tree.dart";
+part "../test-data/v18_common_tree.dart";
+part "../test-data/v2_common_tree.dart";
+part "../test-data/vx_common_tree.dart";
+part "../test-data/v_common_tree.dart";
+part "../test-data/w_common_tree.dart";
 
 
 main() {  
