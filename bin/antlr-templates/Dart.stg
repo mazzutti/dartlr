@@ -1455,8 +1455,8 @@ class DFA_<grammar.recognizerName>_<dfa.decisionNumber> extends DFA {
     decisionNumber = <dfa.decisionNumber>;
     eot = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_eot;
     eof = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_eof;
-    min_ = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_min;
-    max_ = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_max;
+    min = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_min;
+    max = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_max;
     accept = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_accept;
     special = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_special;
     transition = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_transition;
@@ -1494,4 +1494,5 @@ class DFA_<grammar.recognizerName>_<dfa.decisionNumber> extends DFA {
 <endif>
 }<\n>
 >>
+
 

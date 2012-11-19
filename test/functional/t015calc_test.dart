@@ -4,7 +4,7 @@
 
 library dartlr_tests;
 
-import "dart:math";
+import "dart:math" as math;
 import "package:unittest/unittest.dart";
 import "package:dartlr/dartlr.dart";
 

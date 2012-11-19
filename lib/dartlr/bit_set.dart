@@ -55,7 +55,7 @@ class BitSet implements Cloneable {
   * bit is the element that must fit in set
   */
   void growToInclude(int bit) {
-    int newSize = max(_bits.length << 1, _numWordsToHold(bit));
+    int newSize = math.max(_bits.length << 1, _numWordsToHold(bit));
     List<int> newbits = new List<int>(newSize);
     Arrays.copy(_bits, 0, newbits, 0, _bits.length);
     _bits = newbits;
@@ -65,7 +65,7 @@ class BitSet implements Cloneable {
     if (a == null) return;   
     if (a.bits.length > _bits.length)
       _setSize(a.bits.length);   
-    int min = min(bits.length, a.bits.length);
+    int min = math.min(bits.length, a.bits.length);
     for (int i = min - 1; i >= 0; i--)
            _bits[i] |= a.bits[i];   
   }
@@ -76,7 +76,7 @@ class BitSet implements Cloneable {
   */
   void _setSize(int nwords) {
     List<int> newbits = new List<int>(nwords);
-    int n = min(nwords, _bits.length);
+    int n = math.min(nwords, _bits.length);
     Arrays.copy(_bits, 0, newbits, 0, n);
     for(int i = _bits.length; i < newbits.length; i++)
       newbits[i] = 0;
@@ -104,7 +104,7 @@ class BitSet implements Cloneable {
 
   bool operator ==(Object other) {
     if ( other == null || !(other is BitSet)) return false;
-    int n = min(bits.length, other.bits.length);    
+    int n = math.min(bits.length, other.bits.length);    
     for (int i = 0; i < n; i++)
       if (bits[i] != other.bits[i])
         return false;
@@ -191,7 +191,7 @@ class BitSet implements Cloneable {
       s.add(a);
       return s;
     } else if (b != null && c == null && d == null){
-      BitSet s = new BitSet(max(a,b) + 1);
+      BitSet s = new BitSet(math.max(a,b) + 1);
       s.add(a);
       s.add(b);
       return s;
