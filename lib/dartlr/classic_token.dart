@@ -6,69 +6,30 @@ part of dartlr;
 
 class ClassicToken implements Token {
   
-  String _text;
-  int _type;
-  int _line;
-  int _charPositionInLine;
-  int _channel = DEFAULT_CHANNEL;
+  String text;
+  int type;
+  int line;
+  int charPositionInLine;
+  int channel = DEFAULT_CHANNEL;
+  int tokenIndex;
   
-  /** What token number is this from 0..n-1 tokens */
-  int _index;
-
-  ClassicToken(this._type, [this._text, this._channel]);
+  ClassicToken(this.type, [this.text, this.channel]);
 
   ClassicToken.fromToken(Token oldToken) {
-    _text = oldToken.text;
-    _type = oldToken.type;
-    _line = oldToken.line;
-    _charPositionInLine = oldToken.charPositionInLine;
-    _channel = oldToken.channel;
+    text = oldToken.text;
+    type = oldToken.type;
+    line = oldToken.line;
+    charPositionInLine = oldToken.charPositionInLine;
+    channel = oldToken.channel;
   }
-
-  int get type => _type;
-  
-  int get line => _line;
-  
-  int get channel => _channel;
-  
-  int get tokenIndex => _index;
   
   CharStream get inputStream => null;
-  
-  String get text => _text;
-
-  void set line(int line) {
-    _line = line;
-  } 
-
-  void set text(String text) {
-    _text = text;
-  }  
-
-  int get charPositionInLine => _charPositionInLine;
-  
-  void set charPositionInLine(int charPositionInLine) {
-    _charPositionInLine = charPositionInLine;
-  } 
-
-  void set channel(int channel) {
-    _channel = channel;
-  }
-
-  void set type(int type) {
-    _type = type;
-  }
-
-  void set tokenIndex(int index) {
-    _index = index;
-  } 
-
   void set inputStream(CharStream input) {}
   
   String toString() {
     String channelStr = "";
-    if (_channel > 0)
-      channelStr = ",channel=${_channel}";  
+    if (channel > 0)
+      channelStr = ",channel=${channel}";  
     String txt = text;
     if (txt != null ) {
       txt = txt.replaceAll("\n","\\\\n");
@@ -81,5 +42,5 @@ class ClassicToken implements Token {
       "$channelStr,${line}:${charPositionInLine}]";
   }
   
-  int get hashCode => _type + _line + _charPositionInLine;
+  int get hashCode => type + line + charPositionInLine;
 }

@@ -25,13 +25,7 @@ class TreeWizard {
   TreeAdaptor _adaptor;
   Map _tokenNameToTypeMap;  
 
-  static Set _INDEX_ALL;
-  
-  static Set get  INDEX_ALL {
-    if(_INDEX_ALL == null)
-      _INDEX_ALL = new HashSet();
-    return _INDEX_ALL;
-  }
+  static final Set INDEX_ALL = new HashSet();  
 
   TreeWizard(this._adaptor, [tokenNames]) {
     if(tokenNames is Map)  
@@ -68,14 +62,14 @@ class TreeWizard {
    *  more efficient.  Returns Map<int, List> where the List is
    *  of your AST node type.  The int is the token type of the node.
    */
-  Map index(Object t) {
+  Map index(t) {
     Map m = new HashMap();
     _index(t, m);
     return m;
   }
 
   /** Do the work for index */
-  void _index(Object t, Map m) {
+  void _index(t, Map m) {
     if (t == null) return; 
     int type = _adaptor.getType(t);
     List elements = m[type];
@@ -86,20 +80,20 @@ class TreeWizard {
     elements.add(t);
     int n = _adaptor.getChildCount(t);
     for (int i = 0; i < n; i++) {
-      Object child = _adaptor.getChild(t, i);
+      var child = _adaptor.getChild(t, i);
       _index(child, m);
     }
   }
 
   /** Return a List of tree nodes with token type ttype */
-  List find(Object t, int type) {
+  List find(t, int type) {
     final List nodes = new List();
     visit(t, type, new TreeWizardVisitor());
     return nodes;
   }
 
   /** Return a List of subtrees matching pattern. */
-  List findWithPattern(Object t, String pattern) {
+  List findWithPattern(t, String pattern) {
     final List subtrees = new List();
     TreePatternLexer tokenizer = new TreePatternLexer(pattern);
     TreePatternParser parser = 
@@ -114,25 +108,25 @@ class TreeWizard {
     return subtrees;
   }
 
-  Object findFirst(Object t, type) => null;
+  findFirst(t, type) => null;
 
   /** Visit every ttype node in t, invoking the visitor.  This is a quicker
    *  version of the general visit(t, pattern) method.  The labels arg
    *  of the visitor action method is never set (it's null) since using
    *  a token type rather than a pattern doesn't let us set a label.
    */
-  void visit(Object t, int ttype, ContextVisitor visitor) {
+  void visit(t, int ttype, ContextVisitor visitor) {
     _visit(t, null, 0, ttype, visitor);
   }
 
   /** Do the recursive work for visit */
-  void _visit(Object t, Object parent, int childIndex, int ttype, ContextVisitor visitor) {
+  void _visit(t, parent, int childIndex, int ttype, ContextVisitor visitor) {
     if (t == null) return;
     if (_adaptor.getType(t) == ttype)
       visitor.visit(t, parent, childIndex, null);
     int n = _adaptor.getChildCount(t);
     for (int i = 0; i < n; i++) {
-      Object child = _adaptor.getChild(t, i);
+      var child = _adaptor.getChild(t, i);
       _visit(child, t, i, ttype, visitor);
     }
   }
@@ -142,7 +136,7 @@ class TreeWizard {
   *  with visit(t, ttype, visitor) so nil-rooted patterns are not allowed.
   *  Patterns with wildcard roots are also not allowed.
   */
-  void visitWithPattern(Object t, final String pattern, final ContextVisitor visitor) {
+  void visitWithPattern(t, final String pattern, final ContextVisitor visitor) {
     TreePatternLexer tokenizer = new TreePatternLexer(pattern);
     TreePatternParser parser =
       new TreePatternParser(tokenizer, this, new TreePatternTreeAdaptor());
@@ -154,7 +148,7 @@ class TreeWizard {
     visit(t, rootTokenType, new _TreeWizardContextVisitorVisit(this, visitor, tpattern));      
   }
 
-  bool parseWithLabels(Object t, String pattern, Map labels) {
+  bool parseWithLabels(t, String pattern, Map labels) {
     TreePatternLexer tokenizer = new TreePatternLexer(pattern);
     TreePatternParser parser =
       new TreePatternParser(tokenizer, this, new TreePatternTreeAdaptor());
@@ -172,7 +166,7 @@ class TreeWizard {
    *  If a node specifies a text arg in pattern, then that must match
    *  for that node in t.
    */
-  bool parse(Object t, String pattern) {
+  bool parse(t, String pattern) {
     return parseWithLabels(t, pattern, null);
   }
 
@@ -181,7 +175,7 @@ class TreeWizard {
    *  text arguments on nodes.  Fill labels map with pointers to nodes
    *  in tree matched against nodes in pattern with labels.
    */
-  bool _parse(Object t1, TreePattern tpattern, Map labels) {   
+  bool _parse(t1, TreePattern tpattern, Map labels) {   
     if (t1 == null || tpattern == null) return false;
     if (tpattern.runtimeType.toString() != "WildcardTreePattern") {
       if (_adaptor.getType(t1) != tpattern.type) return false;
@@ -191,10 +185,10 @@ class TreeWizard {
     if ((tpattern.label != null) && (labels != null))
       labels[tpattern.label] =  t1;
     int n1 = _adaptor.getChildCount(t1);
-    int n2 = tpattern.getChildCount();
+    int n2 = tpattern.childCount;
     if (n1 != n2) return false;
     for (int i=0; i<n1; i++) {
-      Object child1 = _adaptor.getChild(t1, i);
+      var child1 = _adaptor.getChild(t1, i);
       TreePattern child2 = tpattern.getChild(i);
       if (!_parse(child1, child2, labels) ) {
         return false;
@@ -216,10 +210,10 @@ class TreeWizard {
   *  nil is a special name meaning "give me a nil node".  Useful for
   *  making lists: (nil A B C) is a list of A B C.
   */
-  Object create(String pattern) {
+  create(String pattern) {
     TreePatternLexer tokenizer = new TreePatternLexer(pattern);
     TreePatternParser parser = new TreePatternParser(tokenizer, this, _adaptor);
-    Object t = parser.pattern();
+    var t = parser.pattern();
     return t;
   }
 
@@ -227,18 +221,18 @@ class TreeWizard {
    *  The trees are examined in their entirety so that (A B) does not match
    *  (A B C) nor (A (B C)). 
    */
-  static bool equals(Object t1, Object t2, TreeAdaptor adaptor) {
+  static bool equals(t1, t2, TreeAdaptor adaptor) {
     return _equals(t1, t2, adaptor);
   }
 
   /** Compare type, structure, and text of two trees, assuming adaptor in
    *  this instance of a TreeWizard.
    */
-  bool areEquals(Object t1, Object t2) {
+  bool areEquals(t1, t2) {
     return _equals(t1, t2, _adaptor);
   }
 
-  static bool _equals(Object t1, Object t2, TreeAdaptor adaptor) {    
+  static bool _equals(t1, t2, TreeAdaptor adaptor) {    
     if (t1 == null || t2 == null) return false;
     if (adaptor.getType(t1) != adaptor.getType(t2)) return false;
     if (!(adaptor.getText(t1) == adaptor.getText(t2)))
@@ -247,8 +241,8 @@ class TreeWizard {
     int n2 = adaptor.getChildCount(t2);
     if (n1 != n2) return false;
     for (int i=0; i<n1; i++) {
-      Object child1 = adaptor.getChild(t1, i);
-      Object child2 = adaptor.getChild(t2, i);
+      var child1 = adaptor.getChild(t1, i);
+      var child2 = adaptor.getChild(t2, i);
       if (!_equals(child1, child2, adaptor))
         return false;
     }
@@ -257,22 +251,17 @@ class TreeWizard {
 }
 
 abstract class ContextVisitor {   
-    void visit(Object t, Object parent, int childIndex, Map labels);    
+    void visit(t, parent, int childIndex, Map labels);    
 }
 
-abstract class Visitor implements ContextVisitor {
-    
-  void visit(Object t, Object parent, 
-           int childIndex, Map l) {
-    _visit(t);
-  }
-  
-  void _visit(Object t);
+abstract class Visitor implements ContextVisitor {    
+  void visit(t, parent, int childIndex, Map l) => _visit(t);
+  void _visit(t);
 }
 
 class TreeWizardVisitor extends Visitor {
   
-  void _visit(Object t, [List nodes]) {
+  void _visit(t, [List nodes]) {
     if(nodes != null) nodes.add(t);
   }  
 }
@@ -285,7 +274,7 @@ class _TreeWizardContextVisitorVisit implements ContextVisitor {
   
   _TreeWizardContextVisitorVisit(this._tw, this._visitor, this._tpattern);  
   
-  void visit(Object t, Object parent, int childIndex, Map labels) {
+  void visit(t, parent, int childIndex, Map labels) {
     labels.clear();
     if (_tw._parse(t, _tpattern, labels)) {
       _visitor.visit(t, parent, childIndex, labels);
@@ -301,7 +290,7 @@ class _TreeWizardContextVisitorSubTrees implements ContextVisitor {
   
   _TreeWizardContextVisitorSubTrees(this._tw, this._tpattern, this._subtrees);
   
-  void visit(Object t, Object parent, int childIndex, Map labels) {
+  void visit(t, parent, int childIndex, Map labels) {
     if (_tw._parse(t, _tpattern, null))
       _subtrees.add(t);
   }
@@ -335,7 +324,7 @@ class WildcardTreePattern extends TreePattern {
 /** This adaptor creates TreePattern objects for use during scan() */
 class TreePatternTreeAdaptor extends CommonTreeAdaptor {
   
-  Object createTreeNode(Token payload) {
+  createTreeNode(Token payload) {
     return new TreePattern(payload);
   }
   

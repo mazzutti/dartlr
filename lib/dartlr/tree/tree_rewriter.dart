@@ -16,7 +16,7 @@ class TreeRewriter extends TreeParser {
    _originalTokenStream =_input.tokenStream;        
   }
 
-  Object applyOnce(Object t, TreeRewriter_fptr whichRule) {
+  applyOnce(t, TreeRewriter_fptr whichRule) {
     if (t == null) return null;
     try {
       state = new RecognizerSharedState();
@@ -36,17 +36,17 @@ class TreeRewriter extends TreeParser {
     return t;
   }
 
-  Object applyRepeatedly(Object t, TreeRewriter_fptr whichRule) {
+  applyRepeatedly(t, TreeRewriter_fptr whichRule) {
     bool treeChanged = true;
     while (treeChanged  ) {
-      Object u =applyOnce(t, whichRule);
+      var u =applyOnce(t, whichRule);
       treeChanged = !(t == u);
       t = u;
     }
     return t;
   }
 
-  Object downup(Object t, [bool showTransformations]) {
+  downup(t, [bool showTransformations]) {
     if(showTransformations)
    _showTransformations = showTransformations;
     TreeVisitor v = new TreeVisitor(new CommonTreeAdaptor());
@@ -55,18 +55,18 @@ class TreeRewriter extends TreeParser {
     return t;
   }
 
-  void reportTransformation(Object oldTree, Object newTree) {
+  void reportTransformation(oldTree, newTree) {
     print("${(oldTree as Tree).toStringTree()} -> ${(newTree as Tree).toStringTree()}");
   }
 
-  Object topdown() =>  null;
+  topdown() =>  null;
   
-  Object bottomup() => null;
+  bottomup() => null;
   
 }
 
 abstract class TreeRewriter_fptr {
-  Object rule(); 
+  rule(); 
 }
 
 class _TreeRewriterTopdown_fptr implements TreeRewriter_fptr {
@@ -75,7 +75,7 @@ class _TreeRewriterTopdown_fptr implements TreeRewriter_fptr {
   
   _TreeRewriterTopdown_fptr(this._tr);
   
-  Object rule() =>_tr.topdown(); 
+  rule() =>_tr.topdown(); 
   
 }
 
@@ -85,7 +85,7 @@ class _TreeRewriterBottomup_ftpr implements TreeRewriter_fptr {
   
   _TreeRewriterBottomup_ftpr(this._tr);
   
-  Object rule() =>_tr.bottomup(); 
+  rule() =>_tr.bottomup(); 
   
 }
 
@@ -95,9 +95,9 @@ class _TreeRewriterTreeVisitorAction implements TreeVisitorAction {
   
   _TreeRewriterTreeVisitorAction(this._tr);
   
-  Object pre(Object t) =>_tr.applyOnce(t, new _TreeRewriterTopdown_fptr(_tr));
+  pre(t) =>_tr.applyOnce(t, new _TreeRewriterTopdown_fptr(_tr));
   
-  Object post(Object t) =>_tr.applyRepeatedly(t, new _TreeRewriterBottomup_ftpr(_tr)); 
+  post(t) =>_tr.applyRepeatedly(t, new _TreeRewriterBottomup_ftpr(_tr)); 
   
 }
 

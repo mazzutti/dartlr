@@ -15,32 +15,32 @@ class TreePatternParser {
     _ttype = _tokenizer.nextToken();
   }
 
-  Object pattern() {
+  pattern() {
     if (_ttype == TreePatternLexer.BEGIN)
       return parseTree();
     else if (_ttype == TreePatternLexer.ID) {
-      Object node = parseNode();
+      var node = parseNode();
       if (_ttype == TreePatternLexer.EOF)
         return node;
     }
   }
 
-  Object parseTree() {
+  parseTree() {
     if (_ttype != TreePatternLexer.BEGIN) 
       throw new Exception("no BEGIN");
     _ttype = _tokenizer.nextToken();
-    Object root = parseNode();
+    var root = parseNode();
     if (root == null) return null; 
     while (_ttype == TreePatternLexer.BEGIN ||
         _ttype == TreePatternLexer.ID ||
         _ttype == TreePatternLexer.PERCENT ||
         _ttype == TreePatternLexer.DOT) {
       if (_ttype == TreePatternLexer.BEGIN) {
-        Object subtree = parseTree();
+        var subtree = parseTree();
         _adaptor.addChild(root, subtree);
       }
       else {
-        Object child = parseNode();
+        var child = parseNode();
         if (child == null) return null;
         _adaptor.addChild(root, child);
       }
@@ -51,7 +51,7 @@ class TreePatternParser {
     return root;
   }
 
-  Object parseNode() {
+  parseNode() {
     String label = null;
     if (_ttype == TreePatternLexer.PERCENT) {     
       _ttype = _tokenizer.nextToken();
@@ -83,7 +83,7 @@ class TreePatternParser {
     }
     int treeNodeType = _wizard.getTokenType(tokenName);
     if (treeNodeType == Token.INVALID_TOKEN_TYPE) return null;
-    Object node;
+    var node;
     node = _adaptor.createFromTokenType(treeNodeType, text);
     if (label != null && node.runtimeType.toString() ==  "TreePattern")
       (node as TreePattern).label = label;

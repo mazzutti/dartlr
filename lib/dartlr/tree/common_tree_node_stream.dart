@@ -10,14 +10,16 @@ class CommonTreeNodeStream extends LookaheadStream<Object> implements TreeNodeSt
   static final int INITIAL_CALL_STACK_SIZE = 10;
 
   /** Pull nodes from which tree? */
-  Object _root;
+  var _root;
   
   /** If this tree (root) was created from a token stream, track it. */
-  TokenStream _tokens;
+  TokenStream tokenStream;
   
   /** What tree adaptor was used to build these trees */
-  TreeAdaptor adaptor;
+  TreeAdaptor treeAdaptor;
   
+  bool uniqueNavigationNodes;
+    
   /** The tree iterator we using */
   TreeIterator _it;
   
@@ -30,10 +32,10 @@ class CommonTreeNodeStream extends LookaheadStream<Object> implements TreeNodeSt
   /** Tracks tree depth.  Level=0 means we're at root node level. */
   int _level = 0;
 
-  CommonTreeNodeStream(this._root, [this.adaptor]) {
-    if(adaptor == null) 
-      adaptor = new CommonTreeAdaptor();
-    _it = new TreeIterator(_root, adaptor);
+  CommonTreeNodeStream(this._root, [this.treeAdaptor]) {
+    if(treeAdaptor == null) 
+      treeAdaptor = new CommonTreeAdaptor();
+    _it = new TreeIterator(_root, treeAdaptor);
   }
 
   void reset() {
@@ -47,8 +49,8 @@ class CommonTreeNodeStream extends LookaheadStream<Object> implements TreeNodeSt
   /** Pull elements from tree iterator.  Track tree level 0..max_level.
   *  If nil rooted tree, don't give initial nil and DOWN nor final UP.
   */
-  Object nextElement() {
-    Object t = _it.next();   
+  nextElement() {
+    var t = _it.next();   
     if (t == _it.up) {
       _level--;
       if (_level == 0 && _hasNilRoot) 
@@ -56,7 +58,7 @@ class CommonTreeNodeStream extends LookaheadStream<Object> implements TreeNodeSt
     }
     else if (t == _it.down) 
       _level++;
-    if (_level == 0 && adaptor.isNil(t)) { 
+    if (_level == 0 && treeAdaptor.isNil(t)) { 
       _hasNilRoot = true;
       t = _it.next();
       _level++;
@@ -65,32 +67,19 @@ class CommonTreeNodeStream extends LookaheadStream<Object> implements TreeNodeSt
     return t;
   }
 
-  bool isEOF(Object o) => adaptor.getType(o) == Token.EOF;
+  bool isEOF(o) => treeAdaptor.getType(o) == Token.EOF;
 
-  void set uniqueNavigationNodes(bool uniqueNavigationNodes){}
-
-  Object get treeSource => _root;
+  get treeSource => _root;
   
   String get sourceName => tokenStream.sourceName;
-  
-  TokenStream get tokenStream => _tokens;
-  
-  void set tokenStream(TokenStream tokens) { 
-    _tokens = tokens; 
-  }
-  
-  TreeAdaptor get treeAdaptor => adaptor;
-  
-  void set treeAdaptor(TreeAdaptor a) { 
-    adaptor = a; 
-  }
+    
 
-  Object at(int i) {
+  at(int i) {
     throw new UnsupportedError(
       "Absolute node indexes are meaningless in an unbuffered stream");
   }
 
-  int LA(int i) => adaptor.getType(LT(i));
+  int LA(int i) => treeAdaptor.getType(LT(i));
   
   
   /** Make stream jump to a new location, saving old location.
@@ -112,25 +101,25 @@ class CommonTreeNodeStream extends LookaheadStream<Object> implements TreeNodeSt
     return ret;
   }
 
-  void replaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t) {
+  void replaceChildren(parent, int startChildIndex, int stopChildIndex, t) {
     if (parent != null)
-      adaptor.replaceChildren(parent, startChildIndex, stopChildIndex, t);
+      treeAdaptor.replaceChildren(parent, startChildIndex, stopChildIndex, t);
   }
 
-  String toString([Object start, Object stop]) => "n/a";
+  String toString([start, stop]) => "n/a";
 
   /** For debugging; destructive: moves tree iterator to end. */
   String toTokenTypeString() {
     reset();
     StringBuffer buf = new StringBuffer();
-    Object o = LT(1);
-    int type = adaptor.getType(o);
+    var o = LT(1);
+    int type = treeAdaptor.getType(o);
     while (type != Token.EOF) {
         buf.add(" ");
         buf.add(type);
         consume();
         o = LT(1);
-        type = adaptor.getType(o);
+        type = treeAdaptor.getType(o);
     }
     return buf.toString();
   }

@@ -13,21 +13,21 @@ abstract class TreeAdaptor {
    *
    *  Override if you want another kind of node to be built.
    */
-  Object createTreeNode(Token payload);
+  createTreeNode(Token payload);
 
   /** Duplicate a single tree node.
    *  Override if you want another kind of node to be built.
    */
-  Object dupNode(Object treeNode);
+  dupNode(treeNode);
 
   /** Duplicate tree recursively, using dupNode() for each node */
-  Object dupTree(Object tree);
+  dupTree(tree);
 
   /** Return a nil node (an empty but non-null node) that can hold
    *  a list of element as the children.  If you want a flat tree (a list)
    *  use "t=adaptor.nil(); t.addChild(x); t.addChild(y);"
    */
-  Object nil();
+  nil();
   
   /** Return a tree node representing an error.  This node records the
    *  tokens consumed during error recovery.  The start token indicates the
@@ -43,10 +43,10 @@ abstract class TreeAdaptor {
    *  Tree parsing should happen only when parsing and tree construction
    *  succeed.
    */
-  Object errorNode(TokenStream input, Token start, Token stop, RecognitionException e);
+  errorNode(TokenStream input, Token start, Token stop, RecognitionException e);
 
   /** Is tree considered a nil node used to make lists of child nodes? */
-  bool isNil(Object tree);
+  bool isNil(tree);
 
   /** Add a child to the tree t.  If child is a flat tree (a list), make all
    *  in list children of t.  Warning: if t has no children, but child does
@@ -55,7 +55,7 @@ abstract class TreeAdaptor {
    *  make sure that this is consistent with have the user will build
    *  ASTs.  Do nothing if t or child is null.
    */
-  void addChild(Object t, Object child);
+  void addChild(t, child);
 
   /** If oldRoot is a nil root, just copy or move the children to newRoot.
    *  If not a nil root, make oldRoot a child of newRoot.
@@ -83,7 +83,7 @@ abstract class TreeAdaptor {
    *  constructing these nodes so we should have this control for
    *  efficiency.
    */
-  Object becomeRoot(Object newRoot, Object oldRoot);
+  becomeRoot(newRoot, oldRoot);
 
   /** Given the root of the subtree created for this rule, post process
    *  it to do any simplifications or whatever you want.  A required
@@ -98,7 +98,7 @@ abstract class TreeAdaptor {
    *  This method is executed after all rule tree construction and right
    *  before setTokenBoundaries().
    */
-  Object rulePostProcessing(Object root);
+  rulePostProcessing(root);
 
   /** For identifying trees.
   *
@@ -106,9 +106,9 @@ abstract class TreeAdaptor {
   *  Even becomeRoot is an issue.  <node>.hashCode() 
   *  usually.
   */
-  int getUniqueID(Object node);
+  int getUniqueID(node);
 
-  Object becomeRootFormToken(Token newRoot, Object oldRoot); 
+  becomeRootFormToken(Token newRoot, oldRoot); 
 
   /** Create a new node derived from a token, with a new token type.
    *  This is invoked from an imaginary node ref on right side of a
@@ -116,7 +116,7 @@ abstract class TreeAdaptor {
    *
    *  This should invoke createToken(Token).
    */
-  Object create(int tokenType, Token fromToken, [String text]);
+  create(int tokenType, Token fromToken, [String text]);
 
   /** Create a new node derived from a token, with a new token type.
    *  This is invoked from an imaginary node ref on right side of a
@@ -124,20 +124,20 @@ abstract class TreeAdaptor {
    *
    *  This should invoke createToken(int,String).
    */
-  Object createFromTokenType(int tokenType, String text);
+  createFromTokenType(int tokenType, String text);
 
   /** For tree parsing, I need to know the token type of a node */
-  int getType(Object t);
+  int getType(t);
 
   /** Node constructors can set the type of a node */
-  void setType(Object t, int type);
+  void setType(t, int type);
 
-  String getText(Object t);
+  String getText(t);
 
   /** Node constructors can set the text of a node */
-  void setText(Object t, String text);
+  void setText(t, String text);
 
-  /** Return the token object from which this node was created.
+  /** Return the token from which this node was created.
    *  Currently used only for printing an error message.
    *  The error display routine in [BaseRecognizer] needs to
    *  display where the input the error occurred. If your
@@ -146,7 +146,7 @@ abstract class TreeAdaptor {
    *  the appropriate information and pass that back.  See
    *  BaseRecognizer.getErrorMessage().
    */
-  Token getToken(Object t);
+  Token getToken(t);
 
   /** Where are the bounds in the input token stream for this node and
    *  all children?  Each rule that creates AST nodes will call this
@@ -154,41 +154,41 @@ abstract class TreeAdaptor {
    *  still usually have a nil root node just to hold the children list.
    *  That node would contain the start/stop indexes then.
    */
-  void setTokenBoundaries(Object t, Token startToken, Token stopToken);
+  void setTokenBoundaries(t, Token startToken, Token stopToken);
 
   /** Get the token start index for this subtree; return -1 if no such index */
-  int getTokenStartIndex(Object t);
+  int getTokenStartIndex(t);
 
   /** Get the token stop index for this subtree; return -1 if no such index */
-  int getTokenStopIndex(Object t);
+  int getTokenStopIndex(t);
 
   /** Get a child 0..n-1 node */
-  Object getChild(Object t, int i);
+  getChild(t, int i);
 
   /** Set ith child (0..n-1) to t; t must be non-null and non-nil node */
-  void setChild(Object t, int i, Object child);
+  void setChild(t, int i, child);
 
   /** Remove ith child and shift children down from right. */
-  Object deleteChild(Object t, int i);
+  deleteChild(t, int i);
 
   /** How many children?  If 0, then this is a leaf node */
-  int getChildCount(Object t);
+  int getChildCount(t);
 
   /** Who is the parent node of this node; if null, implies node is root.
    *  If your node type doesn't handle this, it's ok but the tree rewrites
    *  in tree parsers need this functionality.
    */
-  Object getParent(Object t);
+  getParent(t);
   
-  void setParent(Object t, Object parent);
+  void setParent(t, parent);
 
   /** What index is this node in the child list? Range: 0..n-1
    *  If your node type doesn't handle this, it's ok but the tree rewrites
    *  in tree parsers need this functionality.
    */
-  int getChildIndex(Object t);
+  int getChildIndex(t);
   
-  void setChildIndex(Object t, int index);
+  void setChildIndex(t, int index);
 
   /** Replace from start to stop child index of parent with t, which might
    *  be a list.  Number of children may be different
@@ -197,7 +197,7 @@ abstract class TreeAdaptor {
    *  If parent is null, don't do anything; must be at root of overall tree.
    *  Can't replace whatever points to the parent externally.  Do nothing.
    */
-  void replaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t);
+  void replaceChildren(parent, int startChildIndex, int stopChildIndex, t);
   
 }
 

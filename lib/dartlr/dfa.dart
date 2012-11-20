@@ -44,11 +44,11 @@ class DFA {
     _eof = eof;
   }
   
-  void set min(List<int> min) {
+  void set min_(List<int> min) {
     _min = min;
   }
   
-  void set max(List<int> max) {
+  void set max_(List<int> max) {
     _max = max;
   }
   

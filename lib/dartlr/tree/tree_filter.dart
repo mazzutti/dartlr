@@ -20,7 +20,7 @@ class TreeFilter extends TreeParser {
     _originalTokenStream = input.tokenStream;
   }
 
-  void applyOnce(Object t, TreeFilter_fptr whichRule) {
+  void applyOnce(t, TreeFilter_fptr whichRule) {
     if (t == null) return;
     try {
       state = new RecognizerSharedState();
@@ -29,15 +29,14 @@ class TreeFilter extends TreeParser {
       setBacktrackingLevel(1);
       whichRule.rule();
       setBacktrackingLevel(0);
-    }
-    on RecognitionException catch(e) {
+    } on RecognitionException catch(e) {
       print(e.toString());
     }
   }
 
-  void downup(Object t) {
-    TreeVisitor v = new TreeVisitor(new CommonTreeAdaptor());
-    TreeVisitorAction actions = new _TreeVisitorAction(this);
+  void downup(t) {
+    var v = new TreeVisitor(new CommonTreeAdaptor());
+    var actions = new _TreeVisitorAction(this);
     v.visit(t, actions);
   }
       
@@ -53,12 +52,12 @@ class _TreeVisitorAction implements TreeVisitorAction {
   
   _TreeVisitorAction(this._tf);  
   
-  Object pre(Object t) {
+  pre(t) {
     _tf.applyOnce(t, new _TreeFilterTopdown_fptr(_tf)); 
     return t; 
   }
   
-  Object post(Object t) { 
+  post(t) { 
     _tf.applyOnce(t, new _TreeFilterBottomup_fptr(_tf)); 
     return t; 
   }

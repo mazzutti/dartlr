@@ -12,11 +12,5 @@ part of dartlr;
 class TreeRuleReturnScope extends RuleReturnScope {
   
   /** First node or root node of tree matched for this rule. */
-  Object _start;
-  
-  Object get start => _start;
-  
-  void set start(Object s) {
-    _start = s;
-  }  
+  var start;
 }

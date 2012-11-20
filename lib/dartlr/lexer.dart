@@ -26,14 +26,14 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
   void reset() {
     super.reset();
     if(_input != null) _input.seek(0);
-    if(_state == null) return;
-    _state.token = null;
-    _state.type = Token.INVALID_TOKEN_TYPE;
-    _state.channel = Token.DEFAULT_CHANNEL;
-    _state.tokenStartCharIndex = -1;
-    _state.tokenStartCharPositionInLine = -1;
-    _state.tokenStartLine = -1;
-    _state.text = null;
+    if(state == null) return;
+    state.token = null;
+    state.type = Token.INVALID_TOKEN_TYPE;
+    state.channel = Token.DEFAULT_CHANNEL;
+    state.tokenStartCharIndex = -1;
+    state.tokenStartCharPositionInLine = -1;
+    state.tokenStartLine = -1;
+    state.text = null;
   }
 
   /** Return a token from this source; i.e., match a token on the char
@@ -41,12 +41,12 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
   */
   Token nextToken() {
     while(true) {
-      _state.token = null;
-      _state.channel = Token.DEFAULT_CHANNEL;      
-      _state.tokenStartCharIndex = _input.index; 
-      _state.tokenStartCharPositionInLine = _input.charPositionInLine;     
-      _state.tokenStartLine = _input.line;      
-      _state.text = null;
+      state.token = null;
+      state.channel = Token.DEFAULT_CHANNEL;      
+      state.tokenStartCharIndex = _input.index; 
+      state.tokenStartCharPositionInLine = _input.charPositionInLine;     
+      state.tokenStartLine = _input.line;      
+      state.text = null;
       if(_input.LA(1) == CharStream.EOF) {
         Token eof = new CommonToken.fromCharStream(_input,Token.EOF, 
             Token.DEFAULT_CHANNEL, _input.index , _input.index);
@@ -56,11 +56,11 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
       }
       try {
         mTokens();
-        if(_state.token == null){          
+        if(state.token == null){          
           emit();       
-        }else if(_state.token == Token.SKIP_TOKEN)
+        }else if(state.token == Token.SKIP_TOKEN)
           continue;       
-        return _state.token;
+        return state.token;
       } on MismatchedRangeException catch(re) {        
         reportError(re);        
       } on MismatchedTokenException catch(re) {        
@@ -79,7 +79,7 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
   *  and emits it.
   */
   void skip() {
-    _state.token = Token.SKIP_TOKEN;
+    state.token = Token.SKIP_TOKEN;
   }
   
   /** This is the lexer entry point that sets instance var 'token' */
@@ -103,15 +103,15 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
    */
   Token emit([Token token]) {
     if(token == null) {
-      Token t = new CommonToken.fromCharStream(_input, _state.type, 
-        _state.channel, _state.tokenStartCharIndex, charIndex - 1);
-      t.line = _state.tokenStartLine;
-      t.text = _state.text;
-      t.charPositionInLine = _state.tokenStartCharPositionInLine;
-      _state.token = t;
+      Token t = new CommonToken.fromCharStream(_input, state.type, 
+        state.channel, state.tokenStartCharIndex, charIndex - 1);
+      t.line = state.tokenStartLine;
+      t.text = state.text;
+      t.charPositionInLine = state.tokenStartCharPositionInLine;
+      state.token = t;
       return t;
     }
-    _state.token = token;
+    state.token = token;
     return token;
   }
 
@@ -120,8 +120,8 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
       int i = 0;
       while(i < s.length) {
         if(_input.LA(1) != s.charCodeAt(i)) {
-          if(_state.backtracking > 0) {
-            _state.failed = true;            
+          if(state.backtracking > 0) {
+            state.failed = true;            
             return;
           }
           MismatchedTokenException me =
@@ -131,12 +131,12 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
         }
         i++;
         _input.consume();
-        _state.failed = false;
+        state.failed = false;
        }
     } else if(s is int) {
       if(_input.LA(1) != s) {
-        if(_state.backtracking > 0) {
-          _state.failed = true;
+        if(state.backtracking > 0) {
+          state.failed = true;
           return;
         }
         MismatchedTokenException mte =
@@ -145,7 +145,7 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
         throw mte;
       }
       _input.consume();
-      _state.failed = false;
+      state.failed = false;
     }    
   }
 
@@ -155,8 +155,8 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
 
   void matchRange(int a, int b) {
     if(_input.LA(1) < a || _input.LA(1) > b) {
-      if(_state.backtracking > 0) {
-        _state.failed = true;
+      if(state.backtracking > 0) {
+        state.failed = true;
         return;
       }
       MismatchedRangeException mre =
@@ -165,7 +165,7 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
       throw mre;
     }
     _input.consume();
-    _state.failed = false;
+    state.failed = false;
   }
 
   int get line => _input.line;
@@ -179,13 +179,13 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
    *  text override.
    */
   String get text {
-    if(_state.text != null)
-      return _state.text;
-    return _input.substring(_state.tokenStartCharIndex, charIndex - 1);
+    if(state.text != null)
+      return state.text;
+    return _input.substring(state.tokenStartCharIndex, charIndex - 1);
   }
 
   void set text(String text) {
-    _state.text = text;
+    state.text = text;
   }
 
   void reportError(RecognitionException e) {

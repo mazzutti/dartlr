@@ -8,19 +8,9 @@ part of dartlr;
  *  This signifies a case where the cardinality of two or more elements
  *  in a subrule are different: (ID INT)+ where |ID|!=|INT|
  */
-class RewriteCardinalityException implements Exception {
-  
-  String elementDescription;
-
-  RewriteCardinalityException([this.elementDescription]);
-  
-  String getMessage() {
-    if (elementDescription != null)
-      return elementDescription;
-    return "";
-  }
-  
-  String toString() => this.getMessage();
-  
+class RewriteCardinalityException implements Exception {  
+  final String message;
+  RewriteCardinalityException([this.message=""]);    
+  String toString() => message;
 }
 

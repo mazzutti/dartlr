@@ -15,23 +15,17 @@ class BitSet implements Cloneable {
   static const int _MOD_MASK = _BITS - 1;
   
   /** The actual data bits */
-  List<int> _bits;
+  List<int> bits;
   
   /** Construct a bitset of size one word (64 bits) */
   BitSet([int nbits = _BITS]) {
-    _bits = new List<int>(((nbits - 1) >> _LOG_BITS) + 1);    
-    for(int i = 0; i < _bits.length; i++)
-      _bits[i] = 0;
+    bits = new List<int>(((nbits - 1) >> _LOG_BITS) + 1);    
+    for(int i = 0; i < bits.length; i++)
+      bits[i] = 0;
   }
 
   /** Construction from a list of ints */
-  BitSet.fromList(this._bits);
-  
-  List<int> get bits => _bits;
-  
-  void set bits(List<int> bts) {
-    _bits = bts;
-  }
+  BitSet.fromList(this.bits);
 
   /** return this | a in a new set */
   BitSet or(BitSet a) {
@@ -44,10 +38,10 @@ class BitSet implements Cloneable {
   /** or this element into this set (grow as necessary to accommodate) */
   void add(int el) {
     int n = _wordNumber(el);
-    if (n >= _bits.length) {
+    if (n >= bits.length) {
       growToInclude(el);
     }
-    _bits[n] |= _bitMask(el);
+    bits[n] |= _bitMask(el);
   }
 
   /**
@@ -55,19 +49,19 @@ class BitSet implements Cloneable {
   * bit is the element that must fit in set
   */
   void growToInclude(int bit) {
-    int newSize = math.max(_bits.length << 1, _numWordsToHold(bit));
+    int newSize = math.max(bits.length << 1, _numWordsToHold(bit));
     List<int> newbits = new List<int>(newSize);
-    Arrays.copy(_bits, 0, newbits, 0, _bits.length);
-    _bits = newbits;
+    Arrays.copy(bits, 0, newbits, 0, bits.length);
+    bits = newbits;
   }
 
   void orInPlace(BitSet a) {
     if (a == null) return;   
-    if (a.bits.length > _bits.length)
+    if (a.bits.length > bits.length)
       _setSize(a.bits.length);   
     int min = math.min(bits.length, a.bits.length);
     for (int i = min - 1; i >= 0; i--)
-           _bits[i] |= a.bits[i];   
+           bits[i] |= a.bits[i];   
   }
 
   /**
@@ -76,24 +70,24 @@ class BitSet implements Cloneable {
   */
   void _setSize(int nwords) {
     List<int> newbits = new List<int>(nwords);
-    int n = math.min(nwords, _bits.length);
-    Arrays.copy(_bits, 0, newbits, 0, n);
-    for(int i = _bits.length; i < newbits.length; i++)
+    int n = math.min(nwords, bits.length);
+    Arrays.copy(bits, 0, newbits, 0, n);
+    for(int i = bits.length; i < newbits.length; i++)
       newbits[i] = 0;
-    _bits = newbits;
+    bits = newbits;
   } 
 
   Object clone() {
     BitSet s = new BitSet();    
-    s.bits = new List<int>(_bits.length);
-    Arrays.copy(_bits, 0, s.bits, 0, _bits.length);  
+    s.bits = new List<int>(bits.length);
+    Arrays.copy(bits, 0, s.bits, 0, bits.length);  
     return s;
   }
 
   int size() {
     int deg = 0;
-    for (int i = _bits.length - 1; i >= 0; i--) {
-      int word = _bits[i];
+    for (int i = bits.length - 1; i >= 0; i--) {
+      int word = bits[i];
       if (word != 0)
         for (int bit = _BITS - 1; bit >= 0; bit--)
           if ((word & (1 << bit)) != 0)
@@ -122,48 +116,48 @@ class BitSet implements Cloneable {
   bool member(int el) {
     if (el < 0) return false;
     int n = _wordNumber(el);
-    if (n >= _bits.length) return false;
-    return (_bits[n] & _bitMask(el)) != 0;
+    if (n >= bits.length) return false;
+    return (bits[n] & _bitMask(el)) != 0;
   }
 
   void remove(int el) {
     int n = _wordNumber(el);
-    if (n < _bits.length)
-      _bits[n] &= ~_bitMask(el);    
+    if (n < bits.length)
+      bits[n] &= ~_bitMask(el);    
   }
 
   bool isNil() {
-    for (int i = _bits.length - 1; i >= 0; i--)
-      if (_bits[i] != 0) return false;      
+    for (int i = bits.length - 1; i >= 0; i--)
+      if (bits[i] != 0) return false;      
     return true;
   }
 
   int _numWordsToHold(int el) =>  (el >> _LOG_BITS) + 1;
 
-  int numBits() => _bits.length << _LOG_BITS; 
+  int numBits() => bits.length << _LOG_BITS; 
 
   /** return how much space is being used by the bits array not
    *  how many actually have member bits on.
    */
-  int lengthInWords() => _bits.length;
+  int lengthInWords() => bits.length;
 
   List<int> toArray() {
     List<int> elems = new List<int>(size());
     int en = 0;
-    for (int i = 0; i < (_bits.length << _LOG_BITS); i++)
+    for (int i = 0; i < (bits.length << _LOG_BITS); i++)
       if (member(i))
         elems[en++] = i;       
     return elems;
   }
 
-  List<int> toPackedArray() => _bits;  
+  List<int> toPackedArray() => bits;  
 
   String toString([List<String> tokenNames]) {
     StringBuffer buf = new StringBuffer();
     String separator = ",";
     bool havePrintedAnElement = false;
     buf.add('{');
-    for (int i = 0; i < (_bits.length << _LOG_BITS); i++) {
+    for (int i = 0; i < (bits.length << _LOG_BITS); i++) {
       if (member(i)) {
         if (i > 0 && havePrintedAnElement)
           buf.add(separator);

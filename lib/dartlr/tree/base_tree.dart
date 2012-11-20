@@ -57,7 +57,7 @@ abstract class BaseTree extends Tree {
     }    
   }
 
-  int getChildCount() {
+  int get childCount  {
     if (_children == null)  return 0;
     return _children.length;
   }
@@ -187,21 +187,19 @@ abstract class BaseTree extends Tree {
 
   /** Set the parent and child index values for all child of t */
   void freshenParentAndChildIndexes([int offset = 0]) {
-    int n = getChildCount();
-    for (int c = offset; c < n; c++) {
-      Tree child = getChild(c);
-      child.childIndex = c;
-      child.parent = this;
+    for (int c = offset; c < childCount; c++) {
+      this[c]
+        ..childIndex = c
+        ..parent = this;
     }
   }
   
   void freshenParentAndChildIndexesDeeply([int offset = 0]) {
-    int n = getChildCount();
-    for (int c = offset; c < n; c++) {
-      BaseTree child = getChild(c);
-      child.childIndex = c;
-      child.parent = this;
-      child.freshenParentAndChildIndexesDeeply();
+    for (int c = offset; c < childCount; c++) {
+      this[c]
+        ..childIndex = c
+        ..parent = this
+        ..freshenParentAndChildIndexesDeeply();
     }
   }
 
@@ -210,8 +208,7 @@ abstract class BaseTree extends Tree {
       throw new Exception("parents don't match; expected $parent found ${parent}");
     if (i != childIndex)
       throw new Exception("child indexes don't match; expected $i found ${childIndex}");
-    int n = getChildCount();
-    for (int c = 0; c < n; c++) {
+    for (int c = 0; c < childCount; c++) {
       CommonTree child = getChild(c);
       child.sanityCheckParentAndChildIndexes(this, c);
     }
@@ -222,8 +219,7 @@ abstract class BaseTree extends Tree {
 
   /** Walk upwards and get first ancestor with this token type. */
   Tree getAncestor(int ttype) {
-    Tree t = this;
-    t = t.parent;
+    Tree t = parent;
     while (t != null) {
       if (t.type == ttype) return t;
       t = t.parent;
@@ -233,11 +229,10 @@ abstract class BaseTree extends Tree {
   /** Return a list of all ancestors of this node.  The first node of
   *  list is the root and the last is the parent of this node.
   */
-  List getAncestors() {
+  List get ancestors {
     if (parent == null ) return null;
-    List ancestors = new List();
-    Tree t = this;
-    t = t.parent;
+    List ancestors = [];
+    Tree t = parent;
     while (t != null) {
       ancestors.insertRange(0, 1, t);
       t = t.parent;
