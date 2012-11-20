@@ -8,7 +8,7 @@ class RewriteRuleSubtreeStream extends RewriteRuleElementStream {
   
   /** Create a stream with one more elements */
   RewriteRuleSubtreeStream(TreeAdaptor adaptor, 
-    String elementDescription, [Object e]) : super(adaptor, elementDescription, e);
+    String elementDescription, [e]) : super(adaptor, elementDescription, e);
  
   /** Treat next element as a single node even if it's a subtree.
    *  This is used instead of next() when the result has to be a
@@ -23,18 +23,18 @@ class RewriteRuleSubtreeStream extends RewriteRuleElementStream {
    *  a proper way to refactor.  This needs to always call dup node
    *  and super.next() doesn't know which to call: dup node or dup tree.
    */
-  Object nextNode() {
-    int n = size();
+  nextNode() {
+    int n = size;
     if (_dirty || (_cursor >= n && n == 1)) {
-      Object el = _next();
+      var el = _next();
       return _adaptor.dupNode(el);
     }
-    Object tree = _next();
+    var tree = _next();
     while (_adaptor.isNil(tree) && _adaptor.getChildCount(tree) == 1)
       tree = _adaptor.getChild(tree, 0);   
-    Object el = _adaptor.dupNode(tree); 
+    var el = _adaptor.dupNode(tree); 
     return el;
   }
 
-  Object _dup(Object el) => _adaptor.dupTree(el);
+  _dup(el) => _adaptor.dupTree(el);
 }

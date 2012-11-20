@@ -6,7 +6,7 @@ part of dartlr;
 
 class MismatchedTreeNodeException extends RecognitionException {
   
-  int expecting;
+  final int expecting;
 
   MismatchedTreeNodeException([this.expecting, TreeNodeStream input]) : super(input);
 

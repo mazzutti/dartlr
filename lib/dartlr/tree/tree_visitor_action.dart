@@ -14,12 +14,12 @@ abstract class TreeVisitorAction {
    *  with the return value.  Children of returned value will be
    *  visited if using TreeVisitor.visit().
    */
-  Object pre(Object t);
+  pre(t);
   
   /** Execute an action after visiting children of t.  Return t or
    *  a rewritten t.  It is up to the visitor to decide what to do
    *  with the return value.
    */
-  Object post(Object t);
+  post(t);
   
 }

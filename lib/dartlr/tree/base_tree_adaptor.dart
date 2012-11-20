@@ -58,9 +58,8 @@ abstract class BaseTreeAdaptor implements TreeAdaptor {
   *  make sure that this is consistent with have the user will build
   *  ASTs.
   */
-  void addChild(Object t, Object child) {
-    if (t!= null && child != null)
-      (t as Tree).addChild(child);
+  void addChild(t, child) {
+    if (t!= null && child != null) t.addChild(child);
   }
 
   /** If oldRoot is a nil root, just copy or move the children to newRoot.
@@ -89,13 +88,13 @@ abstract class BaseTreeAdaptor implements TreeAdaptor {
    *  constructing these nodes so we should have this control for
    *  efficiency.
    */
-  Object becomeRoot(Object newRoot, Object oldRoot) {
+   becomeRoot(newRoot,  oldRoot) {
     Tree newRootTree = newRoot;
     Tree oldRootTree = oldRoot;
     if (oldRoot == null)
       return newRoot;
     if (newRootTree.isNil()) {
-        int nc = newRootTree.getChildCount();
+        int nc = newRootTree.childCount;
         if (nc == 1) newRootTree = newRootTree.getChild(0);
         else if (nc > 1) {
         throw new Exception("more than one node as root (TODO: make exception hierarchy)");
@@ -106,12 +105,12 @@ abstract class BaseTreeAdaptor implements TreeAdaptor {
   }
 
   /** Transform ^(nil x) to x and nil to null */
-  Object rulePostProcessing(Object root) {
+  rulePostProcessing(root) {
     Tree r = root;
     if (r != null && r.isNil()) {
-      if (r.getChildCount() == 0)
+      if (r.childCount == 0)
         r = null;
-      else if (r.getChildCount() == 1) {
+      else if (r.childCount == 1) {
         r = r.getChild(0);
         r.parent = null;
         r.childIndex = -1;
@@ -150,31 +149,25 @@ abstract class BaseTreeAdaptor implements TreeAdaptor {
     return t;
   }
 
-  int getType(Object t) => (t as Tree).type;
+  int getType(t) => t.type;
 
-  void setType(Object t, int type) {
+  void setType(t, int type) {
     throw new Exception("don't know enough about Tree node");
   }
 
-  String getText(Object t) => (t as Tree).text;
+  String getText(t) => t.text;
 
-  void setText(Object t, String text) {
+  void setText(t, String text) {
     throw new Exception("don't know enough about Tree node");
   }
 
-  Object getChild(Object t, int i) => (t as Tree).getChild(i);
+  Object getChild(t, int i) => t.getChild(i);
 
-  void setChild(Object t, int i, Object child) {
-    (t as Tree).setChild(i, child);
-  }
+  setChild(t, int i, child) => t.setChild(i,child);
 
-  Object deleteChild(Object t, int i) {
-    return (t as Tree).deleteChild(i);
-  }
+  Object deleteChild(t, int i) => t.deleteChild(i);
 
-  int getChildCount(Object t) {
-    return (t as Tree).getChildCount();
-  }
+  int getChildCount(t) => t.childCount;
 
   int getUniqueID(Object node) {
     if (_treeToUniqueIDMap == null )

@@ -7,11 +7,9 @@ part of dartlr;
 /** A mismatched char or Token or tree node */
 class MismatchedTokenException extends RecognitionException {
   
-  int _expecting = Token.INVALID_TOKEN_TYPE;
+  final int expecting; 
 
-  MismatchedTokenException([this._expecting, IntStream input]) : super(input);
-  
-  int get expecting => _expecting;
+  MismatchedTokenException([this.expecting=Token.INVALID_TOKEN_TYPE, IntStream input]) : super(input);
 
   String toString() => "MismatchedTokenException(${unexpectedType} != ${expecting})";
   

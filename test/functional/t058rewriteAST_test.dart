@@ -883,7 +883,7 @@ main() {
       parser.a();
       Expect.fail("This shouldn't be executed!");
     } catch (e) {
-      expect(e.getMessage(), equals("token ID"));
+      expect(e.message, equals("token ID"));
     }    
   });
   
@@ -896,7 +896,7 @@ main() {
       parser.a();
       Expect.fail("This shouldn't be executed!");
     } catch (e) {
-      expect(e.getMessage(), equals("token ID"));
+      expect(e.message, equals("token ID"));
     }    
   });
   
@@ -909,7 +909,7 @@ main() {
       parser.a();
       Expect.fail("This shouldn't be executed!");
     } catch ( e) {
-      expect(e.getMessage(), equals("token ID"));
+      expect(e.message, equals("token ID"));
     }    
   });
   

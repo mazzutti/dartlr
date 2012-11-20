@@ -8,11 +8,11 @@ class RewriteRuleTokenStream extends RewriteRuleElementStream {
 
   /** Create a stream with one or more elements */
   RewriteRuleTokenStream(TreeAdaptor adaptor, 
-    String elementDescription, [Object elements]) : super(adaptor, elementDescription, elements);
+    String elementDescription, [elements]) : super(adaptor, elementDescription, elements);
   
   /** Get next token from stream and make a node for it */
-  Object nextNode() {
-    Token t = _next();
+  nextNode() {
+    var t = _next();
     return _adaptor.createTreeNode(t);
   }
 
@@ -21,10 +21,8 @@ class RewriteRuleTokenStream extends RewriteRuleElementStream {
   /** Don't convert to a tree unless they explicitly call nextTree.
    *  This way we can do hetero tree nodes in rewrite.
    */
-  Object _toTree(Object el) => el;
+  _toTree(el) => el;
 
-  Object _dup(Object el) {
-    throw new UnsupportedError("dup can't be called for a token stream.");
-  }
+  _dup(el) => throw new UnsupportedError("dup can't be called for a token stream.");
 }
 

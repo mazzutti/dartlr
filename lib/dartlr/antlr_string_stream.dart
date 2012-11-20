@@ -19,16 +19,16 @@ class ANTLRStringStream implements CharStream {
   int _p = 0;
   
   /** line number 1..n within the input */
-  int _line = 1;
+  int line = 1;
   
   /** The index of the character relative to the beginning of the line 0..n-1 */
-  int _charPositionInLine = 0;
+  int charPositionInLine = 0;
   
   /** tracks how deep mark() calls are nested */
   int _markDepth = 0;
   
   /** A list of [CharStreamState] objects that tracks the stream state
-   *  values _line, _charPositionInLine, and _p that can change as you
+   *  values _line, charPositionInLine, and _p that can change as you
    *  move through the input stream.  Indexed from 1..markDepth.
      *  A null is kept @ index 0.  Create upon first call to mark().
    */
@@ -61,21 +61,9 @@ class ANTLRStringStream implements CharStream {
    */
   int get index => _p;
   
-  int get line => _line;
-
-  int get charPositionInLine => _charPositionInLine;
-  
   int get size => _n;
   
   String get sourceName => _name;
-  
-  void set line(int line) {
-    _line = line;
-  }
-
-  void set charPositionInLine(int pos) {
-    _charPositionInLine = pos;
-  }  
 
   /** Reset the stream so that it's in the same state it was
    *  when the object was created *except* the data array is not
@@ -83,17 +71,17 @@ class ANTLRStringStream implements CharStream {
    */
   void reset() {
     _p = 0;
-    _line = 1;
-    _charPositionInLine = 0;
+    line = 1;
+    charPositionInLine = 0;
     _markDepth = 0;
   }
 
   void consume() {   
     if(_p < _n) {
-      _charPositionInLine++;
+      charPositionInLine++;
       if (_data[_p] == '\n'.charCodeAt(0)) {       
-        _line++;
-        _charPositionInLine = 0;
+        line++;
+        charPositionInLine = 0;
       }
       _p++;      
     }
@@ -126,8 +114,8 @@ class ANTLRStringStream implements CharStream {
       state = _markers[_markDepth];
     }
     state.p = _p;
-    state.line = _line;
-    state.charPositionInLine = _charPositionInLine;
+    state.line = line;
+    state.charPositionInLine = charPositionInLine;
     _lastMarker = _markDepth;
     return _markDepth;
   }
@@ -136,8 +124,8 @@ class ANTLRStringStream implements CharStream {
     if(marker == null) marker = _lastMarker;
     CharStreamState state = _markers[marker]; 
     seek(state.p);
-    _line = state.line;
-    _charPositionInLine = state.charPositionInLine;
+    line = state.line;
+    charPositionInLine = state.charPositionInLine;
     release(marker);
   }
 
@@ -147,7 +135,7 @@ class ANTLRStringStream implements CharStream {
   }
   
   /** consume() ahead until _p == index; can't just set _p = index as we must
-   *  update line and _charPositionInLine.
+   *  update line and charPositionInLine.
    */
   void seek(int index) {
     if (index <= _p ) {

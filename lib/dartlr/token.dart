@@ -18,14 +18,14 @@ abstract class Token {
 
   static const int EOF = CharStream.EOF;
   
-  static Token EOF_TOKEN = new CommonToken(EOF);
+  static final Token EOF_TOKEN = new CommonToken(EOF);
   
-  static Token INVALID_TOKEN = new CommonToken(INVALID_TOKEN_TYPE);
+  static final Token INVALID_TOKEN = new CommonToken(INVALID_TOKEN_TYPE);
   
   /** In an action, a lexer rule can set token to this _SKIP_TOKEN and ANTLR
   *  will avoid creating a token for this symbol and try to fetch another.
   */
-  static Token SKIP_TOKEN = new CommonToken(INVALID_TOKEN_TYPE);
+  static final Token SKIP_TOKEN = new CommonToken(INVALID_TOKEN_TYPE);
   
   static const int INVALID_TOKEN_TYPE = 0;  
 
@@ -41,33 +41,26 @@ abstract class Token {
   static const int HIDDEN_CHANNEL = 99;
 
   /** Get the text of the token */
-   String get text;
-   void set text(String text);
+  String text;
 
-   int get type;
-   void set type(int ttype);
+  int type;
  
   /**  The line number on which this token was matched; line=1..n */
-   int get line;
-   void set line(int line);
+  int line;
 
   /** The index of the first character relative to the beginning of the line 0..n-1 */
-   int get charPositionInLine;
-   void set charPositionInLine(int pos);
+  int charPositionInLine;
 
-   int get channel;
-   void set channel(int channel);
-
+  int channel;
+   
   /** An index from 0..n-1 of the token object in the input stream.
    *  This must be valid in order to use the ANTLRWorks debugger.
    */
-   int get tokenIndex;
-   void set tokenIndex(int index);
+  int tokenIndex;
 
   /** From what character stream was this token created?  You don't have to
    *  implement but it's nice to know where a Token comes from if you have
    *  include files etc... on the input.
    */
-   CharStream get inputStream;
-   void set inputStream(CharStream input);  
+  CharStream inputStream;
 }

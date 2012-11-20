@@ -41,13 +41,13 @@ class BufferedTreeNodeStream implements TreeNodeStream {
   Object _root;
   
   /** IF this tree (root) was created from a token stream, track it. */
-  TokenStream _tokens;
+  TokenStream tokenStream;
   
   /** What tree adaptor was used to build these trees */
-  TreeAdaptor _adaptor;
+  TreeAdaptor treeAdaptor;
   
   /** Reuse same DOWN, UP navigation nodes unless this is true */
-  bool _uniqueNavigationNodes = false;
+  bool uniqueNavigationNodes = false;
   
   /** The index into the nodes list of the current node (next node
    *  to consume).  If -1, nodes array not filled yet.
@@ -60,13 +60,13 @@ class BufferedTreeNodeStream implements TreeNodeStream {
   /** Stack of indexes used for push/pop calls */
   IntArray _calls;
 
-  BufferedTreeNodeStream(this._root, [this._adaptor, 
+  BufferedTreeNodeStream(this._root, [this.treeAdaptor, 
         int initialBufferSize = DEFAULT_INITIAL_BUFFER_SIZE]) {    
-    if(_adaptor == null) _adaptor = new CommonTreeAdaptor();
+    if(treeAdaptor == null) treeAdaptor = new CommonTreeAdaptor();
     _nodes = new List(initialBufferSize);
-    _down = _adaptor.createFromTokenType(Token.DOWN, "DOWN");
-    _up = _adaptor.createFromTokenType(Token.UP, "UP");
-    _eof = _adaptor.createFromTokenType(Token.EOF, "EOF");
+    _down = treeAdaptor.createFromTokenType(Token.DOWN, "DOWN");
+    _up = treeAdaptor.createFromTokenType(Token.UP, "UP");
+    _eof = treeAdaptor.createFromTokenType(Token.EOF, "EOF");
   }
 
   /** Walk tree with depth-first-search and fill nodes buffer.
@@ -78,14 +78,14 @@ class BufferedTreeNodeStream implements TreeNodeStream {
   }
 
   void fillBuffer([Object t]) {
-    bool nil = _adaptor.isNil(t);
+    bool nil = treeAdaptor.isNil(t);
     if (!nil)
       _nodes.add(t);
-    int n = _adaptor.getChildCount(t);
+    int n = treeAdaptor.getChildCount(t);
     if (!nil && n > 0 )
       _addNavigationNode(Token.DOWN);
     for (int c = 0; c < n; c++) {
-      Object child = _adaptor.getChild(t,c);
+      Object child = treeAdaptor.getChild(t,c);
       fillBuffer(child);
     }
     if (!nil && n > 0)
@@ -113,13 +113,13 @@ class BufferedTreeNodeStream implements TreeNodeStream {
   void _addNavigationNode(final int ttype) {
     Object navNode = null;
     if (ttype == Token.DOWN )
-      if (hasUniqueNavigationNodes())
-        navNode = _adaptor.createFromTokenType(Token.DOWN, "DOWN");
+      if (uniqueNavigationNodes)
+        navNode = treeAdaptor.createFromTokenType(Token.DOWN, "DOWN");
       else
         navNode = _down;
     else
-      if (hasUniqueNavigationNodes())
-        navNode = _adaptor.createFromTokenType(Token.UP, "UP");
+      if (uniqueNavigationNodes)
+        navNode = treeAdaptor.createFromTokenType(Token.UP, "UP");
       else
         navNode = _up;    
     _nodes.add(navNode);
@@ -152,31 +152,13 @@ class BufferedTreeNodeStream implements TreeNodeStream {
 
   String get sourceName => tokenStream.sourceName;
 
-  TokenStream get tokenStream => _tokens;
-
-  void set tokenStream(TokenStream tokens) {
-    _tokens = tokens;
-  }
-
-  TreeAdaptor get treeAdaptor => _adaptor;
-
-  void set treeAdaptor(TreeAdaptor adaptor) {
-    _adaptor = adaptor;
-  }
-
-  bool hasUniqueNavigationNodes() => _uniqueNavigationNodes;
-
-  void set uniqueNavigationNodes(bool uniqueNavigationNodes) {
-    uniqueNavigationNodes = uniqueNavigationNodes;
-  }
-
   void consume() {
     if (_p == -1)
       _fillBuffer();
     _p++;
   }
 
-  int LA(int i) => _adaptor.getType(LT(i));
+  int LA(int i) => treeAdaptor.getType(LT(i));
 
   int mark() {
     if (_p == -1)
@@ -240,7 +222,7 @@ class BufferedTreeNodeStream implements TreeNodeStream {
 
   void replaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t) {
     if (parent != null)
-      _adaptor.replaceChildren(parent, startChildIndex, stopChildIndex, t);
+      treeAdaptor.replaceChildren(parent, startChildIndex, stopChildIndex, t);
   }
 
   /** Used for testing, just return the token type stream */
@@ -251,7 +233,7 @@ class BufferedTreeNodeStream implements TreeNodeStream {
     for (int i = 0; i < _nodes.length; i++) {
       Object t = _nodes[i];
       buf.add(" ");
-      buf.add(_adaptor.getType(t));
+      buf.add(treeAdaptor.getType(t));
     }
     return buf.toString();
   }
@@ -263,7 +245,7 @@ class BufferedTreeNodeStream implements TreeNodeStream {
     for (int i = start; i < _nodes.length && i <= stop; i++) {
       Object t = _nodes[i];
       buf.add(" ");
-      buf.add(_adaptor.getToken(t));
+      buf.add(treeAdaptor.getToken(t));
     }
     return buf.toString();
   }
@@ -277,14 +259,14 @@ class BufferedTreeNodeStream implements TreeNodeStream {
     else print("$start");
     if (stop is CommonTree) print("${stop.token}");
     else print("$stop");    
-    if (_tokens != null) {
-      int beginTokenIndex = _adaptor.getTokenStartIndex(start);
-      int endTokenIndex = _adaptor.getTokenStopIndex(stop);      
-      if (_adaptor.getType(stop) == Token.UP)
-        endTokenIndex = _adaptor.getTokenStopIndex(start);
-      else if (_adaptor.getType(stop) == Token.EOF)
+    if (tokenStream != null) {
+      int beginTokenIndex = treeAdaptor.getTokenStartIndex(start);
+      int endTokenIndex = treeAdaptor.getTokenStopIndex(stop);      
+      if (treeAdaptor.getType(stop) == Token.UP)
+        endTokenIndex = treeAdaptor.getTokenStopIndex(start);
+      else if (treeAdaptor.getType(stop) == Token.EOF)
         endTokenIndex = size - 2;
-      return _tokens.toRangeString(beginTokenIndex, endTokenIndex);
+      return tokenStream.toRangeString(beginTokenIndex, endTokenIndex);
     }    
     Object t = null;
     int i = 0;
@@ -295,16 +277,16 @@ class BufferedTreeNodeStream implements TreeNodeStream {
     StringBuffer buf = new StringBuffer();
     t = _nodes[i];
     while (t != stop) {
-      String text = _adaptor.getText(t);
+      String text = treeAdaptor.getText(t);
       if (text == null) 
-        text = " ${new String.fromCharCodes([_adaptor.getType(t)])}";
+        text = " ${new String.fromCharCodes([treeAdaptor.getType(t)])}";
       buf.add(text);
       i++;
       t = _nodes[i];
     }
-    String text = _adaptor.getText(stop);
+    String text = treeAdaptor.getText(stop);
     if (text == null)
-      text = " ${new String.fromCharCodes([_adaptor.getType(stop)])}";
+      text = " ${new String.fromCharCodes([treeAdaptor.getType(stop)])}";
     buf.add(text);
     return buf.toString();
   }

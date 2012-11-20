@@ -11,14 +11,12 @@ class RewriteRuleNodeStream extends RewriteRuleElementStream {
 
   /** Create a stream with one  or more elements */
   RewriteRuleNodeStream(TreeAdaptor adaptor, 
-   String elementDescription, [Object elements]) : super(adaptor, elementDescription, elements);
+   String elementDescription, [elements]) : super(adaptor, elementDescription, elements);
 
-  Object nextNode() => _next();
+  nextNode() => _next();
 
-  Object _toTree(Object el) => _adaptor.dupNode(el);
+  _toTree(el) => _adaptor.dupNode(el);
 
-  Object _dup(Object el) {
-    throw new UnsupportedError("dup can't be called for a node stream.");
-  }  
+  _dup(el) => throw new UnsupportedError("dup can't be called for a node stream.");  
 }
 

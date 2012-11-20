@@ -23,7 +23,7 @@ abstract class RewriteRuleElementStream {
   int _cursor = 0;
   
   /** Track single elements w/o creating a list.  Upon 2nd add, alloc list */
-  Object _singleElement;
+  var _singleElement;
   
   /** The list of tokens or subtrees we are tracking */
   List _elements;
@@ -47,7 +47,7 @@ abstract class RewriteRuleElementStream {
   
   /** Create a stream with one Object (can be a list of objects) */  
   RewriteRuleElementStream(this._adaptor, 
-         this._elementDescription, [Object e]) {
+         this._elementDescription, [e]) {
     if(e != null) {
       if(e is List) {
         _elements = e;
@@ -67,7 +67,7 @@ abstract class RewriteRuleElementStream {
     _dirty = true;
   }
 
-  void add(Object el) {
+  void add(el) {
     if (el == null) return;
     if (_elements != null ) { 
       _elements.add(el);
@@ -88,13 +88,13 @@ abstract class RewriteRuleElementStream {
   *  Return a duplicate node/subtree if stream is out of elements and
   *  size == 1.  If we've already used the element, dup (dirty bit set).
   */
-  Object nextTree() {
-    int n = size();
+  nextTree() {
+    int n = size;
     if (_dirty || (_cursor >= n && n == 1) ) {
-      Object el = _next();
+      var el = _next();
       return _dup(el);
     }
-    Object el = _next();
+    var el = _next();
     return el;
   }
 
@@ -104,8 +104,8 @@ abstract class RewriteRuleElementStream {
    *  if the stream is empty or we're out of elements and size>1.
    *  protected so you can override in a subclass if necessary.
    */
-  Object _next() {
-    int n = size();
+  _next() {
+    int n = size;
     if (n == 0)
       throw new RewriteEmptyStreamException(_elementDescription);
     if ( _cursor >= n) { 
@@ -118,7 +118,7 @@ abstract class RewriteRuleElementStream {
       _cursor++;     
       return  _toTree(_singleElement);
     }    
-    Object o =  _toTree(_elements[_cursor]); 
+    var o =  _toTree(_elements[_cursor]); 
     _cursor++;    
     return o;
   }
@@ -128,21 +128,19 @@ abstract class RewriteRuleElementStream {
   *  around it.  For trees, you must call the adaptor.dupTree() unless
   *  the element is for a tree root; then it must be a node dup.
   */
-  Object _dup(Object el);
+  _dup(el);
 
   /** Ensure stream emits trees; tokens must be converted to AST nodes.
    *  AST nodes can be passed through unmolested.
    */
-  Object _toTree(Object el) {
-    return el;
-  }
+  _toTree(el) => el;
 
   bool hasNext() {
     return ( _singleElement != null &&  _cursor < 1) ||
          (_elements!=null &&  _cursor <  _elements.length);
   }
 
-  int size() {
+  int get size {
     int n = 0;
     if (_singleElement != null) n = 1;
     if (_elements != null) return _elements.length;

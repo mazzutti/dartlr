@@ -17,14 +17,14 @@ main() {
     
     Token token = lexer.nextToken(); 
     expect(token.type, equals(t006lexer.FOO));
-    expect((token as CommonToken).startIndex, equals(0));
-    expect((token as CommonToken).stopIndex, equals(1));
+    expect((token as CommonToken).start, equals(0));
+    expect((token as CommonToken).stop, equals(1));
     expect(token.text, equals("fo"));
     
     token = lexer.nextToken(); 
     expect(token.type, equals(t006lexer.FOO));
-    expect((token as CommonToken).startIndex, equals(2));
-    expect((token as CommonToken).stopIndex, equals(7));
+    expect((token as CommonToken).start, equals(2));
+    expect((token as CommonToken).stop, equals(7));
     expect(token.text, equals("faaooa"));
     
     token = lexer.nextToken();
