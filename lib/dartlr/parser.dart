@@ -45,9 +45,9 @@ class Parser extends BaseRecognizer {
   
   String get recognizerClassName => "Parser";
 
-  Object _getCurrentInputSymbol(IntStream input) => _input.LT(1);
+  _getCurrentInputSymbol(IntStream input) => _input.LT(1);
 
-  Object _getMissingSymbol(IntStream input, 
+  _getMissingSymbol(IntStream input, 
       RecognitionException e, int expectedTokenType, BitSet follow) {
     String tokenText = null;
     if (expectedTokenType == Token.EOF) 
@@ -60,18 +60,18 @@ class Parser extends BaseRecognizer {
       current = _input.LT(-1);
     t.line = current.line;
     t.charPositionInLine = current.charPositionInLine;
-    t.input = current.inputStream;
+    t.inputStream = current.inputStream;
     t.channel = BaseRecognizer.DEFAULT_TOKEN_CHANNEL;    
     return t;
   }
   
-  void traceIn(String ruleName, int ruleIndex, [Object inputSymbol])  {
+  void traceIn(String ruleName, int ruleIndex, [inputSymbol])  {
     if(inputSymbol == null)
       inputSymbol = _input.LT(1);
     super.traceIn(ruleName, ruleIndex, inputSymbol);
   }
 
-  void traceOut(String ruleName, int ruleIndex, [Object inputSymbol]) {
+  void traceOut(String ruleName, int ruleIndex, [inputSymbol]) {
     if(inputSymbol == null)
       inputSymbol = _input.LT(1);
     super.traceOut(ruleName, ruleIndex, inputSymbol);

@@ -87,12 +87,12 @@ class TokenRewriteStream extends CommonTokenStream {
     rollback(MIN_TOKEN_INDEX, programName);
   }
 
-  void insertAfter( d, Object text, [String programName = DEFAULT_PROGRAM_NAME]) {
+  void insertAfter( d, text, [String programName = DEFAULT_PROGRAM_NAME]) {
     int index = (d is Token) ? d.tokenIndex : d;
     insertBefore(index + 1, text, programName);
   }
 
-  void insertBefore( d , Object text, [String programName = DEFAULT_PROGRAM_NAME]) {
+  void insertBefore( d , text, [String programName = DEFAULT_PROGRAM_NAME]) {
     int  index = (d is Token) ? d.tokenIndex : d;   
     _RewriteOperation op = new _InsertBeforeOp(_tokens, index, text);
     List rewrites = _getProgram(programName);
@@ -100,7 +100,7 @@ class TokenRewriteStream extends CommonTokenStream {
     rewrites.add(op);   
   }
 
-  void replace( d1, Object text, [ d2 , String programName = DEFAULT_PROGRAM_NAME]) {
+  void replace( d1, text, [ d2 , String programName = DEFAULT_PROGRAM_NAME]) {
     int to, from = ((d1 is Token) ? d1.tokenIndex : d1);
     if(d2 == null) 
       to = from;
@@ -262,7 +262,7 @@ class TokenRewriteStream extends CommonTokenStream {
     return m;
 }
 
-  String _catOpText(Object a, Object b) {
+  String _catOpText(a, b) {
     String x = "", y = "";
     if (a != null) x = a.toString();
     if (b != null) y = b.toString();
@@ -295,78 +295,54 @@ class TokenRewriteStream extends CommonTokenStream {
 class _RewriteOperation {
   
   List<Token> _tokens;
-  int _instructionIndex;
-  int _index;
-  Object _text;
+  int instructionIndex;
+  int index;
+  var text;
 
-  _RewriteOperation(this._tokens, this._index, [this._text]);
-  
-  int get instructionIndex => _instructionIndex;
-  
-  int get index => _index;
-  
-  void set index(int i) {
-    _index = i;
-  }
-  
-  Object get text => _text;
-  
-  void set text(Object o) {
-    _text = o;
-  }
-  
-  void set instructionIndex(int iIndex) {
-    _instructionIndex = iIndex;
-  }
-  
-  int execute(StringBuffer buf) => _index;
+  _RewriteOperation(this._tokens, this.index, [this.text]);
+    
+  int execute(StringBuffer buf) => index;
   
   String toString() {
     String opName = "_RewriteOperation";
     int $index = opName.indexOf(r'$');
     opName = opName.substring($index+1, opName.length);
-    return "<$opName@${_tokens[_index]}:'${_text}'>";
+    return "<$opName@${_tokens[index]}:'${text}'>";
   }
 }
 
 class _InsertBeforeOp extends _RewriteOperation {
   
   _InsertBeforeOp(List<Token> tokens, 
-    int index, Object text) : super(tokens, index, text);
+    int index, text) : super(tokens, index, text);
     
   int execute(StringBuffer buf) {    
-    buf.add(_text);
-    if (_tokens[_index].type != Token.EOF)
-      buf.add(_tokens[_index].text);
-    return _index + 1;
+    buf.add(text);
+    if (_tokens[index].type != Token.EOF)
+      buf.add(_tokens[index].text);
+    return index + 1;
   }
 }
 
 class _ReplaceOp extends _RewriteOperation {
   
-  int _lastIndex;
+  int lastIndex;
   
   _ReplaceOp(List<Token> tokens, int from, 
-    this._lastIndex, Object text) : super(tokens, from, text);
-  
-  int get lastIndex => _lastIndex;
-  
-  void set lastIndex(int li) {
-    _lastIndex = li;
-  }
+    this.lastIndex, text) : super(tokens, from, text);
   
   int execute(StringBuffer buf) {
-    if (_text != null)     
-      buf.add(_text);  
-    return _lastIndex + 1;
+    if (text != null)     
+      buf.add(text);  
+    return lastIndex + 1;
   }
   
   String toString() {
-    if (_text == null)
-      return "<_DeleteOp@${_tokens[_index]}.."
-                        "${_tokens[_lastIndex]}>";
-    return "<_ReplaceOp@${_tokens[_index]}.."
-        "${_tokens[_lastIndex]}:'${_text}'>";
+    if (text == null)
+      return "<_DeleteOp@${_tokens[index]}.."
+                        "${_tokens[lastIndex]}>";
+    return "<_ReplaceOp@${_tokens[index]}.."
+        "${_tokens[lastIndex]}:'${text}'>";
   }
 }
 

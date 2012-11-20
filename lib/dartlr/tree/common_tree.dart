@@ -16,10 +16,10 @@ class CommonTree extends BaseTree {
   int _startIndex = -1, _stopIndex = -1;
   
   /** Who is the parent node of this node; if null, implies node is root */
-  CommonTree _parent;
+  CommonTree parent;
   
   /** What index is this node in the child list? Range: 0..n-1 */
-  int _childIndex = -1;
+  int childIndex = -1;
   
   CommonTree([CommonTree node]) : super(node) {
     if(node != null) {
@@ -33,32 +33,14 @@ class CommonTree extends BaseTree {
   
   Token get token => _token; 
   
-  int get childIndex => _childIndex;
-  
-  Tree get parent => _parent;
+  int get type => token == null ? Token.INVALID_TOKEN_TYPE : token.type;
 
-  void set parent(Tree t) {
-    _parent = t;
-  }
-
-  void set childIndex(int index) {
-    _childIndex = index;
-  }
-
-  int get type {
-    if (token == null ) return Token.INVALID_TOKEN_TYPE;
-    return token.type;
-  }
-
-  String get text {
-    if (token == null) return null;
-    return token.text;
-  }
+  String get text => token == null ? null : token.text;
 
   int get line {
     if (token == null || token.line == 0) {
-      if (getChildCount() > 0)
-        return getChild(0).line;     
+      if (childCount > 0)
+        return this[0].line;     
       return 0;
     }
     return token.line;
@@ -66,8 +48,8 @@ class CommonTree extends BaseTree {
 
   int get charPositionInLine {
     if (token == null || token.charPositionInLine == -1) {
-      if (getChildCount() > 0)
-        return getChild(0).charPositionInLine;
+      if (childCount > 0)
+        return this[0].charPositionInLine;
       return 0;
     }
     return token.charPositionInLine;

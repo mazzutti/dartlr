@@ -17,14 +17,12 @@ abstract class TreeNodeStream extends IntStream {
    *  parser.  Optional unless you use tree parser rule text attribute
    *  or  rewrite=true option.
    */
-  TokenStream get tokenStream;
-  
-  void set tokenStream(TokenStream t);
+  TokenStream tokenStream;
 
   /** What adaptor can tell me how to interpret/navigate nodes and
    *  trees.  E.g., get text of a node.
    */
-  TreeAdaptor get treeAdaptor;
+  TreeAdaptor treeAdaptor;
 
   /** As we flatten the tree, we use UP, DOWN nodes to represent
    *  the tree structure.  When debugging we need unique nodes
@@ -32,7 +30,7 @@ abstract class TreeNodeStream extends IntStream {
    *  parsing, it's slow and a waste of memory to create unique
    *  navigation nodes.  Default should be false;
    */
-  void set uniqueNavigationNodes(bool uniqueNavigationNodes);
+  bool uniqueNavigationNodes;
   
   /** Get a tree node at an absolute index i; 0..n-1.
    *  If you don't want to buffer up nodes, then this method makes no

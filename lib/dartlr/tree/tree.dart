@@ -16,7 +16,7 @@ part of dartlr;
  */
 abstract class Tree {
   
-  static Tree INVALID_NODE = new CommonTree.fromToken(Token.INVALID_TOKEN);   
+  static final Tree INVALID_NODE = new CommonTree.fromToken(Token.INVALID_TOKEN);   
   
   /** Return a token type; needed for tree parsing */
    int get type;
@@ -43,8 +43,9 @@ abstract class Tree {
    toStringTree();
   
    Tree getChild(int i);
+   Tree operator[](int i) => getChild(i);
 
-   int getChildCount();
+   int get childCount;
 
   /** Is there is a node above with token type ttype? */
    bool hasAncestor(int ttype);
@@ -55,7 +56,7 @@ abstract class Tree {
   /** Return a list of all ancestors of this node.  The first node of
    *  list is the root and the last is the parent of this node.
    */
-   List getAncestors();
+   List get ancestors;
 
   /** Set the parent and child index values for all children */
    void freshenParentAndChildIndexes();
@@ -67,6 +68,7 @@ abstract class Tree {
 
   /** Set ith child (0..n-1) to t; t must be non-null and non-nil node */
    void setChild(int i, Tree t);
+   operator[]=(int i, Tree t) => setChild(i,t);
 
    Object deleteChild(int i);
 

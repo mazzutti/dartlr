@@ -26,14 +26,14 @@ class TreeVisitor {
    *
    *  Return result of applying post action to this node.
    */
-  Object visit(Object t, TreeVisitorAction action) {
+  visit(t, TreeVisitorAction action) {
     bool isNil = _adaptor.isNil(t);
     if (action != null && !isNil)
       t = action.pre(t);
     for (int i = 0; i < _adaptor.getChildCount(t); i++) {
-      Object child = _adaptor.getChild(t, i);
-      Object visitResult = visit(child, action);
-      Object childAfterVisit = _adaptor.getChild(t, i);
+      var child = _adaptor.getChild(t, i);
+      var visitResult = visit(child, action);
+      var childAfterVisit = _adaptor.getChild(t, i);
       if (visitResult !=  childAfterVisit)
         _adaptor.setChild(t, i, visitResult);
     }

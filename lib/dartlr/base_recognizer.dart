@@ -23,13 +23,13 @@ abstract class BaseRecognizer {
    *  and other state variables.  It's a kind of explicit multiple
    *  inheritance via delegation of methods and shared state.
    */
-  RecognizerSharedState _state;
+  RecognizerSharedState state;
   List<String> _reportedErros;
   String _output = "";
   
-  BaseRecognizer([this._state]) {
-    if(_state == null) 
-      _state = new RecognizerSharedState();
+  BaseRecognizer([this.state]) {
+    if(state == null) 
+      state = new RecognizerSharedState();
     _reportedErros = new List<String>();
   }
   
@@ -38,20 +38,14 @@ abstract class BaseRecognizer {
   String get output => _output;
   
   IntStream get input;
-  
-  RecognizerSharedState get state => _state;
-  
-  void set state(RecognizerSharedState s) {
-    _state = s;
-  }
-  
+    
   void capture(String value) {
     _output = "${_output}$value";
   }
 
   /** reset the parser's state; subclasses must rewinds the input stream */
   void reset() {
-    if (_state == null) return;
+    if (state == null) return;
     state.fsp = -1;
     state.errorRecovery = false;
     state.lastErrorIndex = -1;
@@ -81,8 +75,8 @@ abstract class BaseRecognizer {
       state.failed = false;
       return matchedSymbol;
     }
-    if (_state.backtracking > 0 ) {
-      _state.failed = true;      
+    if (state.backtracking > 0 ) {
+      state.failed = true;      
       return matchedSymbol;
     }
     matchedSymbol = _recoverFromMismatchedToken(input, ttype, follow); 
@@ -91,8 +85,8 @@ abstract class BaseRecognizer {
 
   /** Match the wildcard: in a symbol */
   void matchAny([IntStream input]) {
-    _state.errorRecovery = false;
-    _state.failed = false;
+    state.errorRecovery = false;
+    state.failed = false;
     if(input != null) input.consume();
   }
 
@@ -127,9 +121,9 @@ abstract class BaseRecognizer {
   *  If you override, make sure to update syntaxErrors if you care about that.
   */
   void reportError(RecognitionException e) {    
-    if (_state.errorRecovery) return;
-    _state.syntaxErrors++;
-    _state.errorRecovery = true;
+    if (state.errorRecovery) return;
+    state.syntaxErrors++;
+    state.errorRecovery = true;
     displayRecognitionError(tokenNames, e);
   }
 
@@ -221,7 +215,7 @@ abstract class BaseRecognizer {
    *
    *  See also reportError()
    */
-  int get numberOfSyntaxErrors => _state.syntaxErrors;
+  int get numberOfSyntaxErrors => state.syntaxErrors;
 
   /** What is the error header, normally line/character position information? */
   String getErrorHeader(RecognitionException e) {
@@ -261,9 +255,9 @@ abstract class BaseRecognizer {
    *  token that the matchSymbol() routine could not recover from.
    */
   void recover(RecognitionException re, [IntStream input]) {
-    if (_state.lastErrorIndex == input.index)
+    if (state.lastErrorIndex == input.index)
       input.consume();
-    _state.lastErrorIndex = input.index;
+    state.lastErrorIndex = input.index;
     BitSet followSet = _computeErrorRecoverySet();
     beginResync();
     consumeUntilBitSet(input, followSet);
@@ -411,7 +405,7 @@ abstract class BaseRecognizer {
     int top = state.fsp;
     BitSet followSet = new BitSet();
     for (int i = top; i >= 0; i--) {
-      BitSet localFollowSet = _state.following[i];
+      BitSet localFollowSet = state.following[i];
       followSet.orInPlace(localFollowSet);
       if (exact)     
         if ( localFollowSet.member(Token.EOR_TOKEN_TYPE) )       
@@ -535,12 +529,12 @@ abstract class BaseRecognizer {
 
   /** Push a rule's follow set using our own hardcoded stack */
   void pushFollow(BitSet fset) {    
-    if ((_state.fsp + 1) >= _state.following.length) {
+    if ((state.fsp + 1) >= state.following.length) {
       List<BitSet> f = new List<BitSet>(state.following.length*2);
-      Arrays.copy(_state.following, 0, f, 0, _state.following.length);
-      _state.following = f;
+      Arrays.copy(state.following, 0, f, 0, state.following.length);
+      state.following = f;
     }
-    _state.following[++_state.fsp] = fset;
+    state.following[++state.fsp] = fset;
    }
 
   /** Return List<String> of the rules in your parser instance
@@ -568,14 +562,14 @@ abstract class BaseRecognizer {
     return rules;
   }
   
-  int getBacktrackingLevel() => _state.backtracking;
+  int getBacktrackingLevel() => state.backtracking;
 
   void setBacktrackingLevel(int n) { 
-    _state.backtracking = n; 
+    state.backtracking = n; 
   }
   
   /** Return whether or not a backtracking attempt failed. */
-  bool failed() => _state.failed;
+  bool failed() => state.failed;
 
   /** Used to print out token names like ID during debugging and
    *  error reporting.  The generated parsers implement a method
@@ -614,9 +608,9 @@ abstract class BaseRecognizer {
    *  tosses out data after we commit past input position i.
    */
   int getRuleMemoization(int ruleIndex, int ruleStartIndex) {
-    if (_state.ruleMemo[ruleIndex] == null )
-      _state.ruleMemo[ruleIndex] = new HashMap();
-    int stopIndexI = _state.ruleMemo[ruleIndex][ruleStartIndex];
+    if (state.ruleMemo[ruleIndex] == null )
+      state.ruleMemo[ruleIndex] = new HashMap();
+    int stopIndexI = state.ruleMemo[ruleIndex][ruleStartIndex];
     if (stopIndexI == null)
       return MEMO_RULE_UNKNOWN;
     return stopIndexI;
@@ -636,7 +630,7 @@ abstract class BaseRecognizer {
     if (stopIndex == MEMO_RULE_UNKNOWN)
       return false;
     if (stopIndex == MEMO_RULE_FAILED)
-      _state.failed = true;
+      state.failed = true;
     else 
       input.seek(stopIndex + 1);
     return true;
@@ -646,20 +640,20 @@ abstract class BaseRecognizer {
   *  successfully.
   */
   void memoize(IntStream input, int ruleIndex, int ruleStartIndex) {
-    int stopTokenIndex = _state.failed ? MEMO_RULE_FAILED : input.index - 1;
-    if (_state.ruleMemo == null)
+    int stopTokenIndex = state.failed ? MEMO_RULE_FAILED : input.index - 1;
+    if (state.ruleMemo == null)
       print("!!!!!!!!! memo array is null for ${grammarFileName}");
-    if (ruleIndex >= _state.ruleMemo.length)
-      print("!!!!!!!!! memo size is ${_state.ruleMemo.length}, but rule index is $ruleIndex");
-    if (_state.ruleMemo[ruleIndex] != null)
+    if (ruleIndex >= state.ruleMemo.length)
+      print("!!!!!!!!! memo size is ${state.ruleMemo.length}, but rule index is $ruleIndex");
+    if (state.ruleMemo[ruleIndex] != null)
       state.ruleMemo[ruleIndex][ruleStartIndex] =  stopTokenIndex;
   }
 
   /** return how many rule/input-index pairs there are in total. */
   int get ruleMemoizationCacheSize {
     int n = 0;
-    for (int i = 0; _state.ruleMemo != null && i < _state.ruleMemo.length; i++) {
-      Map ruleMap = _state.ruleMemo[i];
+    for (int i = 0; state.ruleMemo != null && i < state.ruleMemo.length; i++) {
+      Map ruleMap = state.ruleMemo[i];
       if (ruleMap != null)
         n += ruleMap.length;
     }
@@ -669,16 +663,16 @@ abstract class BaseRecognizer {
   void traceIn(String ruleName, int ruleIndex, [Object inputSymbol])  {
     print("enter $ruleName $inputSymbol");
     if (state.backtracking > 0) {
-      print(" backtracking=${_state.backtracking}");
+      print(" backtracking=${state.backtracking}");
     }
     print(Platform.operatingSystem == "windows" ? "\r\n" : "\n");
   }
 
   void traceOut(String ruleName, int ruleIndex, [Object inputSymbol]) {
     print("exit $ruleName $inputSymbol");
-    if (_state.backtracking > 0) {
-      print(" backtracking=${_state.backtracking}");
-      if (_state.failed) print(" failed");
+    if (state.backtracking > 0) {
+      print(" backtracking=${state.backtracking}");
+      if (state.failed) print(" failed");
       else print(" succeeded");
     }
     print(Platform.operatingSystem == "windows" ? "\r\n" : "\n");

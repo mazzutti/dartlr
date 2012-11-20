@@ -6,9 +6,9 @@ part of dartlr;
 
 class NoViableAltException extends RecognitionException {
   
-  String grammarDecisionDescription;
-  int decisionNumber;
-  int stateNumber;
+  final String grammarDecisionDescription;
+  final int decisionNumber;
+  final int stateNumber;
 
   NoViableAltException([this.grammarDecisionDescription, 
       this.decisionNumber, this.stateNumber, input]) : super(input);

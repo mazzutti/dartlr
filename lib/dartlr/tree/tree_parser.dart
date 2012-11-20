@@ -14,8 +14,8 @@ class TreeParser extends BaseRecognizer {
   static const int UP = Token.UP;
   static const String dotdot = ".*[^.]\\.\\.[^.].*";
   static const String doubleEtc = ".*\\.\\.\\.\\s+\\.\\.\\..*";
-  static RegExp dotdotPattern = new RegExp(dotdot);
-  static RegExp doubleEtcPattern = new RegExp(doubleEtc);
+  static final RegExp dotdotPattern = new RegExp(dotdot);
+  static final RegExp doubleEtcPattern = new RegExp(doubleEtc);
   
   TreeNodeStream _input;
 
@@ -38,9 +38,9 @@ class TreeParser extends BaseRecognizer {
   
   String get sourceName => _input.sourceName;
 
-  Object _getCurrentInputSymbol(IntStream input) => _input.LT(1);
+  _getCurrentInputSymbol(IntStream input) => _input.LT(1);
 
-  Object _getMissingSymbol(IntStream input, 
+  _getMissingSymbol(IntStream input, 
       RecognitionException e, int expectedTokenType, BitSet follow) {
     String tokenText = "<missing ${tokenNames[expectedTokenType]}>";
     TreeAdaptor adaptor = (e.input as TreeNodeStream).treeAdaptor;
@@ -54,7 +54,7 @@ class TreeParser extends BaseRecognizer {
   void matchAny([IntStream input]) {
     state.errorRecovery = false;
     state.failed = false;
-    Object look = _input.LT(1);
+    var look = _input.LT(1);
     if (_input.treeAdaptor.getChildCount(look) == 0) {
       _input.consume();
       return;
@@ -77,7 +77,7 @@ class TreeParser extends BaseRecognizer {
   *  plus we want to alter the exception type.  Don't try to recover
   *  from tree parser errors inline...
     */
-  Object _recoverFromMismatchedToken(IntStream input, int ttype, BitSet follow) {
+  _recoverFromMismatchedToken(IntStream input, int ttype, BitSet follow) {
     throw new MismatchedTreeNodeException(ttype, input);
   }
   
@@ -119,7 +119,7 @@ class TreeParser extends BaseRecognizer {
   }
 
   static bool getInContext(TreeAdaptor adaptor, 
-      List<String> tokenNames, Object t, String context) {
+      List<String> tokenNames, t, String context) {
     if (dotdotPattern.hasMatch(context))
       throw new ArgumentError("invalid syntax: ..");
     if (doubleEtcPattern.hasMatch(context))
@@ -133,7 +133,7 @@ class TreeParser extends BaseRecognizer {
       if (nodes[ni] == "...") {
         if (ni == 0) return true;
         String goal = nodes[ni-1];
-        Object ancestor = _getAncestor(adaptor, tokenNames, t, goal);
+        var ancestor = _getAncestor(adaptor, tokenNames, t, goal);
         if ( ancestor==null ) return false;
         t = ancestor;
         ni--;
@@ -150,7 +150,7 @@ class TreeParser extends BaseRecognizer {
   }
 
   /** Helper for static getInContext */
-  static Object _getAncestor(TreeAdaptor adaptor, List<String> tokenNames, Object t, String goal) {
+  static _getAncestor(TreeAdaptor adaptor, List<String> tokenNames, t, String goal) {
     while (t != null ) {
       String name = tokenNames[adaptor.getType(t)];
       if (name == goal) return t;
@@ -159,12 +159,12 @@ class TreeParser extends BaseRecognizer {
     return null;
   }
 
-  void traceIn(String ruleName, int ruleIndex, [Object inputSymbol])  {
+  void traceIn(String ruleName, int ruleIndex, [inputSymbol])  {
     if(inputSymbol == null) inputSymbol = _input.LT(1);
     super.traceIn(ruleName, ruleIndex, inputSymbol);
   }
 
-  void traceOut(String ruleName, int ruleIndex, [Object inputSymbol])  {
+  void traceOut(String ruleName, int ruleIndex, [inputSymbol])  {
     if(inputSymbol == null) inputSymbol = _input.LT(1);
     super.traceOut(ruleName, ruleIndex, inputSymbol);
   }
