@@ -13,7 +13,7 @@ class Profiler extends BlankDebugEventListener {
   static final String newline = 
       (Platform.operatingSystem == "windows") ? "\r\n" : "\n";
 
-  static bool dump = false;
+  static const bool dump = false;
   static const String Version = "3";
   static const String RUNTIME_STATS_FILENAME = "runtime.stats";
 
@@ -134,7 +134,7 @@ class Profiler extends BlankDebugEventListener {
 
   void consumeToken(Token token) {
     if(dump) print("consume token $token");
-    if(!inDecision()) {
+    if(!inDecision) {
       stats.numTokens++;
       return;
     }
@@ -150,15 +150,15 @@ class Profiler extends BlankDebugEventListener {
         "${d.decision.ruleName}-${d.decision.decision} start index ${d.startIndex}");   
   }
 
-  bool inDecision() => _decisionStack.length > 0;
+  bool get inDecision => _decisionStack.length > 0;
 
   void consumeHiddenToken(Token token) {
-    if(!inDecision()) 
+    if(!inDecision) 
       stats.numHiddenTokens++;
   }
 
   void LT(int i, Token t) {
-    if(inDecision() && i > 0) {
+    if(inDecision && i > 0) {
       DecisionEvent d = _currentDecision;
       if(dump) 
         print("LT($i)=$t index ${t.tokenIndex} relative to "
@@ -224,7 +224,7 @@ class Profiler extends BlankDebugEventListener {
 
   void semanticPredicate(bool result, String predicate) {
     stats.numSemanticPredicates++;
-    if(inDecision()) {
+    if(inDecision) {
       DecisionEvent _d = _currentDecision;
       _d.evalSemPred = true;
       _d.decision.numSemPredEvals++;
