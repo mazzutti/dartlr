@@ -16,7 +16,7 @@ class RecognizerSharedState {
    */
   List<BitSet> following;
   
-  int _fsp = -1;
+  int fsp = -1;
   
   /** This is true when we see an error and before having successfully
    *  matched a token.  Prevents generation of more than one error message
@@ -85,7 +85,7 @@ class RecognizerSharedState {
   /** You can set the text for the current token to override what is in
    *  the input char buffer.
    */
-  String _text;
+  String text;
 
   RecognizerSharedState() {
     following = new List<BitSet>(BaseRecognizer.INITIAL_FOLLOW_STACK_SIZE);
@@ -96,7 +96,7 @@ class RecognizerSharedState {
     if (following.length < state.following.length)
         following = new List<BitSet>(state.following.length);
     Arrays.copy(state.following, 0, following, 0, state.following.length);
-    _fsp = state.fsp;
+    fsp = state.fsp;
     errorRecovery = state.errorRecovery;
     lastErrorIndex = state.lastErrorIndex;
     failed = state.failed;
@@ -109,19 +109,7 @@ class RecognizerSharedState {
     tokenStartCharPositionInLine = state.tokenStartCharPositionInLine;
     channel = state.channel;
     type = state.type;
-    _text = state.text;
+    text = state.text;
   }
-  
-  int get fsp => _fsp;
-  
-  void set fsp(int i) {
-    _fsp = i;
-  }
-  
-  String get text => _text;
-  
-  void set text(String t) {
-    _text = t;
-  }  
 }
 
