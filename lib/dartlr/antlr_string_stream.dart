@@ -40,12 +40,13 @@ class ANTLRStringStream implements CharStream {
   /** What is name or source of this char stream? */
   String _name;
 
-  /** Copy data in string to a local char array */
-  ANTLRStringStream([String input]) {
-    if(?input) {
-      _data = input.charCodes;
-      _n = input.length;
-    }
+  /** Copy data in string to a local char array
+   * Throws an [AssertionError] if input is null. 
+   */
+  ANTLRStringStream([String input=""]) {
+    if(input == null) throw new ArgumentError("input must not be null");
+    _data = input.charCodes;
+    _n = input.length;
   }
   
   ANTLRStringStream.fromList(List<int> data, int numberOfActualCharsInArray) {    
