@@ -12,9 +12,7 @@ class ANTLRReaderStream extends ANTLRStringStream {
   static const int READ_BUFFER_SIZE = 1024;
   static const int INITIAL_BUFFER_SIZE = 1024;
 
-  ANTLRReaderStream(InputStream r, [int size = 0, int readChunkSize = 0]) {
-    if(size == 0) size = INITIAL_BUFFER_SIZE;
-    if(readChunkSize == 0) size = READ_BUFFER_SIZE;
+  ANTLRReaderStream(InputStream r, [int size = INITIAL_BUFFER_SIZE, int readChunkSize = READ_BUFFER_SIZE]) {
     load(r, size, readChunkSize);
   }
 
