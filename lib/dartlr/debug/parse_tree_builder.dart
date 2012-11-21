@@ -46,7 +46,7 @@ class ParseTreeBuilder extends BlankDebugEventListener {
   void exitRule(String ruleName, [String grammarFileName]) {
     if (backtracking > 0) return;
     ParseTree ruleNode = callStack.last;
-    if (ruleNode.getChildCount() == 0)
+    if (ruleNode.childCount == 0)
       ruleNode.addChild(epsilonNode());
     callStack.removeLast();    
   }
