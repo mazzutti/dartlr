@@ -35,7 +35,7 @@ class CommonTokenStream extends BufferedTokenStream {
   }
 
   /** Always leave p on an on-channel token. */
-  void consume() {
+  consume() {
     if (_p == -1) _setup();
     _p++;
     _sync(_p);
@@ -94,12 +94,12 @@ class CommonTokenStream extends BufferedTokenStream {
     return i;
   }
 
-  void reset() {
+  reset() {
     super.reset();
     _p = _skipOffTokenChannels(0);
   }
 
-  void _setup() {
+  _setup() {
     _p = 0;
     _sync(0);
     int i = 0;
@@ -123,7 +123,7 @@ class CommonTokenStream extends BufferedTokenStream {
   }
 
   /** Reset this token stream by setting its token source. */
-  void set tokenSource(TokenSource tokenSource) {
+  set tokenSource(TokenSource tokenSource) {
     super.tokenSource = tokenSource;
     _channel = Token.DEFAULT_CHANNEL;
   }

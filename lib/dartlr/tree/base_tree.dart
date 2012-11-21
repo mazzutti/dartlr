@@ -28,12 +28,12 @@ abstract class BaseTree extends Tree {
   /** BaseTree doesn't track child indexes. */
   int get childIndex => 0;
   
-  void set childIndex(int index){}
+  set childIndex(int index){}
 
   /** BaseTree doesn't track parent pointers. */
   Tree get parent => null; 
   
-  void set parent(Tree t) {}
+  set parent(Tree t) {}
   
   int get line => 0;
 
@@ -68,12 +68,12 @@ abstract class BaseTree extends Tree {
   *  and child isNil then this routine moves children to t via
   *  t.children = child.children; i.e., without copying the array.
   */
-  void addChild(Tree t) {
+  addChild(Tree t) {
     if (t == null) return;
     BaseTree childTree = t;
     if ( childTree.isNil() ) {
       if (_children != null && _children == childTree.children)
-        throw new Exception("attempt to add child list to itself");     
+        throw new ArgumentError("attempt to add child list to itself");     
       if (childTree.children != null) {
         if (children != null) {
           int n = childTree.children.length;
@@ -100,14 +100,14 @@ abstract class BaseTree extends Tree {
   }
 
   /** Add all elements of kids list as children of this node */
-  void addChildren(List kids) {
+  addChildren(List kids) {
     for (int i = 0; i < kids.length; i++) {
       Tree t = kids[i];
       addChild(t);
     }
   }
 
-  void setChild(int i, Tree t) {
+  setChild(int i, Tree t) {
     if (t == null) return; 
     if (t.isNil())
       throw new ArgumentError("Can't set single child to a list");
@@ -122,13 +122,13 @@ abstract class BaseTree extends Tree {
     i+1..n-1 to the right one position. Set parent / indexes properly
     but does NOT collapse nil-rooted t's that come in here like addChild.
  */
-  void insertChild(int i, Object t) {
+  insertChild(int i, t) {
     if (_children == null ) return;
     _children.insertRange(i, 1, t);    
     freshenParentAndChildIndexes(i);
   }
 
-  Object deleteChild(int i) {
+  deleteChild(int i) {
     if (_children == null) return null;
     Tree killed = _children[i];
     _children.removeRange(i, 1);    
@@ -141,7 +141,7 @@ abstract class BaseTree extends Tree {
    *  For huge child lists, inserting children can force walking rest of
    *  children to set their childindex; could be slow.
    */
-  void replaceChildren(int startChildIndex, int stopChildIndex, Object t) {
+  replaceChildren(int startChildIndex, int stopChildIndex, t) {
     if (_children == null )
       throw new ArgumentError("indexes invalid; no children in list");
     int replacingHowMany = stopChildIndex - startChildIndex + 1;
@@ -186,7 +186,7 @@ abstract class BaseTree extends Tree {
   } 
 
   /** Set the parent and child index values for all child of t */
-  void freshenParentAndChildIndexes([int offset = 0]) {
+  freshenParentAndChildIndexes([int offset = 0]) {
     for (int c = offset; c < childCount; c++) {
       this[c]
         ..childIndex = c
@@ -194,7 +194,7 @@ abstract class BaseTree extends Tree {
     }
   }
   
-  void freshenParentAndChildIndexesDeeply([int offset = 0]) {
+  freshenParentAndChildIndexesDeeply([int offset = 0]) {
     for (int c = offset; c < childCount; c++) {
       this[c]
         ..childIndex = c
@@ -203,11 +203,11 @@ abstract class BaseTree extends Tree {
     }
   }
 
-  void sanityCheckParentAndChildIndexes([Tree parent = null, int i = -1]) {
+  sanityCheckParentAndChildIndexes([Tree parent = null, int i = -1]) {
     if (parent != this.parent)
-      throw new Exception("parents don't match; expected $parent found ${parent}");
+      throw new ArgumentError("parents don't match; expected $parent found ${parent}");
     if (i != childIndex)
-      throw new Exception("child indexes don't match; expected $i found ${childIndex}");
+      throw new ArgumentError("child indexes don't match; expected $i found ${childIndex}");
     for (int c = 0; c < childCount; c++) {
       CommonTree child = getChild(c);
       child.sanityCheckParentAndChildIndexes(this, c);

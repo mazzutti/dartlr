@@ -19,7 +19,7 @@ class SerializedGrammar {
     input.closeSync();
   }
 
-  void _readFile(RandomAccessFile input) {
+  _readFile(RandomAccessFile input) {
       String cookie = _readString(input); 
       if (!(cookie == COOKIE)) throw new FileIOException("not a serialized grammar file");
       int version = input.readByteSync();

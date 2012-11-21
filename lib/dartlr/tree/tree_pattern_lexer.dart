@@ -100,7 +100,7 @@ class TreePatternLexer {
     return EOF;
   }
 
-  void _consume() {
+  _consume() {
     _p++;
     if (_p >= _n)
       _c = EOF;

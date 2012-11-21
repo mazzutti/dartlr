@@ -20,149 +20,149 @@ class DebugEventHub implements DebugEventListener {
   List get listeners => _listeners; 
 
   /** Add another listener to broadcast events too.*/
-  void addListener(DebugEventListener listener) {
+  addListener(DebugEventListener listener) {
     _listeners.add(listener);
   }
   
   
-  void enterRule(String ruleName, [String grammarFileName]) {
+  enterRule(String ruleName, [String grammarFileName]) {
     _listeners.forEach((listener) 
       => listener.enterRule(ruleName, grammarFileName));    
   }
 
-  void exitRule(String ruleName, [String grammarFileName]) {
+  exitRule(String ruleName, [String grammarFileName]) {
     _listeners.forEach((listener) 
       => listener.exitRule(ruleName, grammarFileName));
   }
 
-  void enterAlt(int alt) {
+  enterAlt(int alt) {
     _listeners.forEach((listener) 
       => listener.enterAlt(alt));
   }
 
-  void enterSubRule(int decisionNumber) {
+  enterSubRule(int decisionNumber) {
     _listeners.forEach((listener) 
       => listener.enterSubRule(decisionNumber));
   }
 
-  void exitSubRule(int decisionNumber) {
+  exitSubRule(int decisionNumber) {
     _listeners.forEach((listener) 
       => listener.exitSubRule(decisionNumber));
   }
 
-  void enterDecision(int decisionNumber, bool couldBacktrack) {
+  enterDecision(int decisionNumber, bool couldBacktrack) {
     _listeners.forEach((listener) 
       => listener.enterDecision(decisionNumber, couldBacktrack));
   }
 
-  void exitDecision(int decisionNumber) {
+  exitDecision(int decisionNumber) {
     _listeners.forEach((listener) 
       => listener.exitDecision(decisionNumber));
   }
 
-  void location(int line, int pos) {
+  location(int line, int pos) {
     _listeners.forEach((listener) 
       => listener.location(line, pos));
   }
 
-  void consumeToken(Token token) {
+  consumeToken(Token token) {
     _listeners.forEach((listener) 
       => listener.consumeToken(token));
   }
 
-  void consumeHiddenToken(Token token) {
+  consumeHiddenToken(Token token) {
     _listeners.forEach((listener) 
       => listener.consumeHiddenToken(token));
   }
 
-  void LT(int index, Object t) {
+  LT(int index, t) {
     _listeners.forEach((listener) 
       => listener.LT(index, t));
   }
 
-  void mark(int index) {
+  mark(int index) {
     _listeners.forEach((listener) 
       => listener.mark(index));
   }
 
-  void rewind([int marker]) {
+  rewind([int marker]) {
     _listeners.forEach((listener) 
       => listener.rewind(marker));
   }
 
-  void beginBacktrack(int level) {
+  beginBacktrack(int level) {
     _listeners.forEach((listener) 
       => listener.beginBacktrack(level));
   }
 
-  void endBacktrack(int level, bool successful) {
+  endBacktrack(int level, bool successful) {
     _listeners.forEach((listener) 
       => listener.endBacktrack(level, successful));
   }
 
-  void recognitionException(RecognitionException e) {
+  recognitionException(RecognitionException e) {
     _listeners.forEach((listener) 
       => listener.recognitionException(e));
   }
 
-  void beginResync() {
+  beginResync() {
     _listeners.forEach((listener) 
       => listener.beginResync());
   }
 
-  void endResync() {
+  endResync() {
     _listeners.forEach((listener) 
       => listener.endResync());
   }
 
-  void semanticPredicate(bool result, String predicate) {
+  semanticPredicate(bool result, String predicate) {
     _listeners.forEach((listener) 
       => listener.semanticPredicate(result, predicate));
   }
 
-  void commence() {
+  commence() {
     _listeners.forEach((listener) 
       => listener.commence());
   }
 
-  void terminate() {
+  terminate() {
     _listeners.forEach((listener) 
       => listener.terminate());
   }
 
-  void consumeNode(Object t) {
+  consumeNode(t) {
     _listeners.forEach((listener) 
       => listener.consumeNode(t));
   }
 
   
 
-  void nilNode(Object t) {
+  nilNode(t) {
     _listeners.forEach((listener) 
       => listener.nilNode(t));    
   }
 
-  void errorNode(Object t) {
+  errorNode(t) {
     _listeners.forEach((listener) 
       => listener.errorNode(t));    
   }
 
-  void createNode(Object node, [Token token]) {
+  createNode(node, [Token token]) {
     _listeners.forEach((listener) 
       => listener.createNode(node, token));    
   }
 
-  void becomeRoot(Object newRoot, Object oldRoot) {
+  becomeRoot(newRoot, oldRoot) {
     _listeners.forEach((listener) 
       => listener.becomeRoot(newRoot, oldRoot));    
   }
 
-  void addChild(Object root, Object child) {
+  addChild(root, child) {
     _listeners.forEach((listener) 
       => listener.addChild(root, child));
   }
 
-  void setTokenBoundaries(Object t, int tokenStartIndex, int tokenStopIndex) {
+  setTokenBoundaries(t, int tokenStartIndex, int tokenStopIndex) {
     _listeners.forEach((listener) 
       => listener.setTokenBoundaries(t, tokenStartIndex, tokenStopIndex));
   }

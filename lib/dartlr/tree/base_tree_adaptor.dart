@@ -10,7 +10,7 @@ abstract class BaseTreeAdaptor implements TreeAdaptor {
   Map _treeToUniqueIDMap;
   int _uniqueNodeID = 1;
 
-  Object nil() => createTreeNode(null);
+  nil() => createTreeNode(null);
 
   /** create tree node that holds the start and stop tokens associated
    *  with an error.
@@ -23,7 +23,7 @@ abstract class BaseTreeAdaptor implements TreeAdaptor {
    *  You don't have to subclass [CommonErrorNode]; you will likely need to
    *  subclass your own tree node class to avoid class cast exception.
    */
-  Object errorNode(TokenStream input, 
+  errorNode(TokenStream input, 
                    Token start, 
                    Token stop, 
                    RecognitionException e) {
@@ -31,21 +31,21 @@ abstract class BaseTreeAdaptor implements TreeAdaptor {
     return t;
   }
 
-  bool isNil(Object tree) => (tree as Tree).isNil();
+  bool isNil(tree) => (tree as Tree).isNil();
 
   /** This is generic in the sense that it will work with any kind of
    *  tree (not just [Tree] interface).  It invokes the adaptor routines
    *  not the tree node routines to do the construction.  
    */
-  Object dupTree(Object t, [Object parent = null]) {
+  dupTree(t, [parent = null]) {
     if (t == null) return null; 
-    Object newTree = dupNode(t);
+    var newTree = dupNode(t);
     setChildIndex(newTree, getChildIndex(t));
     setParent(newTree, parent);
     int n = getChildCount(t);
     for (int i = 0; i < n; i++) {
-      Object child = getChild(t, i);
-      Object newSubTree = dupTree(child, t);
+      var child = getChild(t, i);
+      var newSubTree = dupTree(child, t);
       addChild(newTree, newSubTree);
     }
     return newTree;
@@ -58,7 +58,7 @@ abstract class BaseTreeAdaptor implements TreeAdaptor {
   *  make sure that this is consistent with have the user will build
   *  ASTs.
   */
-  void addChild(t, child) {
+  addChild(t, child) {
     if (t!= null && child != null) t.addChild(child);
   }
 
@@ -97,7 +97,7 @@ abstract class BaseTreeAdaptor implements TreeAdaptor {
         int nc = newRootTree.childCount;
         if (nc == 1) newRootTree = newRootTree.getChild(0);
         else if (nc > 1) {
-        throw new Exception("more than one node as root (TODO: make exception hierarchy)");
+        throw new StateError("more than one node as root");
       }
     }
     newRootTree.addChild(oldRootTree);
@@ -119,11 +119,11 @@ abstract class BaseTreeAdaptor implements TreeAdaptor {
     return r;
   }
 
-  Object becomeRootFormToken(Token newRoot, Object oldRoot) {
+  becomeRootFormToken(Token newRoot, oldRoot) {
     return becomeRoot(createTreeNode(newRoot), oldRoot);
   }
   
-  Object create(int tokenType,  from, [String text]) {
+  create(int tokenType,  from, [String text]) {
     if(from is String){
       Token fromToken = createToken(tokenType, from);
       return createTreeNode(fromToken);
@@ -143,33 +143,27 @@ abstract class BaseTreeAdaptor implements TreeAdaptor {
     }
   }
 
-  Object createFromTokenType(int tokenType, String text) {
+  createFromTokenType(int tokenType, String text) {
     Token fromToken = createToken(tokenType, text);
     Tree t = createTreeNode(fromToken);
     return t;
   }
 
   int getType(t) => t.type;
-
-  void setType(t, int type) {
-    throw new Exception("don't know enough about Tree node");
-  }
+  setType(t, int type) =>throw new UnimplementedError("don't know enough about Tree node");
 
   String getText(t) => t.text;
+  setText(t, String text) =>throw new UnimplementedError("don't know enough about Tree node");
 
-  void setText(t, String text) {
-    throw new Exception("don't know enough about Tree node");
-  }
-
-  Object getChild(t, int i) => t.getChild(i);
+  getChild(t, int i) => t.getChild(i);
 
   setChild(t, int i, child) => t.setChild(i,child);
 
-  Object deleteChild(t, int i) => t.deleteChild(i);
+  deleteChild(t, int i) => t.deleteChild(i);
 
   int getChildCount(t) => t.childCount;
 
-  int getUniqueID(Object node) {
+  int getUniqueID(node) {
     if (_treeToUniqueIDMap == null )
        _treeToUniqueIDMap = new HashMap();
     int prevID = _treeToUniqueIDMap[node];

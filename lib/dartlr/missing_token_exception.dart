@@ -9,7 +9,7 @@ part of dartlr;
  */
 class MissingTokenException extends MismatchedTokenException {
   
-  final Object inserted;
+  final inserted;
  
   MissingTokenException([this.inserted, 
                          int expecting, 

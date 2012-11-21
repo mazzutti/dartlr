@@ -6,5 +6,5 @@ part of dartlr;
 
 class ParserRuleReturnScope extends RuleReturnScope {
   Token start, stop;
-  Object tree;
+  var tree;
 }

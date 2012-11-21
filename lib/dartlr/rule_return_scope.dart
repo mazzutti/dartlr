@@ -8,21 +8,21 @@ part of dartlr;
 abstract class RuleReturnScope {
   
   /** Return the start token or tree */
-  Object get start =>  null;
+  get start =>  null;
  
   /** Return the stop token or tree */
-  Object get stop => null;
+  get stop => null;
   
   /** Has a value potentially if output=AST; */
-  Object get tree => null;
+  get tree => null;
   
-  Object get template =>  null;
+  get template =>  null;
   
-  void set start(Object s) {}
+  set start(s) {}
   
-  void set stop(Object s)  {}
+  set stop(s)  {}
   
-  void set tree(Object t) {}
+  set tree(t) {}
   
 }
 

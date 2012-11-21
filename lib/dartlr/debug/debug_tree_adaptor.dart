@@ -23,111 +23,111 @@ class DebugTreeAdaptor implements TreeAdaptor {
 
   DebugTreeAdaptor(this._dbg, this._adaptor);
 
-  Object createTreeNode(Token payload) {
+  createTreeNode(Token payload) {
     if (payload.tokenIndex < 0)      
       return create(payload.type, payload.text);
-    Object node = _adaptor.createTreeNode(payload);
+    var node = _adaptor.createTreeNode(payload);
     _dbg.createNode(node, payload);
     return node;
   }
 
-  Object errorNode(TokenStream input, 
+  errorNode(TokenStream input, 
        Token start, Token stop, RecognitionException e) {
-    Object node = _adaptor.errorNode(input, start, stop, e);
+    var node = _adaptor.errorNode(input, start, stop, e);
     if (node != null)
       _dbg.errorNode(node);   
     return node;
   }
 
-  Object dupTree(Object tree) {
-    Object t = _adaptor.dupTree(tree);
+  dupTree(tree) {
+    var t = _adaptor.dupTree(tree);
     _simulateTreeConstruction(t);
     return t;
   }
 
-  void _simulateTreeConstruction(Object t) {
+  _simulateTreeConstruction(t) {
     _dbg.createNode(t);
     int n = _adaptor.getChildCount(t);
     for (int i=0; i < n; i++) {
-      Object child = _adaptor.getChild(t, i);
+      var child = _adaptor.getChild(t, i);
       _simulateTreeConstruction(child);
       _dbg.addChild(t, child);
     }
   }
 
-  Object dupNode(Object treeNode) {
-    Object d = _adaptor.dupNode(treeNode);
+  dupNode(treeNode) {
+    var d = _adaptor.dupNode(treeNode);
     _dbg.createNode(d);
     return d;
   }
 
-  Object nil() {
-    Object node = _adaptor.nil();
+  nil() {
+    var node = _adaptor.nil();
     _dbg.nilNode(node);
     return node;
   }
 
-  bool isNil(Object tree) {
+  bool isNil(tree) {
     return _adaptor.isNil(tree);
   }
 
-  void addChild(Object t, Object child) {
+  addChild(t, child) {
     if (t == null || child == null) return;
     t = (t is Token) ? createTreeNode(child) : t;
     _adaptor.addChild(t,child);
     _dbg.addChild(t, child);
   }
 
-  Object becomeRoot(Object newRoot, Object oldRoot) {    
-    Object n = _adaptor.becomeRoot(newRoot, oldRoot);
+  becomeRoot(newRoot, oldRoot) {    
+    var n = _adaptor.becomeRoot(newRoot, oldRoot);
     _dbg.becomeRoot(newRoot, oldRoot);    
     return n;
   }
   
-  Object becomeRootFormToken(Token newRoot, Object oldRoot) {
-    Object n = createTreeNode(newRoot);
+  becomeRootFormToken(Token newRoot, oldRoot) {
+    var n = createTreeNode(newRoot);
     _adaptor.becomeRoot(n, oldRoot);
     _dbg.becomeRoot(newRoot, oldRoot);
     return n;
   }
 
-  Object rulePostProcessing(Object root) {
+  rulePostProcessing(root) {
     return _adaptor.rulePostProcessing(root);
   }
 
-  Object create(int tokenType, fromToken, [String text]) {
-    Object node = _adaptor.create(tokenType, fromToken, text);
+  create(int tokenType, fromToken, [String text]) {
+    var node = _adaptor.create(tokenType, fromToken, text);
     _dbg.createNode(node);
     return node;
   }
   
-  Object createFromTokenType(int tokenType, String text) {
-    Object node = _adaptor.createFromTokenType(tokenType, text);
+  createFromTokenType(int tokenType, String text) {
+    var node = _adaptor.createFromTokenType(tokenType, text);
     _dbg.createNode(node);
     return node;
   }
 
-  int getType(Object t) {
+  int getType(t) {
     return _adaptor.getType(t);
   }
 
-  void setType(Object t, int type) {
+  setType(t, int type) {
     _adaptor.setType(t, type);
   }
 
-  String getText(Object t) {
+  String getText(t) {
     return _adaptor.getText(t);
   }
 
-  void setText(Object t, String text) {
+  setText(t, String text) {
     _adaptor.setText(t, text);
   }
 
-  Token getToken(Object t) {
+  Token getToken(t) {
     return _adaptor.getToken(t);
   }
 
-  void setTokenBoundaries(Object t, Token startToken, Token stopToken) {
+  setTokenBoundaries(t, Token startToken, Token stopToken) {
     _adaptor.setTokenBoundaries(t, startToken, stopToken);
     if ( t!=null && startToken != null && stopToken != null ) {
       _dbg.setTokenBoundaries(
@@ -135,57 +135,57 @@ class DebugTreeAdaptor implements TreeAdaptor {
     }
   }
 
-  int getTokenStartIndex(Object t) {
+  int getTokenStartIndex(t) {
     return _adaptor.getTokenStartIndex(t);
   }
 
-  int getTokenStopIndex(Object t) {
+  int getTokenStopIndex(t) {
     return _adaptor.getTokenStopIndex(t);
   }
 
-  Object getChild(Object t, int i) {
+  getChild(t, int i) {
     return _adaptor.getChild(t, i);
   }
 
-  void setChild(Object t, int i, Object child) {
+  setChild(t, int i, child) {
     _adaptor.setChild(t, i, child);
   }
 
-  Object deleteChild(Object t, int i) {
+  deleteChild(t, int i) {
     return deleteChild(t, i);
   }
 
-  int getChildCount(Object t) {
+  int getChildCount(t) {
     return _adaptor.getChildCount(t);
   }
 
-  int getUniqueID(Object node) {
+  int getUniqueID(node) {
     return _adaptor.getUniqueID(node);
   }
 
-  Object getParent(Object t) {
+  getParent(t) {
     return _adaptor.getParent(t);
   }
 
-  int getChildIndex(Object t) {
+  int getChildIndex(t) {
     return _adaptor.getChildIndex(t);
   }
 
-  void setParent(Object t, Object parent) {
+  setParent(t, parent) {
     _adaptor.setParent(t, parent);
   }
 
-  void setChildIndex(Object t, int index) {
+  setChildIndex(t, int index) {
     _adaptor.setChildIndex(t, index);
   }
 
-  void replaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t) {
+  replaceChildren(parent, int startChildIndex, int stopChildIndex, t) {
     _adaptor.replaceChildren(parent, startChildIndex, stopChildIndex, t);
   }
 
   DebugEventListener get debugListener => _dbg;
 
-  void set debugListener(DebugEventListener dbg) {
+  set debugListener(DebugEventListener dbg) {
     _dbg = dbg;
   }
 

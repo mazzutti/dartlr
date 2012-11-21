@@ -24,13 +24,13 @@ class TreeParser extends BaseRecognizer {
   TreeParser.fromRecognizerSharedState
         (this._input, RecognizerSharedState state) : super(state);
 
-  void reset() {
+  reset() {
     super.reset(); 
     if (_input != null)
       _input.seek(0); 
   }
 
-  void set input(TreeNodeStream input) {
+  set input(TreeNodeStream input) {
     _input = input;
   }
 
@@ -51,7 +51,7 @@ class TreeParser extends BaseRecognizer {
    *  entire tree if node has children.  If children, scan until
    *  corresponding UP node.
    */
-  void matchAny([IntStream input]) {
+  matchAny([IntStream input]) {
     state.errorRecovery = false;
     state.failed = false;
     var look = _input.LT(1);
@@ -159,12 +159,12 @@ class TreeParser extends BaseRecognizer {
     return null;
   }
 
-  void traceIn(String ruleName, int ruleIndex, [inputSymbol])  {
+  traceIn(String ruleName, int ruleIndex, [inputSymbol])  {
     if(inputSymbol == null) inputSymbol = _input.LT(1);
     super.traceIn(ruleName, ruleIndex, inputSymbol);
   }
 
-  void traceOut(String ruleName, int ruleIndex, [inputSymbol])  {
+  traceOut(String ruleName, int ruleIndex, [inputSymbol])  {
     if(inputSymbol == null) inputSymbol = _input.LT(1);
     super.traceOut(ruleName, ruleIndex, inputSymbol);
   }

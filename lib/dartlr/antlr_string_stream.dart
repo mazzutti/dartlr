@@ -40,12 +40,13 @@ class ANTLRStringStream implements CharStream {
   /** What is name or source of this char stream? */
   String _name;
 
-  /** Copy data in string to a local char array */
-  ANTLRStringStream([String input]) {
-    if(?input) {
-      _data = input.charCodes;
-      _n = input.length;
-    }
+  /** Copy data in string to a local char array
+   * Throws an [AssertionError] if input is null. 
+   */
+  ANTLRStringStream([String input=""]) {
+    if(input == null) throw new ArgumentError("input must not be null");
+    _data = input.charCodes;
+    _n = input.length;
   }
   
   ANTLRStringStream.fromList(List<int> data, int numberOfActualCharsInArray) {    
@@ -69,14 +70,14 @@ class ANTLRStringStream implements CharStream {
    *  when the object was created *except* the data array is not
    *  touched.
    */
-  void reset() {
+  reset() {
     _p = 0;
     line = 1;
     charPositionInLine = 0;
     _markDepth = 0;
   }
 
-  void consume() {   
+  consume() {   
     if(_p < _n) {
       charPositionInLine++;
       if (_data[_p] == '\n'.charCodeAt(0)) {       
@@ -120,7 +121,7 @@ class ANTLRStringStream implements CharStream {
     return _markDepth;
   }
 
-  void rewind([int marker]) {
+  rewind([int marker]) {
     if(marker == null) marker = _lastMarker;
     CharStreamState state = _markers[marker]; 
     seek(state.p);
@@ -129,7 +130,7 @@ class ANTLRStringStream implements CharStream {
     release(marker);
   }
 
-  void release(int marker) {
+  release(int marker) {
     _markDepth = marker;
     _markDepth--;
   }
@@ -137,7 +138,7 @@ class ANTLRStringStream implements CharStream {
   /** consume() ahead until _p == index; can't just set _p = index as we must
    *  update line and charPositionInLine.
    */
-  void seek(int index) {
+  seek(int index) {
     if (index <= _p ) {
       _p = index;
       return;

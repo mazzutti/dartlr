@@ -34,7 +34,7 @@ class RemoteDebugEventSocketListener {
     });
   }
 
-  void _openConnection(void cb(bool success)) {
+  _openConnection(cb(bool success)) {
     try {
       channel = new Socket(machine, port);
       channel.onConnect = () { 
@@ -48,7 +48,7 @@ class RemoteDebugEventSocketListener {
     }    
   }
 
-  void _closeConnection() {
+  _closeConnection() {
     try {
       inStream = null;
       outStream.close(); 
@@ -72,7 +72,7 @@ class RemoteDebugEventSocketListener {
     }
   }
 
-  void _dispatch(String line) {   
+  _dispatch(String line) {   
     List<String> elements = getEventElements(line);   
     if(elements == null || elements[0] == null) {
       stderr.writeString("unknown debug event: $line");
@@ -337,65 +337,31 @@ class RemoteDebugEventSocketListener {
 
 class ProxyToken extends Token {
   
-  int _index;
-  int _type;
-  int _channel;
-  int _line;
-  int _charPos;
-  String _text;
+  int tokenIndex;
+  int type;
+  int channel;
+  int line;
+  int charPositionInLine;
+  String text;
   
-  ProxyToken(this._index, 
-    [this._type, this._channel,
-      this._line, this._charPos, this._text]);
+  ProxyToken(this.tokenIndex, 
+    [this.type, this.channel,
+      this.line, this.charPositionInLine, this.text]);
 
-  String get text => _text;
-  
-  void set text(String text) {
-    _text = text;
-  }
-  int get type => _type;
-  
-  void set type(int ttype) {
-    _type = ttype;
-  }
-  
-  int get line => _line;
-  
-  void set line(int line) {
-    _line = line;
-  }
-   
-  int get charPositionInLine => _charPos;
-   
-  void set charPositionInLine(int pos) {
-    _charPos = pos;
-  }
-  
-  int get channel => _channel;
-  
-  void set channel(int channel) {
-    _channel = channel;
-  }
-  
-  int get tokenIndex =>  _index;
-  
-  void set tokenIndex(int index) {
-    _index = index;
-  }
   
   CharStream get inputStream => null;
   
-  void set inputStream(CharStream input) {}
+  set inputStream(CharStream input) {}
   
   String toString() {
     String channelStr = "";
-    if(_channel != Token.DEFAULT_CHANNEL)
+    if(channel != Token.DEFAULT_CHANNEL)
       channelStr=",channel=$channel";
-    return "[${_text}<${_type}>$channelStr,"
-        "${_line}:${charPositionInLine},@${_index}]";
+    return "[${text}<${type}>$channelStr,"
+        "${line}:${charPositionInLine},@${tokenIndex}]";
   }
   
-  int get hashCode => _type + _line + _charPos;
+  int get hashCode => type + line + charPositionInLine;
 }
 
 class ProxyTree extends BaseTree {
@@ -410,9 +376,9 @@ class ProxyTree extends BaseTree {
       this.charPos = -1, this.tokenIndex = -1, this._text]);
 
   int get tokenStartIndex => tokenIndex;
-  void set tokenStartIndex(int index) {}
+  set tokenStartIndex(int index) {}
   int get tokenStopIndex => 0;
-  void set tokenStopIndex(int index) {}
+  set tokenStopIndex(int index) {}
   Tree dupNode() {return null;}
   int get type => _type;
   String get text => _text;

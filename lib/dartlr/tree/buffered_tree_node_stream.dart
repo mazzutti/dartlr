@@ -22,9 +22,9 @@ class BufferedTreeNodeStream implements TreeNodeStream {
   static const int DEFAULT_INITIAL_BUFFER_SIZE = 100;
   static const int INITIAL_CALL_STACK_SIZE = 10;
   
-  Object _down;
-  Object _up;
-  Object _eof;
+  var _down;
+  var _up;
+  var _eof;
   
   /** The complete mapping from stream index to tree node.
    *  This buffer includes pointers to DOWN, UP, and EOF nodes.
@@ -38,7 +38,7 @@ class BufferedTreeNodeStream implements TreeNodeStream {
   List _nodes;
   
   /** Pull nodes from which tree? */
-  Object _root;
+  var _root;
   
   /** IF this tree (root) was created from a token stream, track it. */
   TokenStream tokenStream;
@@ -72,12 +72,12 @@ class BufferedTreeNodeStream implements TreeNodeStream {
   /** Walk tree with depth-first-search and fill nodes buffer.
    *  Don't do DOWN, UP nodes if its a list (t is isNil).
    */
-  void _fillBuffer() {
+  _fillBuffer() {
     fillBuffer(_root);
     _p = 0;
   }
 
-  void fillBuffer([Object t]) {
+  fillBuffer([t]) {
     bool nil = treeAdaptor.isNil(t);
     if (!nil)
       _nodes.add(t);
@@ -85,7 +85,7 @@ class BufferedTreeNodeStream implements TreeNodeStream {
     if (!nil && n > 0 )
       _addNavigationNode(Token.DOWN);
     for (int c = 0; c < n; c++) {
-      Object child = treeAdaptor.getChild(t,c);
+      var child = treeAdaptor.getChild(t,c);
       fillBuffer(child);
     }
     if (!nil && n > 0)
@@ -95,23 +95,18 @@ class BufferedTreeNodeStream implements TreeNodeStream {
   /** What is the stream index for node? 0..n-1
       *  Return -1 if node not found.
       */
-  int _getNodeIndex(Object node) {
+  int _getNodeIndex(node) {
     if (_p == -1)
-      _fillBuffer();
-    for (int i = 0; i < _nodes.length; i++) {
-      Object t = _nodes[i];
-      if (t == node)
-        return i;
-    }
-    return -1;
+    _fillBuffer();
+    return _nodes.indexOf(node);
   }
 
   /** As we flatten the tree, we use UP, DOWN nodes to represent
   *  the tree structure.  When debugging we need unique nodes
   *  so instantiate new ones when _uniqueNavigationNodes is true.
   */
-  void _addNavigationNode(final int ttype) {
-    Object navNode = null;
+  _addNavigationNode(final int ttype) {
+    var navNode = null;
     if (ttype == Token.DOWN )
       if (uniqueNavigationNodes)
         navNode = treeAdaptor.createFromTokenType(Token.DOWN, "DOWN");
@@ -125,13 +120,13 @@ class BufferedTreeNodeStream implements TreeNodeStream {
     _nodes.add(navNode);
   }
 
-  Object at(int i) {
+  at(int i) {
     if (_p == -1)
       _fillBuffer();
     return _nodes[i];
   }
 
-  Object LT(int k) {
+  LT(int k) {
     if (_p == -1) _fillBuffer();
     if (k == 0) return null; 
     if (k < 0) return _LB(-k);
@@ -139,20 +134,20 @@ class BufferedTreeNodeStream implements TreeNodeStream {
     return _nodes[_p + k - 1];
   }
 
-  Object getCurrentSymbol() => LT(1);
+  getCurrentSymbol() => LT(1);
 
   /** Look backwards k nodes */
-  Object _LB(int k) {
+  _LB(int k) {
     if (k == 0) return null;
     if ((_p -k) < 0) return null;
     return _nodes[_p - k];
   }
 
-  Object get treeSource => _root;
+  get treeSource => _root;
 
   String get sourceName => tokenStream.sourceName;
 
-  void consume() {
+  consume() {
     if (_p == -1)
       _fillBuffer();
     _p++;
@@ -167,16 +162,16 @@ class BufferedTreeNodeStream implements TreeNodeStream {
     return _lastMarker;
   }
 
-  void release(int marker) {}
+  release(int marker) {}
 
   int get index => _p;
 
-  void rewind([int marker]) {
+  rewind([int marker]) {
     if(marker == null) marker = _lastMarker;
     seek(marker);
   }
 
-  void seek(int index) {
+  seek(int index) {
     if (_p == -1)
       _fillBuffer();
     _p = index;
@@ -185,7 +180,7 @@ class BufferedTreeNodeStream implements TreeNodeStream {
   /** Make stream jump to a new location, saving old location.
   *  Switch back with pop().
   */
-  void push(int index) {
+  push(int index) {
     if (_calls == null) 
       _calls = new IntArray();
     _calls.push(_p);
@@ -201,7 +196,7 @@ class BufferedTreeNodeStream implements TreeNodeStream {
     return ret;
   }
 
-  void reset() {
+  reset() {
     _p = 0;
     _lastMarker = 0;
     if (_calls != null)
@@ -220,7 +215,7 @@ class BufferedTreeNodeStream implements TreeNodeStream {
     return new _StreamIterator(_nodes, _eof);
   }
 
-  void replaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t) {
+  replaceChildren(parent, int startChildIndex, int stopChildIndex, t) {
     if (parent != null)
       treeAdaptor.replaceChildren(parent, startChildIndex, stopChildIndex, t);
   }
@@ -231,7 +226,7 @@ class BufferedTreeNodeStream implements TreeNodeStream {
       fillBuffer();
     StringBuffer buf = new StringBuffer();
     for (int i = 0; i < _nodes.length; i++) {
-      Object t = _nodes[i];
+      var t = _nodes[i];
       buf.add(" ");
       buf.add(treeAdaptor.getType(t));
     }
@@ -243,14 +238,14 @@ class BufferedTreeNodeStream implements TreeNodeStream {
       fillBuffer();
     StringBuffer buf = new StringBuffer();
     for (int i = start; i < _nodes.length && i <= stop; i++) {
-      Object t = _nodes[i];
+      var t = _nodes[i];
       buf.add(" ");
       buf.add(treeAdaptor.getToken(t));
     }
     return buf.toString();
   }
 
-  String toString([Object start, Object stop]) {
+  String toString([start, stop]) {
     print("toString");
     if (start == null || stop == null) return null;
     if (_p == -1) fillBuffer();
@@ -268,7 +263,7 @@ class BufferedTreeNodeStream implements TreeNodeStream {
         endTokenIndex = size - 2;
       return tokenStream.toRangeString(beginTokenIndex, endTokenIndex);
     }    
-    Object t = null;
+    var t = null;
     int i = 0;
     for (; i < _nodes.length; i++) {
       t = _nodes[i];
@@ -296,13 +291,13 @@ class _StreamIterator implements Iterator {
   
   int i = 0;
   List _nodes;
-  Object _eof;
+  var _eof;
   
   _StreamIterator(this._nodes, this._eof);
   
   bool get hasNext => i < _nodes.length;
 
-  Object next() {
+  next() {
     int current = i;
     i++;
     if (current < _nodes.length)
@@ -310,8 +305,6 @@ class _StreamIterator implements Iterator {
     return _eof;
   }
 
-  void remove() {
-    throw new Exception("cannot remove nodes from stream");
-  }
+  remove() => throw new UnimplementedError("cannot remove nodes from stream");
 }
 

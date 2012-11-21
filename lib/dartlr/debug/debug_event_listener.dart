@@ -7,10 +7,10 @@ part of dartlr;
 /** All debugging events that a recognizer can trigger. */
 abstract class DebugEventListener {
   
-  static final String PROTOCOL_VERSION = "2";
+  static const String PROTOCOL_VERSION = "2";
   /** serialized version of true */
-  static final int TRUE = 1;
-  static final int FALSE = 0;
+  static const int TRUE = 1;
+  static const int FALSE = 0;
   
   /** The parser has just entered a rule.  No decision has been made about
    *  which alt is predicted.  This is fired AFTER init actions have been
@@ -18,12 +18,12 @@ abstract class DebugEventListener {
    *  The grammarFileName allows composite grammars to jump around among
    *  multiple grammar files.
    */
-  void enterRule(String ruleName, [String grammarFileName]);
+  enterRule(String ruleName, [String grammarFileName]);
 
   /** Because rules can have lots of alternatives, it is very useful to
    *  know which alt you are entering.  This is 1..n for n alts.
    */
-  void enterAlt(int alt);
+  enterAlt(int alt);
 
   /** This is the last thing executed before leaving a rule.  It is
    *  executed even if an exception is thrown.  This is triggered after
@@ -32,12 +32,12 @@ abstract class DebugEventListener {
    *  The grammarFileName allows composite grammars to jump around among
    *  multiple grammar files.
    */
-  void exitRule(String ruleName, [String grammarFileName]);
+  exitRule(String ruleName, [String grammarFileName]);
 
   /** Track entry into any (...) subrule other EBNF construct */
-  void enterSubRule(int decisionNumber);
+  enterSubRule(int decisionNumber);
 
-  void exitSubRule(int decisionNumber);
+  exitSubRule(int decisionNumber);
   
   /** Every decision, fixed k or arbitrary, has an enter/exit event
    *  so that a GUI can easily track what LT/consume events are
@@ -45,25 +45,25 @@ abstract class DebugEventListener {
    *  subrule but multiple enter/exit decision events, one for each
    *  loop iteration.
    */
-  void enterDecision(int decisionNumber, bool couldBacktrack);
+  enterDecision(int decisionNumber, bool couldBacktrack);
 
-  void exitDecision(int decisionNumber);
+  exitDecision(int decisionNumber);
 
   /** An input token was consumed; matched by any kind of element.
    *  Trigger after the token was matched by things like match(), matchAny().
    */
-  void consumeToken(Token t);
+  consumeToken(Token t);
 
   /** An off-channel input token was consumed.
    *  Trigger after the token was matched by things like match(), matchAny().
    *  (unless of course the hidden token is first stuff in the input stream).
    */
-  void consumeHiddenToken(Token t);
+  consumeHiddenToken(Token t);
 
   /** The parser is going to look arbitrarily ahead; mark this location,
    *  the token stream's marker is sent in case you need it.
    */
-  void mark(int marker);
+  mark(int marker);
 
   /** After an arbitrairly long lookahead as with a cyclic [DFA] (or with
    *  any backtrack), this informs the debugger that stream should be
@@ -75,11 +75,11 @@ abstract class DebugEventListener {
    *  Do not "pop" the marker off the state.  mark(i)
    *  and rewind(i) should balance still.
    */
-  void rewind([int marker]);
+  rewind([int marker]);
   
-  void beginBacktrack(int level);
+  beginBacktrack(int level);
 
-  void endBacktrack(int level, bool successful);
+  endBacktrack(int level, bool successful);
 
   /** To watch a parser move through the grammar, the parser needs to
    *  inform the debugger what line/charPos it is passing in the grammar.
@@ -89,7 +89,7 @@ abstract class DebugEventListener {
    *  This should also allow breakpoints because the debugger can stop
    *  the parser whenever it hits this line/pos.
    */
-  void location(int line, int pos);
+  location(int line, int pos);
  
   /** A recognition exception occurred such as [NoViableAltException].  I made
    *  this a generic event so that I can alter the exception hierachy later
@@ -144,13 +144,13 @@ abstract class DebugEventListener {
    *    exitRule b
    *    terminate
    */
-  void recognitionException(RecognitionException e);
+  recognitionException(RecognitionException e);
 
   /** Indicates the recognizer is about to consume tokens to resynchronize
    *  the parser.  Any consume events from here until the recovered event
    *  are not part of the parse--they are dead tokens.
    */
-  void beginResync();
+  beginResync();
 
   /** Indicates that the recognizer has finished consuming tokens in order
    *  to resychronize.  There may be multiple beginResync/endResync pairs
@@ -160,22 +160,22 @@ abstract class DebugEventListener {
    *  but not matched to anything in grammar.  Anything between
    *  a beginResync/endResync pair was tossed out by the parser.
    */
-  void endResync();
+  endResync();
 
   /** A semantic predicate was evaluate with this result and action text */
-  void semanticPredicate(bool result, String predicate);
+  semanticPredicate(bool result, String predicate);
 
   /** Announce that parsing has begun.  Not technically useful except for
    *  sending events over a socket.
    */
-  void commence();
+  commence();
 
   /** Parsing is over; successfully or not.  Mostly useful for telling
    *  remote debugging listeners that it's time to quit.  When the rule
    *  invocation level goes to zero at the end of a rule, we are done
    *  parsing.
    */
-  void terminate();
+  terminate();
 
   /** Input for a tree parser is an AST, but we know nothing for sure
    *  about a node except its type and text (obtained from the adaptor).
@@ -185,7 +185,7 @@ abstract class DebugEventListener {
    *  the ID is not really meaningful as it's fixed--there is
    *  just one UP node and one DOWN navigation node.
    */
-  void consumeNode(Object t);
+  consumeNode(t);
 
   /** Somebody (anybody) looked ahead.  Note that this actually gets
    *  triggered by both LA and LT calls.  The debugger will want to know
@@ -194,23 +194,23 @@ abstract class DebugEventListener {
    *  ahead into a file it doesn't have so LT events must pass the token
    *  even if the info is redundant.
    */
-  void LT(int i, Object t);
+  LT(int i, t);
 
   /** A nil was created (even nil nodes have a unique ID...
    *  they are not "null" per se).  
    */
-  void nilNode(Object t);
+  nilNode(t);
 
   /** Upon syntax error, recognizers bracket the error with an error node
    *  if they are building ASTs.
    */
-  void errorNode(Object t);
+  errorNode(t);
 
   /** Announce a new node built from token elements such as type etc...
    * 
    *  Announce a new node built from an existing token, if one is given.
    */
-  void createNode(Object node, [Token token]);
+  createNode(node, [Token token]);
 
   /** Make a node the new root of an existing root.  See
   *
@@ -225,14 +225,14 @@ abstract class DebugEventListener {
   *
   *  See [TreeAdaptor.becomeRoot()]
   */
-  void becomeRoot(Object newRoot, Object oldRoot);
+  becomeRoot(newRoot, oldRoot);
 
   /** Make childID a child of rootID.
   *
   *  [TreeAdaptor.addChild()]
   */
-  void addChild(Object root, Object child);
+  addChild(root, child);
 
   /** Set the token start/stop token index for a subtree root or node. */
-  void setTokenBoundaries(Object t, int tokenStartIndex, int tokenStopIndex);
+  setTokenBoundaries(t, int tokenStartIndex, int tokenStopIndex);
 }

@@ -13,7 +13,7 @@ class Profiler extends BlankDebugEventListener {
   static final String newline = 
       (Platform.operatingSystem == "windows") ? "\r\n" : "\n";
 
-  static bool dump = false;
+  static const bool dump = false;
   static const String Version = "3";
   static const String RUNTIME_STATS_FILENAME = "runtime.stats";
 
@@ -44,7 +44,7 @@ class Profiler extends BlankDebugEventListener {
     stats = new ProfileStats();
   }
 
-  void enterRule(String ruleName, [String grammarFileName]) {
+  enterRule(String ruleName, [String grammarFileName]) {
     _ruleLevel++;
     stats.numRuleInvocations++;
     _uniqueRules.add("$grammarFileName:$ruleName");
@@ -54,13 +54,13 @@ class Profiler extends BlankDebugEventListener {
     _currentRuleName.add( ruleName );
   }
 
-  void exitRule(String ruleName, [String grammarFileName]) {
+  exitRule(String ruleName, [String grammarFileName]) {
     _ruleLevel--;
     _currentGrammarFileName.removeLast();
     _currentRuleName.removeLast();;
   }
 
-  void examineRuleMemoization(IntStream input, 
+  examineRuleMemoization(IntStream input, 
             int ruleIndex, int stopIndex, String ruleName) {
     if(dump) 
       print("examine memo $ruleName at ${input.index}: $stopIndex");
@@ -74,18 +74,18 @@ class Profiler extends BlankDebugEventListener {
     }
   }
 
-  void memoize(IntStream input, 
+  memoize(IntStream input, 
        int ruleIndex, int ruleStartIndex,  String ruleName) {
     if(dump) print("memoize $ruleName");
     stats.numMemoizationCacheEntries++;
   }
 
-  void location(int line, int pos) {
+  location(int line, int pos) {
     _currentLine.add(line);
     _currentPos.add(pos);
   }
 
-  void enterDecision(int decisionNumber, bool couldBacktrack) {
+  enterDecision(int decisionNumber, bool couldBacktrack) {
     _lastRealTokenTouchedInDecision = null;
     stats.numDecisionEvents++;
     TokenStream input = _parser.tokenStream;
@@ -116,7 +116,7 @@ class Profiler extends BlankDebugEventListener {
     d.startIndex = startingLookaheadIndex;
   }
 
-  void exitDecision(int decisionNumber) {
+  exitDecision(int decisionNumber) {
     DecisionEvent d = _decisionStack.removeLast();
     d.stopwatch.stop();
 
@@ -132,9 +132,9 @@ class Profiler extends BlankDebugEventListener {
     _decisionEvents.add(d);
   }
 
-  void consumeToken(Token token) {
+  consumeToken(Token token) {
     if(dump) print("consume token $token");
-    if(!inDecision()) {
+    if(!inDecision) {
       stats.numTokens++;
       return;
     }
@@ -150,15 +150,15 @@ class Profiler extends BlankDebugEventListener {
         "${d.decision.ruleName}-${d.decision.decision} start index ${d.startIndex}");   
   }
 
-  bool inDecision() => _decisionStack.length > 0;
+  bool get inDecision => _decisionStack.length > 0;
 
-  void consumeHiddenToken(Token token) {
-    if(!inDecision()) 
+  consumeHiddenToken(Token token) {
+    if(!inDecision) 
       stats.numHiddenTokens++;
   }
 
-  void LT(int i, Token t) {
-    if(inDecision() && i > 0) {
+  LT(int i, Token t) {
+    if(inDecision && i > 0) {
       DecisionEvent d = _currentDecision;
       if(dump) 
         print("LT($i)=$t index ${t.tokenIndex} relative to "
@@ -187,7 +187,7 @@ class Profiler extends BlankDebugEventListener {
    *    ...
    *    exit rule
    */
-  void beginBacktrack(int level) {
+  beginBacktrack(int level) {
     if(dump) 
       print("enter backtrack $level");
     _backtrackDepth++;
@@ -200,31 +200,31 @@ class Profiler extends BlankDebugEventListener {
   }
 
   /** Successful or not, track how much lookahead synpreds use */
-  void endBacktrack(int level, bool successful) {
+  endBacktrack(int level, bool successful) {
     if(dump) 
       print("exit backtrack $level: $successful");
     _backtrackDepth--;   
   }
 
-  void mark(int i) {
+  mark(int i) {
     if(dump)
       print("mark $i");
   }
   
-  void rewind([int marker]) {
+  rewind([int marker]) {
     if(dump) 
       print("rewind${(marker != null) ? " $marker":""}");
   }
 
   DecisionEvent get _currentDecision => _decisionStack.last;
 
-  void recognitionException(RecognitionException e) {
+  recognitionException(RecognitionException e) {
     stats.numReportedErrors++;
   }
 
-  void semanticPredicate(bool result, String predicate) {
+  semanticPredicate(bool result, String predicate) {
     stats.numSemanticPredicates++;
-    if(inDecision()) {
+    if(inDecision) {
       DecisionEvent _d = _currentDecision;
       _d.evalSemPred = true;
       _d.decision.numSemPredEvals++;
@@ -234,7 +234,7 @@ class Profiler extends BlankDebugEventListener {
     }
   }
 
-  void terminate() {
+  terminate() {
     for (DecisionEvent e in _decisionEvents) {
       e.decision.avgk += e.k;
       stats.avgkPerDecisionEvent += e.k;
@@ -261,7 +261,7 @@ class Profiler extends BlankDebugEventListener {
     stderr.writeString(getDecisionStatsDump());
   }
 
-  void set parser(DebugParser p) {
+  set parser(DebugParser p) {
     _parser = p;
   }
 

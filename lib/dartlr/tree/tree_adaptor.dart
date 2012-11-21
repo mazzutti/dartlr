@@ -55,7 +55,7 @@ abstract class TreeAdaptor {
    *  make sure that this is consistent with have the user will build
    *  ASTs.  Do nothing if t or child is null.
    */
-  void addChild(t, child);
+  addChild(t, child);
 
   /** If oldRoot is a nil root, just copy or move the children to newRoot.
    *  If not a nil root, make oldRoot a child of newRoot.
@@ -130,12 +130,12 @@ abstract class TreeAdaptor {
   int getType(t);
 
   /** Node constructors can set the type of a node */
-  void setType(t, int type);
+  setType(t, int type);
 
   String getText(t);
 
   /** Node constructors can set the text of a node */
-  void setText(t, String text);
+  setText(t, String text);
 
   /** Return the token from which this node was created.
    *  Currently used only for printing an error message.
@@ -154,7 +154,7 @@ abstract class TreeAdaptor {
    *  still usually have a nil root node just to hold the children list.
    *  That node would contain the start/stop indexes then.
    */
-  void setTokenBoundaries(t, Token startToken, Token stopToken);
+  setTokenBoundaries(t, Token startToken, Token stopToken);
 
   /** Get the token start index for this subtree; return -1 if no such index */
   int getTokenStartIndex(t);
@@ -166,7 +166,7 @@ abstract class TreeAdaptor {
   getChild(t, int i);
 
   /** Set ith child (0..n-1) to t; t must be non-null and non-nil node */
-  void setChild(t, int i, child);
+  setChild(t, int i, child);
 
   /** Remove ith child and shift children down from right. */
   deleteChild(t, int i);
@@ -180,7 +180,7 @@ abstract class TreeAdaptor {
    */
   getParent(t);
   
-  void setParent(t, parent);
+  setParent(t, parent);
 
   /** What index is this node in the child list? Range: 0..n-1
    *  If your node type doesn't handle this, it's ok but the tree rewrites
@@ -188,7 +188,7 @@ abstract class TreeAdaptor {
    */
   int getChildIndex(t);
   
-  void setChildIndex(t, int index);
+  setChildIndex(t, int index);
 
   /** Replace from start to stop child index of parent with t, which might
    *  be a list.  Number of children may be different
@@ -197,7 +197,7 @@ abstract class TreeAdaptor {
    *  If parent is null, don't do anything; must be at root of overall tree.
    *  Can't replace whatever points to the parent externally.  Do nothing.
    */
-  void replaceChildren(parent, int startChildIndex, int stopChildIndex, t);
+  replaceChildren(parent, int startChildIndex, int stopChildIndex, t);
   
 }
 
