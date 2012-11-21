@@ -51,21 +51,21 @@ class BlankDebugEventListener implements DebugEventListener {
   
   void terminate() {}
   
-  void consumeNode(Object t) {}
+  void consumeNode(t) {}
   
-  void LT(int i, Object t) {}
+  void LT(int i, t) {}
 
-  void nilNode(Object t) {}
+  void nilNode(t) {}
   
-  void errorNode(Object t) {}
+  void errorNode(t) {}
   
-  void createNode(Object t, [Token token]) {}
+  void createNode(t, [Token token]) {}
   
-  void becomeRoot(Object newRoot, Object oldRoot) {}
+  void becomeRoot(newRoot, oldRoot) {}
   
-  void addChild(Object root, Object child) {}
+  void addChild(root, child) {}
   
-  void setTokenBoundaries(Object t, int tokenStartIndex, int tokenStopIndex) {}
+  void setTokenBoundaries(t, int tokenStartIndex, int tokenStopIndex) {}
 }
 
 

@@ -75,7 +75,7 @@ class DebugEventHub implements DebugEventListener {
       => listener.consumeHiddenToken(token));
   }
 
-  void LT(int index, Object t) {
+  void LT(int index, t) {
     _listeners.forEach((listener) 
       => listener.LT(index, t));
   }
@@ -130,39 +130,39 @@ class DebugEventHub implements DebugEventListener {
       => listener.terminate());
   }
 
-  void consumeNode(Object t) {
+  void consumeNode(t) {
     _listeners.forEach((listener) 
       => listener.consumeNode(t));
   }
 
   
 
-  void nilNode(Object t) {
+  void nilNode(t) {
     _listeners.forEach((listener) 
       => listener.nilNode(t));    
   }
 
-  void errorNode(Object t) {
+  void errorNode(t) {
     _listeners.forEach((listener) 
       => listener.errorNode(t));    
   }
 
-  void createNode(Object node, [Token token]) {
+  void createNode(node, [Token token]) {
     _listeners.forEach((listener) 
       => listener.createNode(node, token));    
   }
 
-  void becomeRoot(Object newRoot, Object oldRoot) {
+  void becomeRoot(newRoot, oldRoot) {
     _listeners.forEach((listener) 
       => listener.becomeRoot(newRoot, oldRoot));    
   }
 
-  void addChild(Object root, Object child) {
+  void addChild(root, child) {
     _listeners.forEach((listener) 
       => listener.addChild(root, child));
   }
 
-  void setTokenBoundaries(Object t, int tokenStartIndex, int tokenStopIndex) {
+  void setTokenBoundaries(t, int tokenStartIndex, int tokenStopIndex) {
     _listeners.forEach((listener) 
       => listener.setTokenBoundaries(t, tokenStartIndex, tokenStopIndex));
   }

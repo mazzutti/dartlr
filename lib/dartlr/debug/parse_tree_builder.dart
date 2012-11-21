@@ -27,7 +27,7 @@ class ParseTreeBuilder extends BlankDebugEventListener {
   /**  What kind of node to create.  You might want to override
    *   so I factored out creation here.
    */
-  ParseTree create(Object payload) => new ParseTree(payload);
+  ParseTree create(payload) => new ParseTree(payload);
 
   ParseTree get epsilonNode => create(EPSILON_PAYLOAD);
 

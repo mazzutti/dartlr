@@ -29,7 +29,7 @@ class Tracer extends BlankDebugEventListener {
     print("$ident< $ruleName lookahead(1)=${getInputSymbol(1)}");
   }
 
-  Object getInputSymbol(int k) {
+  getInputSymbol(int k) {
     return (input is TokenStream ) ? (input as TokenStream).LT(k) :
       new String.fromCharCodes([input.LA(k)]);
   }

@@ -47,9 +47,9 @@ class DebugTreeParser extends TreeParser {
     }
   }
 
-  Object _getMissingSymbol(IntStream input, 
+  _getMissingSymbol(IntStream input, 
      RecognitionException e, int expectedTokenType, BitSet follow) {
-    Object o = super._getMissingSymbol(input, e, expectedTokenType, follow);
+    var o = super._getMissingSymbol(input, e, expectedTokenType, follow);
     _dbg.consumeNode(o);
     return o;
   }

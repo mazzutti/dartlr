@@ -168,14 +168,14 @@ class DebugEventSocketProxy extends BlankDebugEventListener {
     _transmit(buf.toString());
   }
 
-  void consumeNode(Object t) {
+  void consumeNode(t) {
     StringBuffer buf = new StringBuffer();
     buf.add("consumeNode");
     _serializeNode(buf, t);
     _transmit(buf.toString());
   }
 
-  void LT(int i, Object t) {
+  void LT(int i, t) {
     if(t is Token) {
       _transmit("LT\t$i\t${_serializeToken(t)}");
     } else {
@@ -187,7 +187,7 @@ class DebugEventSocketProxy extends BlankDebugEventListener {
     }
   }
 
-  void _serializeNode(StringBuffer buf, Object t) {
+  void _serializeNode(StringBuffer buf, t) {
     int ID = _adaptor.getUniqueID(t);
     String text = _adaptor.getText(t);
     int type = _adaptor.getType(t);
@@ -212,12 +212,12 @@ class DebugEventSocketProxy extends BlankDebugEventListener {
     _serializeText(buf, text);
   }
 
-  void nilNode(Object t) {
+  void nilNode(t) {
     int ID = _adaptor.getUniqueID(t);
     _transmit("nilNode\t$ID");
   }
 
-  void errorNode(Object t) {
+  void errorNode(t) {
     int ID = _adaptor.getUniqueID(t);
     String text = t.toString();
     StringBuffer buf = new StringBuffer();
@@ -229,7 +229,7 @@ class DebugEventSocketProxy extends BlankDebugEventListener {
     _transmit(buf.toString());
   }
 
-  void createNode(Object t, [Token token]) {
+  void createNode(t, [Token token]) {
     if(token != null) {
       int ID = _adaptor.getUniqueID(t);
       int tokenIndex = token.tokenIndex;
@@ -248,19 +248,19 @@ class DebugEventSocketProxy extends BlankDebugEventListener {
     }
   }
 
-  void becomeRoot(Object newRoot, Object oldRoot) {
+  void becomeRoot(newRoot, oldRoot) {
     int newRootID = _adaptor.getUniqueID(newRoot);
     int oldRootID = _adaptor.getUniqueID(oldRoot);
     _transmit("becomeRoot\t$newRootID\t$oldRootID");
   }
 
-  void addChild(Object root, Object child) {
+  void addChild(root, child) {
     int rootID = _adaptor.getUniqueID(root);
     int childID = _adaptor.getUniqueID(child);
     _transmit("addChild\t$rootID\t$childID");
   }
 
-  void setTokenBoundaries(Object t, int tokenStartIndex, int tokenStopIndex) {
+  void setTokenBoundaries(t, int tokenStartIndex, int tokenStopIndex) {
     int ID = _adaptor.getUniqueID(t);
     _transmit("setTokenBoundaries\t$ID\t$tokenStartIndex\t$tokenStopIndex");
   }

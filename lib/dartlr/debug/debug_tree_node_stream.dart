@@ -30,15 +30,15 @@ class DebugTreeNodeStream implements TreeNodeStream {
   TreeAdaptor get treeAdaptor => _adaptor;
 
   void consume() {
-    Object node = _input.LT(1);
+    var node = _input.LT(1);
     _input.consume();
     _dbg.consumeNode(node);
   }
 
-  Object at(int i) => _input.at(i);
+  at(int i) => _input.at(i);
 
-  Object LT(int i) {
-    Object node = _input.LT(i);
+  LT(int i) {
+    var node = _input.LT(i);
     int ID = _adaptor.getUniqueID(node);
     String text = _adaptor.getText(node);
     int type = _adaptor.getType(node);
@@ -47,7 +47,7 @@ class DebugTreeNodeStream implements TreeNodeStream {
   }
 
   int LA(int i) {
-    Object node = _input.LT(i);
+    var node = _input.LT(i);
     int ID = _adaptor.getUniqueID(node);
     String text = _adaptor.getText(node);
     int type = _adaptor.getType(node);
@@ -80,7 +80,7 @@ class DebugTreeNodeStream implements TreeNodeStream {
 
   void reset() {}
 
-  Object get treeSource => _input;
+  get treeSource => _input;
 
   String get sourceName => tokenStream.sourceName;
   
@@ -95,11 +95,11 @@ class DebugTreeNodeStream implements TreeNodeStream {
   }
   bool get uniqueNavigationNodes =>  _input.uniqueNavigationNodes;
 
-  void replaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t) {
+  void replaceChildren(parent, int startChildIndex, int stopChildIndex, t) {
     _input.replaceChildren(parent, startChildIndex, stopChildIndex, t);
   }
 
-  String toString([Object start, Object stop]) {
+  String toString([start, stop]) {
     return _input.toString(start,stop);
   }
 }

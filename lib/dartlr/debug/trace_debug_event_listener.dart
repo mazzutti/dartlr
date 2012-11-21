@@ -57,7 +57,7 @@ class TraceDebugEventListener extends BlankDebugEventListener {
     record("exitDecision, $decisionNumber");
   }
 
-  void consumeNode(Object t) {
+  void consumeNode(t) {
     int ID = adaptor.getUniqueID(t);
     String text = adaptor.getText(t);
     int type = adaptor.getType(t);
@@ -72,7 +72,7 @@ class TraceDebugEventListener extends BlankDebugEventListener {
     record("consumeNode, $ID, $type, $line, $pos, $tokenIndex, $text");   
   }
   
-  void LT(int i, Object t) {
+  void LT(int i, t) {
     if(t is Token) {
       record("LT, $i, "
       "${t.type}, ${t.channel}, ${t.line}, "
@@ -93,11 +93,11 @@ class TraceDebugEventListener extends BlankDebugEventListener {
     }
   }
  
-  void nilNode(Object t) {
+  void nilNode(t) {
     record("nilNode, ${adaptor.getUniqueID(t)}");
   }
 
-  void createNode(Object node, [Token token]) {
+  void createNode(node, [Token token]) {
     if(token != null) {
       int ID = adaptor.getUniqueID(node);
       String text = adaptor.getText(node);
@@ -111,23 +111,23 @@ class TraceDebugEventListener extends BlankDebugEventListener {
     }
   }
   
-  void errorNode(Object t) {
+  void errorNode(t) {
     int ID = adaptor.getUniqueID(t);
     String text = t.toString();
     record("errorNode, $ID, ${Token.INVALID_TOKEN_TYPE}, $text");
   }
 
-  void becomeRoot(Object newRoot, Object oldRoot) {
+  void becomeRoot(newRoot, oldRoot) {
     record("becomeRoot, ${adaptor.getUniqueID(newRoot)}, "
                         "${adaptor.getUniqueID(oldRoot)}");
   }
 
-  void addChild(Object root, Object child) {
+  void addChild(root, child) {
     record("addChild, ${adaptor.getUniqueID(root)}, "
                          "${adaptor.getUniqueID(child)}");
   }
 
-  void setTokenBoundaries(Object t, 
+  void setTokenBoundaries(t, 
                 int tokenStartIndex, int tokenStopIndex) {
     record("setTokenBoundaries, ${adaptor.getUniqueID(t)}, "
                           "$tokenStartIndex, $tokenStopIndex");
