@@ -95,7 +95,7 @@ abstract class LookaheadStream<T> extends FastQueue<T> {
     return elementAt(k - 1);
   }
 
-  int index() => _currentElementIndex;
+  int get index => _currentElementIndex;
 
   int mark() {
     _markDepth++;

@@ -6,7 +6,7 @@ part of dartlr;
 
 class IntArray {
   
-  static final int INITIAL_SIZE = 10;
+  static const int INITIAL_SIZE = 10;
   List<int> data;
   int _p = -1;
 
