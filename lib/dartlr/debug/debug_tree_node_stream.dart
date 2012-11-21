@@ -93,6 +93,7 @@ class DebugTreeNodeStream implements TreeNodeStream {
   void set uniqueNavigationNodes(bool uniqueNavigationNodes) {
     _input.uniqueNavigationNodes = uniqueNavigationNodes;
   }
+  bool get uniqueNavigationNodes =>  _input.uniqueNavigationNodes;
 
   void replaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t) {
     _input.replaceChildren(parent, startChildIndex, stopChildIndex, t);
