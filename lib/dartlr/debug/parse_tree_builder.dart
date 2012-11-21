@@ -22,7 +22,7 @@ class ParseTreeBuilder extends BlankDebugEventListener {
     callStack.add(root);
   }
 
-  ParseTree getTree() => callStack[0];
+  ParseTree get tree => callStack[0];
 
   /**  What kind of node to create.  You might want to override
    *   so I factored out creation here.
