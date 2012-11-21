@@ -70,14 +70,14 @@ abstract class Tree {
    void setChild(int i, Tree t);
    operator[]=(int i, Tree t) => setChild(i,t);
 
-   Object deleteChild(int i);
+   deleteChild(int i);
 
   /** Delete children from start to stop and replace with t even if t is
    *  a list (nil-root tree).  num of children can increase or decrease.
    *  For huge child lists, inserting children can force walking rest of
    *  children to set their childindex; could be slow.
    */
-   void replaceChildren(int startChildIndex, int stopChildIndex, Object t); 
+   void replaceChildren(int startChildIndex, int stopChildIndex, t); 
 
   /**  What is the smallest token index (indexing from 0) for this node
    *   and its children?

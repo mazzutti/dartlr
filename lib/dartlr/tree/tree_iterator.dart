@@ -12,8 +12,8 @@ part of dartlr;
 class TreeIterator implements Iterator {
   
   TreeAdaptor _adaptor;
-  Object _root;
-  Object _tree;
+  var _root;
+  var _tree;
   bool _firstTime = true;
   
   /** If we emit UP/DOWN nodes, we need to spit out multiple nodes per
@@ -21,9 +21,9 @@ class TreeIterator implements Iterator {
    */
   FastQueue _nodes;
 
-  Object up;
-  Object down;
-  Object eof;
+  var up;
+  var down;
+  var eof;
  
   TreeIterator(this._tree, [this._adaptor]) {
     if(_adaptor == null)  
@@ -49,7 +49,7 @@ class TreeIterator implements Iterator {
     return _adaptor.getParent(_tree) != null;
   }
 
-  Object next() {
+  next() {
     if (_firstTime) {
       _firstTime = false;
       if (_adaptor.getChildCount(_tree) == 0) { 
@@ -65,7 +65,7 @@ class TreeIterator implements Iterator {
       _nodes.add(_tree); 
       return down;
     }
-    Object parent = _adaptor.getParent(_tree);
+    var parent = _adaptor.getParent(_tree);
     while (parent != null && _adaptor.getChildIndex
           (_tree) + 1 >= _adaptor.getChildCount(parent)){
       _nodes.add(up);

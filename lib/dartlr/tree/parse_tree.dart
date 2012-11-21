@@ -11,10 +11,10 @@ part of dartlr;
  */
 class ParseTree extends BaseTree {
   
-  Object payload;
+  var payload;
   List hiddenTokens;
 
-  ParseTree(Object this.payload);
+  ParseTree(this.payload);
 
   Tree dupNode() => null;
 

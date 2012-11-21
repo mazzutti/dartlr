@@ -122,13 +122,13 @@ abstract class BaseTree extends Tree {
     i+1..n-1 to the right one position. Set parent / indexes properly
     but does NOT collapse nil-rooted t's that come in here like addChild.
  */
-  void insertChild(int i, Object t) {
+  void insertChild(int i, t) {
     if (_children == null ) return;
     _children.insertRange(i, 1, t);    
     freshenParentAndChildIndexes(i);
   }
 
-  Object deleteChild(int i) {
+  deleteChild(int i) {
     if (_children == null) return null;
     Tree killed = _children[i];
     _children.removeRange(i, 1);    
@@ -141,7 +141,7 @@ abstract class BaseTree extends Tree {
    *  For huge child lists, inserting children can force walking rest of
    *  children to set their childindex; could be slow.
    */
-  void replaceChildren(int startChildIndex, int stopChildIndex, Object t) {
+  void replaceChildren(int startChildIndex, int stopChildIndex, t) {
     if (_children == null )
       throw new ArgumentError("indexes invalid; no children in list");
     int replacingHowMany = stopChildIndex - startChildIndex + 1;
