@@ -105,7 +105,7 @@ class BufferedTokenStream implements TokenStream {
 
   Token at(int i) {
     if (i < 0 || i >= _tokens.length) {
-      throw new Exception("token index $i out of range 0..${_tokens.length - 1}");
+      throw new ArgumentError("token index $i out of range 0..${_tokens.length - 1}");
     }
     return _tokens[i];
   }

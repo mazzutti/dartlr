@@ -256,7 +256,7 @@ class TokenRewriteStream extends CommonTokenStream {
       _RewriteOperation op = rewrites[i];
       if (op == null) continue;
       if (m[op.index] != null)
-        throw new Exception("should only be one op per index");
+        throw new StateError("should only be one op per index");
       m[op.index] = op;
     }
     return m;

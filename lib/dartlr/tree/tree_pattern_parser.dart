@@ -27,7 +27,7 @@ class TreePatternParser {
 
   parseTree() {
     if (_ttype != TreePatternLexer.BEGIN) 
-      throw new Exception("no BEGIN");
+      throw new StateError("no BEGIN");
     _ttype = _tokenizer.nextToken();
     var root = parseNode();
     if (root == null) return null; 
@@ -46,7 +46,7 @@ class TreePatternParser {
       }
     }
     if (_ttype != TreePatternLexer.END)
-      throw new Exception("no END");
+      throw new StateError("no END");
     _ttype = _tokenizer.nextToken();
     return root;
   }

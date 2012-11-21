@@ -97,7 +97,7 @@ abstract class BaseTreeAdaptor implements TreeAdaptor {
         int nc = newRootTree.childCount;
         if (nc == 1) newRootTree = newRootTree.getChild(0);
         else if (nc > 1) {
-        throw new Exception("more than one node as root (TODO: make exception hierarchy)");
+        throw new StateError("more than one node as root");
       }
     }
     newRootTree.addChild(oldRootTree);
@@ -150,16 +150,10 @@ abstract class BaseTreeAdaptor implements TreeAdaptor {
   }
 
   int getType(t) => t.type;
-
-  void setType(t, int type) {
-    throw new Exception("don't know enough about Tree node");
-  }
+  void setType(t, int type) =>throw new UnimplementedError("don't know enough about Tree node");
 
   String getText(t) => t.text;
-
-  void setText(t, String text) {
-    throw new Exception("don't know enough about Tree node");
-  }
+  void setText(t, String text) =>throw new UnimplementedError("don't know enough about Tree node");
 
   Object getChild(t, int i) => t.getChild(i);
 

@@ -310,8 +310,6 @@ class _StreamIterator implements Iterator {
     return _eof;
   }
 
-  void remove() {
-    throw new Exception("cannot remove nodes from stream");
-  }
+  void remove() => throw new UnimplementedError("cannot remove nodes from stream");
 }
 
