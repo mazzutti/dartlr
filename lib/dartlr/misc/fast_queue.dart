@@ -24,11 +24,11 @@ class FastQueue<T> {
   
   FastQueue(): _data = new List<T>(); 
 
-  void reset() { 
+  reset() { 
     clear(); 
   }
   
-  void clear() { 
+  clear() { 
     _p = 0; 
     _data.clear(); 
   }
@@ -42,15 +42,15 @@ class FastQueue<T> {
     return o;
   }
 
-  void add(T o) { 
+  add(T o) { 
     _data.add(o); 
   }
 
   int get size => _data.length - _p;
 
-  int range() => _range;
+  int get range => _range;
 
-  T head() => elementAt(0);
+  T get head => elementAt(0);
 
   /** Return element i elements ahead of current element.  i==0 gets
    *  current element.  This is not an absolute index into the data list

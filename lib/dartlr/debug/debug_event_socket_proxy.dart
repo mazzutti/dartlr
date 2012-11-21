@@ -30,14 +30,14 @@ class DebugEventSocketProxy extends BlankDebugEventListener {
     _grammarFileName = _recognizer.grammarFileName;
   }
 
-  void handshake() {
+  handshake() {
     if (_serverSocket == null) {
       _serverSocket = new ServerSocket(_bindAddress, _port, 0);
       _serverSocket.onConnection = _onConnection;
     }
   }
   
-  void _onConnection(Socket socket) {
+  _onConnection(Socket socket) {
     _socket = socket; 
     _inStream = new StringInputStream(socket.inputStream);
     _outStream =  _socket.outputStream;
@@ -49,7 +49,7 @@ class DebugEventSocketProxy extends BlankDebugEventListener {
       _ack();
   }  
   
-  void _ack() {
+  _ack() {
     try {
       _inStream.readLine();
     } on SocketIOException catch(ioe, stackTrace) {
@@ -59,9 +59,9 @@ class DebugEventSocketProxy extends BlankDebugEventListener {
   }
   
 
-  void commence() {}
+  commence() {}
 
-  void terminate() {
+  terminate() {
     _transmit("terminate");
     try {
       if(_socket != null)
@@ -73,73 +73,73 @@ class DebugEventSocketProxy extends BlankDebugEventListener {
     }
   }
 
-  void _transmit(String event) { 
+  _transmit(String event) { 
    if(_outStream != null)
      _outStream.writeString("$event\n"); 
    if(_callback == null)
      _ack();
   }
 
-  void enterRule(String ruleName, [String grammarFileName]) {
+  enterRule(String ruleName, [String grammarFileName]) {
     _transmit("enterRule\t$grammarFileName\t$ruleName");
   }
 
-  void enterAlt(int alt) {
+  enterAlt(int alt) {
     _transmit("enterAlt\t$alt");
   }
 
-  void exitRule(String ruleName, [String grammarFileName]) {
+  exitRule(String ruleName, [String grammarFileName]) {
     _transmit("exitRule\t$grammarFileName\t$ruleName");
   }
 
-  void enterSubRule(int decisionNumber) {
+  enterSubRule(int decisionNumber) {
     _transmit("enterSubRule\t$decisionNumber");
   }
 
-  void exitSubRule(int decisionNumber) {
+  exitSubRule(int decisionNumber) {
     _transmit("exitSubRule\t$decisionNumber");
   }
 
-  void enterDecision(int decisionNumber, bool couldBacktrack) {
+  enterDecision(int decisionNumber, bool couldBacktrack) {
     _transmit("enterDecision\t$decisionNumber\t$couldBacktrack");
   }
 
-  void exitDecision(int decisionNumber) {
+  exitDecision(int decisionNumber) {
     _transmit("exitDecision\t$decisionNumber");
   }
 
-  void consumeToken(Token t) {
+  consumeToken(Token t) {
     String buf = _serializeToken(t);
     _transmit("consumeToken\t$buf");
   }
 
-  void consumeHiddenToken(Token t) {
+  consumeHiddenToken(Token t) {
     String buf = _serializeToken(t);
     _transmit("consumeHiddenToken\t$buf");
   }
 
-  void mark(int i) {
+  mark(int i) {
     _transmit("mark\t$i");
   }
 
-  void rewind([int marker]) {
+  rewind([int marker]) {
     _transmit("rewind\t$marker");
   }
 
-  void beginBacktrack(int level) {
+  beginBacktrack(int level) {
     _transmit("beginBacktrack\t$level");
   }
 
-  void endBacktrack(int level, bool successful) {
+  endBacktrack(int level, bool successful) {
     _transmit("endBacktrack\t$level\t"
       "${(successful ? DebugEventListener.TRUE : DebugEventListener.FALSE)}");
   }
 
-  void location(int line, int pos) {
+  location(int line, int pos) {
     _transmit("location\t$line\t$pos");
   }
 
-  void recognitionException(RecognitionException e) {
+  recognitionException(RecognitionException e) {
     StringBuffer buf = new StringBuffer();
     buf.add("exception\t");
     buf.add(e.runtimeType.toString());
@@ -152,15 +152,15 @@ class DebugEventSocketProxy extends BlankDebugEventListener {
     _transmit(buf.toString());
   }
 
-  void beginResync() {
+  beginResync() {
     _transmit("beginResync");
   }
 
-  void endResync() {
+  endResync() {
     _transmit("endResync");
   }
 
-  void semanticPredicate(bool result, String predicate) {
+  semanticPredicate(bool result, String predicate) {
     StringBuffer buf = new StringBuffer();
     buf.add("semanticPredicate\t");
     buf.add(result);
@@ -168,14 +168,14 @@ class DebugEventSocketProxy extends BlankDebugEventListener {
     _transmit(buf.toString());
   }
 
-  void consumeNode(Object t) {
+  consumeNode(t) {
     StringBuffer buf = new StringBuffer();
     buf.add("consumeNode");
     _serializeNode(buf, t);
     _transmit(buf.toString());
   }
 
-  void LT(int i, Object t) {
+  LT(int i, t) {
     if(t is Token) {
       _transmit("LT\t$i\t${_serializeToken(t)}");
     } else {
@@ -187,7 +187,7 @@ class DebugEventSocketProxy extends BlankDebugEventListener {
     }
   }
 
-  void _serializeNode(StringBuffer buf, Object t) {
+  _serializeNode(StringBuffer buf, t) {
     int ID = _adaptor.getUniqueID(t);
     String text = _adaptor.getText(t);
     int type = _adaptor.getType(t);
@@ -212,12 +212,12 @@ class DebugEventSocketProxy extends BlankDebugEventListener {
     _serializeText(buf, text);
   }
 
-  void nilNode(Object t) {
+  nilNode(t) {
     int ID = _adaptor.getUniqueID(t);
     _transmit("nilNode\t$ID");
   }
 
-  void errorNode(Object t) {
+  errorNode(t) {
     int ID = _adaptor.getUniqueID(t);
     String text = t.toString();
     StringBuffer buf = new StringBuffer();
@@ -229,7 +229,7 @@ class DebugEventSocketProxy extends BlankDebugEventListener {
     _transmit(buf.toString());
   }
 
-  void createNode(Object t, [Token token]) {
+  createNode(t, [Token token]) {
     if(token != null) {
       int ID = _adaptor.getUniqueID(t);
       int tokenIndex = token.tokenIndex;
@@ -248,24 +248,24 @@ class DebugEventSocketProxy extends BlankDebugEventListener {
     }
   }
 
-  void becomeRoot(Object newRoot, Object oldRoot) {
+  becomeRoot(newRoot, oldRoot) {
     int newRootID = _adaptor.getUniqueID(newRoot);
     int oldRootID = _adaptor.getUniqueID(oldRoot);
     _transmit("becomeRoot\t$newRootID\t$oldRootID");
   }
 
-  void addChild(Object root, Object child) {
+  addChild(root, child) {
     int rootID = _adaptor.getUniqueID(root);
     int childID = _adaptor.getUniqueID(child);
     _transmit("addChild\t$rootID\t$childID");
   }
 
-  void setTokenBoundaries(Object t, int tokenStartIndex, int tokenStopIndex) {
+  setTokenBoundaries(t, int tokenStartIndex, int tokenStopIndex) {
     int ID = _adaptor.getUniqueID(t);
     _transmit("setTokenBoundaries\t$ID\t$tokenStartIndex\t$tokenStopIndex");
   }
 
-  void set treeAdaptor(TreeAdaptor adaptor) { 
+  set treeAdaptor(TreeAdaptor adaptor) { 
     _adaptor = adaptor; 
   }
   
@@ -282,7 +282,7 @@ class DebugEventSocketProxy extends BlankDebugEventListener {
     return buf.toString();
   }
 
-  void _serializeText(StringBuffer buf, String text) {
+  _serializeText(StringBuffer buf, String text) {
     buf.add('\t"');
     if (text == null) text = "";
     text = _escapeNewlines(text);

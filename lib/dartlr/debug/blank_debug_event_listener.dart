@@ -11,61 +11,61 @@ part of dartlr;
 
 class BlankDebugEventListener implements DebugEventListener {
   
-  void enterRule(String ruleName, [String grammarFileName]) {}
+  enterRule(String ruleName, [String grammarFileName]) {}
   
-  void exitRule(String ruleName, [String grammarFileName]) {}
+  exitRule(String ruleName, [String grammarFileName]) {}
   
-  void enterAlt(int alt) {}
+  enterAlt(int alt) {}
   
-  void enterSubRule(int decisionNumber) {}
+  enterSubRule(int decisionNumber) {}
   
-  void exitSubRule(int decisionNumber) {}
+  exitSubRule(int decisionNumber) {}
   
-  void enterDecision(int decisionNumber, bool couldBacktrack) {}
+  enterDecision(int decisionNumber, bool couldBacktrack) {}
   
-  void exitDecision(int decisionNumber) {}
+  exitDecision(int decisionNumber) {}
   
-  void location(int line, int pos) {}
+  location(int line, int pos) {}
   
-  void consumeToken(Token token) {}
+  consumeToken(Token token) {}
   
-  void consumeHiddenToken(Token token) {}
+  consumeHiddenToken(Token token) {}
   
-  void mark(int i) {}
+  mark(int i) {}
   
-  void rewind([int marker]) {}
+  rewind([int marker]) {}
   
-  void beginBacktrack(int level) {}
+  beginBacktrack(int level) {}
   
-  void endBacktrack(int level, bool successful) {}
+  endBacktrack(int level, bool successful) {}
   
-  void recognitionException(RecognitionException e) {}
+  recognitionException(RecognitionException e) {}
   
-  void beginResync() {}
+  beginResync() {}
   
-  void endResync() {}
+  endResync() {}
   
-  void semanticPredicate(bool result, String predicate) {}
+  semanticPredicate(bool result, String predicate) {}
   
-  void commence() {}
+  commence() {}
   
-  void terminate() {}
+  terminate() {}
   
-  void consumeNode(Object t) {}
+  consumeNode(t) {}
   
-  void LT(int i, Object t) {}
+  LT(int i, t) {}
 
-  void nilNode(Object t) {}
+  nilNode(t) {}
   
-  void errorNode(Object t) {}
+  errorNode(t) {}
   
-  void createNode(Object t, [Token token]) {}
+  createNode(t, [Token token]) {}
   
-  void becomeRoot(Object newRoot, Object oldRoot) {}
+  becomeRoot(newRoot, oldRoot) {}
   
-  void addChild(Object root, Object child) {}
+  addChild(root, child) {}
   
-  void setTokenBoundaries(Object t, int tokenStartIndex, int tokenStopIndex) {}
+  setTokenBoundaries(t, int tokenStartIndex, int tokenStopIndex) {}
 }
 
 

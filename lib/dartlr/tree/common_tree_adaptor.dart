@@ -60,7 +60,7 @@ class CommonTreeAdaptor extends BaseTreeAdaptor {
    *  seems like this will yield start=i and stop=i-1 in a nil node.
    *  Might be useful info so I'll not force to be i..i.
    */
-  void setTokenBoundaries(t, Token startToken, Token stopToken) {
+  setTokenBoundaries(t, Token startToken, Token stopToken) {
     if (t == null) return;
     int start = 0;
     int stop = 0;
@@ -98,7 +98,7 @@ class CommonTreeAdaptor extends BaseTreeAdaptor {
     if (t != null) t.childIndex = index;
   }
 
-  void replaceChildren(parent, int startChildIndex, int stopChildIndex, t) {
+  replaceChildren(parent, int startChildIndex, int stopChildIndex, t) {
     if (parent != null )
       (parent as Tree).replaceChildren(startChildIndex, stopChildIndex, t);
   }

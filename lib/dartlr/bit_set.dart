@@ -8,7 +8,7 @@ part of dartlr;
  * good enough to handle runtime requirements such as FOLLOW sets
  * for automatic error recovery.
  */
-class BitSet implements Cloneable {
+class BitSet {
   
   static const int _BITS = 64;
   static const int _LOG_BITS = 6;
@@ -36,7 +36,7 @@ class BitSet implements Cloneable {
   }
 
   /** or this element into this set (grow as necessary to accommodate) */
-  void add(int el) {
+  add(int el) {
     int n = _wordNumber(el);
     if (n >= bits.length) {
       growToInclude(el);
@@ -48,14 +48,14 @@ class BitSet implements Cloneable {
   * Grows the set to a larger number of bits.
   * bit is the element that must fit in set
   */
-  void growToInclude(int bit) {
+  growToInclude(int bit) {
     int newSize = math.max(bits.length << 1, _numWordsToHold(bit));
     List<int> newbits = new List<int>(newSize);
     Arrays.copy(bits, 0, newbits, 0, bits.length);
     bits = newbits;
   }
 
-  void orInPlace(BitSet a) {
+  orInPlace(BitSet a) {
     if (a == null) return;   
     if (a.bits.length > bits.length)
       _setSize(a.bits.length);   
@@ -68,7 +68,7 @@ class BitSet implements Cloneable {
   * Sets the size of a set.
   * nwords is how many words the new set should be
   */
-  void _setSize(int nwords) {
+  _setSize(int nwords) {
     List<int> newbits = new List<int>(nwords);
     int n = math.min(nwords, bits.length);
     Arrays.copy(bits, 0, newbits, 0, n);
@@ -77,7 +77,7 @@ class BitSet implements Cloneable {
     bits = newbits;
   } 
 
-  Object clone() {
+  clone() {
     BitSet s = new BitSet();    
     s.bits = new List<int>(bits.length);
     Arrays.copy(bits, 0, s.bits, 0, bits.length);  
@@ -96,7 +96,7 @@ class BitSet implements Cloneable {
     return deg;
   }
 
-  bool operator ==(Object other) {
+  bool operator ==(other) {
     if ( other == null || !(other is BitSet)) return false;
     int n = math.min(bits.length, other.bits.length);    
     for (int i = 0; i < n; i++)
@@ -120,7 +120,7 @@ class BitSet implements Cloneable {
     return (bits[n] & _bitMask(el)) != 0;
   }
 
-  void remove(int el) {
+  remove(int el) {
     int n = _wordNumber(el);
     if (n < bits.length)
       bits[n] &= ~_bitMask(el);    

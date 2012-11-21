@@ -44,7 +44,7 @@ class LegacyCommonTokenStream implements TokenStream {
   }
 
   /** Reset this token stream by setting its token source. */
-  void set tokenSource(TokenSource tokenSource) {
+  set tokenSource(TokenSource tokenSource) {
     _tokenSource = tokenSource;
     _tokens.clear();
     _p = -1;
@@ -56,7 +56,7 @@ class LegacyCommonTokenStream implements TokenStream {
    *  This is done upon first LT request because you might want to
    *  set some token type / channel overrides before filling buffer.
    */
-  void _fillBuffer() {
+  _fillBuffer() {
     int ind = 0;
     Token t = tokenSource.nextToken();
     while (t != null && t.type != CharStream.EOF) {
@@ -88,7 +88,7 @@ class LegacyCommonTokenStream implements TokenStream {
   *
   *  Walk past any token not on the channel the parser is listening to.
   */
-  void consume() {
+  consume() {
     if (_p < _tokens.length) {
       _p++;
       _p = _skipOffTokenChannels(_p);
@@ -117,19 +117,19 @@ class LegacyCommonTokenStream implements TokenStream {
    *  the stream to force all WS and NEWLINE to be a different, ignored
    *  channel.
    */
-  void setTokenTypeChannel(int ttype, int channel) {
+  setTokenTypeChannel(int ttype, int channel) {
     if (_channelOverrideMap == null)
       _channelOverrideMap = new HashMap();
     _channelOverrideMap[ttype] = _channel;
   }
 
-  void discardTokenType(int ttype) {
+  discardTokenType(int ttype) {
     if (_discardSet == null)
       _discardSet = new HashSet();
     _discardSet.add(ttype);
   }
 
-  void discardOffChannelTokens(bool dchannelTokens) {
+  discardOffChannelTokens(bool dchannelTokens) {
     _discardOffChannelTokens = dchannelTokens;
   }
 
@@ -218,7 +218,7 @@ class LegacyCommonTokenStream implements TokenStream {
     return _lastMarker;
   }
 
-  void release(int marker) {}
+  release(int marker) {}
 
   int get size => _tokens.length;
 
@@ -226,17 +226,17 @@ class LegacyCommonTokenStream implements TokenStream {
 
   int get range => _range;
 
-  void rewind([int marker]) {
+  rewind([int marker]) {
     if(marker == null) marker = _lastMarker;
     seek(marker);
   }
 
-  void reset() {
+  reset() {
     _p = 0;
     _lastMarker = 0;
   }
   
-  void seek(int index) {
+  seek(int index) {
     _p = index;
   }
 

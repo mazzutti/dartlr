@@ -30,7 +30,7 @@ abstract class LookaheadStream<T> extends FastQueue<T> {
   /** tracks how deep mark() calls are nested */
   int _markDepth = 0;
 
-  void reset() {
+  reset() {
     super.reset();
     _currentElementIndex = 0;
     _p = 0;
@@ -56,7 +56,7 @@ abstract class LookaheadStream<T> extends FastQueue<T> {
   }
 
   /** Make sure we have at least one element to remove, even if EOF */
-  void consume() {
+  consume() {
     _syncAhead(1);
     _prevElement = remove();
     _currentElementIndex++;
@@ -66,14 +66,14 @@ abstract class LookaheadStream<T> extends FastQueue<T> {
    *  p index is data.length - 1.  p + need - 1 is the data index 'need' elements
    *  ahead.  If we need 1 element, (p+1-1 )== p must be < data.length.
    */
-  void _syncAhead(int need) {
+  _syncAhead(int need) {
     int n = (_p + need - 1) - _data.length + 1; 
     if (n > 0) 
       fill(n);                 
   }
 
   /** add n elements to buffer */
-  void fill(int n) {
+  fill(int n) {
     for (int i=1; i<=n; i++) {
       T o = nextElement();
       if (isEOF(o)) 
@@ -95,7 +95,7 @@ abstract class LookaheadStream<T> extends FastQueue<T> {
     return elementAt(k - 1);
   }
 
-  int index() => _currentElementIndex;
+  int get index => _currentElementIndex;
 
   int mark() {
     _markDepth++;
@@ -103,9 +103,9 @@ abstract class LookaheadStream<T> extends FastQueue<T> {
     return _lastMarker;
   }
 
-  void release(int marker) {}
+  release(int marker) {}
 
-  void rewind([int marker = null]) {
+  rewind([int marker = null]) {
     if(marker == null) 
       seek(_lastMarker);
     else {
@@ -120,7 +120,7 @@ abstract class LookaheadStream<T> extends FastQueue<T> {
    *  Doesn't see to absolute position in input stream since this stream
    *  is unbuffered. Seeks only into our moving window of elements.
    */
-  void seek(int i) { 
+  seek(int i) { 
     _p = i;
   }
 

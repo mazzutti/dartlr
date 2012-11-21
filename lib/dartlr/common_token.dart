@@ -20,7 +20,7 @@ class CommonToken implements Token {
   String _text;
   
   /** What token number is this from 0..n-1 tokens; < 0 implies invalid index */
-  int _index = -1;
+  int index = -1;
   
   /** The char position into the input buffer where this token starts */
   int start;
@@ -37,7 +37,7 @@ class CommonToken implements Token {
     _text = oldToken.text;
     type = oldToken.type;
     line = oldToken.line;
-    _index = oldToken.tokenIndex;
+    index = oldToken.tokenIndex;
     charPositionInLine = oldToken.charPositionInLine;
     channel = oldToken.channel;
     inputStream = oldToken.inputStream;
@@ -56,19 +56,13 @@ class CommonToken implements Token {
     else return "<EOF>";
   }
 
-  void set index(int i) {
-    _index = i; 
-  }
-  
   
   /** Override the text for this token.  get text will return this text
    *  rather than pulling from the buffer.  Note that this does not mean
    *  that start/stop indexes are not valid.  It means that that input
    *  was converted to a new string in the token object.
    */
-  void set text(String text) {
-    _text = text;
-  } 
+  set text(String text) => _text = text;
 
   String toString() {
     String channelStr = "";

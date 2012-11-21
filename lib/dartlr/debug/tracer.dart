@@ -15,21 +15,21 @@ class Tracer extends BlankDebugEventListener {
 
   Tracer(this.input);
 
-  void enterRule(String ruleName, [String grammarFileName]) {
+  enterRule(String ruleName, [String grammarFileName]) {
     String ident = "";
     for(int i = 1; i <= _level; i++) ident = "$ident ";    
     print("$ident> $ruleName lookahead(1)=${getInputSymbol(1)}");
     _level++;
   }
 
-  void exitRule(String ruleName, [String grammarFileName]) {
+  exitRule(String ruleName, [String grammarFileName]) {
     _level--;
     String ident = "";
     for(int i=1; i <= _level; i++) ident = "$ident ";
     print("$ident< $ruleName lookahead(1)=${getInputSymbol(1)}");
   }
 
-  Object getInputSymbol(int k) {
+  getInputSymbol(int k) {
     return (input is TokenStream ) ? (input as TokenStream).LT(k) :
       new String.fromCharCodes([input.LA(k)]);
   }

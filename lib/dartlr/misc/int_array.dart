@@ -6,16 +6,16 @@ part of dartlr;
 
 class IntArray {
   
-  static final int INITIAL_SIZE = 10;
+  static const int INITIAL_SIZE = 10;
   List<int> data;
   int _p = -1;
 
-  void add(int v) {
+  add(int v) {
     ensureCapacity(_p + 1);
     data[++_p] = v;
   }
 
-  void push(int v) {
+  push(int v) {
     add(v);
   }
 
@@ -27,11 +27,11 @@ class IntArray {
 
   int size() => _p;
 
-  void clear() {
+  clear() {
     _p = -1;
   }
 
-  void ensureCapacity(int index) {
+  ensureCapacity(int index) {
     if (data == null)
       data = new List<int>(INITIAL_SIZE);
     else if ((index + 1) >= data.length ) {

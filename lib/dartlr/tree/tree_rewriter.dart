@@ -55,7 +55,7 @@ class TreeRewriter extends TreeParser {
     return t;
   }
 
-  void reportTransformation(oldTree, newTree) {
+  reportTransformation(oldTree, newTree) {
     print("${(oldTree as Tree).toStringTree()} -> ${(newTree as Tree).toStringTree()}");
   }
 

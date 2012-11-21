@@ -27,7 +27,7 @@ abstract class IntStream {
    */
   int get index;
   
-  void consume();
+  consume();
 
   /** Get int at current input pointer + i ahead where i=1 is next int.
    *  Negative indexes are allowed.  LA(-1) is previous token (token
@@ -53,7 +53,7 @@ abstract class IntStream {
    *  like a stack.  Assume the state the stream was in when this marker
    *  was created.
    */
-  void rewind([int marker]);
+  rewind([int marker]);
 
   /** You may want to commit to a backtrack but don't want to force the
    *  stream to keep bookkeeping objects around for a marker that is
@@ -63,7 +63,7 @@ abstract class IntStream {
    *  argument.  So if you're nested 5 levels of mark(), and then release(2)
    *  you have to release resources for depths 2..5.
    */
-  void release(int marker);
+  release(int marker);
   
   /** Set the input cursor to the position indicated by index.  This is
    *  normally used to seek ahead in the input stream.  No buffering is
@@ -85,5 +85,5 @@ abstract class IntStream {
    *  return the ith symbol.  So, seeking to 0 means LA(1) will return the
    *  first element in the stream. 
    */
-  void seek(int index);    
+  seek(int index);    
 }

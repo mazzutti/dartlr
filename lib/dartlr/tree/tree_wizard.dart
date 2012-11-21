@@ -69,7 +69,7 @@ class TreeWizard {
   }
 
   /** Do the work for index */
-  void _index(t, Map m) {
+  _index(t, Map m) {
     if (t == null) return; 
     int type = _adaptor.getType(t);
     List elements = m[type];
@@ -115,12 +115,12 @@ class TreeWizard {
    *  of the visitor action method is never set (it's null) since using
    *  a token type rather than a pattern doesn't let us set a label.
    */
-  void visit(t, int ttype, ContextVisitor visitor) {
+  visit(t, int ttype, ContextVisitor visitor) {
     _visit(t, null, 0, ttype, visitor);
   }
 
   /** Do the recursive work for visit */
-  void _visit(t, parent, int childIndex, int ttype, ContextVisitor visitor) {
+  _visit(t, parent, int childIndex, int ttype, ContextVisitor visitor) {
     if (t == null) return;
     if (_adaptor.getType(t) == ttype)
       visitor.visit(t, parent, childIndex, null);
@@ -136,7 +136,7 @@ class TreeWizard {
   *  with visit(t, ttype, visitor) so nil-rooted patterns are not allowed.
   *  Patterns with wildcard roots are also not allowed.
   */
-  void visitWithPattern(t, final String pattern, final ContextVisitor visitor) {
+  visitWithPattern(t, final String pattern, final ContextVisitor visitor) {
     TreePatternLexer tokenizer = new TreePatternLexer(pattern);
     TreePatternParser parser =
       new TreePatternParser(tokenizer, this, new TreePatternTreeAdaptor());
@@ -251,17 +251,17 @@ class TreeWizard {
 }
 
 abstract class ContextVisitor {   
-    void visit(t, parent, int childIndex, Map labels);    
+    visit(t, parent, int childIndex, Map labels);    
 }
 
 abstract class Visitor implements ContextVisitor {    
-  void visit(t, parent, int childIndex, Map l) => _visit(t);
-  void _visit(t);
+  visit(t, parent, int childIndex, Map l) => _visit(t);
+  _visit(t);
 }
 
 class TreeWizardVisitor extends Visitor {
   
-  void _visit(t, [List nodes]) {
+  _visit(t, [List nodes]) {
     if(nodes != null) nodes.add(t);
   }  
 }
@@ -274,7 +274,7 @@ class _TreeWizardContextVisitorVisit implements ContextVisitor {
   
   _TreeWizardContextVisitorVisit(this._tw, this._visitor, this._tpattern);  
   
-  void visit(t, parent, int childIndex, Map labels) {
+  visit(t, parent, int childIndex, Map labels) {
     labels.clear();
     if (_tw._parse(t, _tpattern, labels)) {
       _visitor.visit(t, parent, childIndex, labels);
@@ -290,7 +290,7 @@ class _TreeWizardContextVisitorSubTrees implements ContextVisitor {
   
   _TreeWizardContextVisitorSubTrees(this._tw, this._tpattern, this._subtrees);
   
-  void visit(t, parent, int childIndex, Map labels) {
+  visit(t, parent, int childIndex, Map labels) {
     if (_tw._parse(t, _tpattern, null))
       _subtrees.add(t);
   }
@@ -307,25 +307,14 @@ class TreePattern extends CommonTree {
   
   TreePattern([Token payload]) : super.fromToken(payload);
   
-  String toString() {
-    if (label != null)
-      return "%${label}:${super.toString()}";
-     else return super.toString();        
-  }  
-  
+  String toString() => label != null ? "%${label}:${super.toString()}" : super.toString();
 }
 
-class WildcardTreePattern extends TreePattern {
-  
-  WildcardTreePattern([Token payload]) : super(payload);  
-  
+class WildcardTreePattern extends TreePattern {  
+  WildcardTreePattern([Token payload]) : super(payload);    
 }
 
 /** This adaptor creates TreePattern objects for use during scan() */
-class TreePatternTreeAdaptor extends CommonTreeAdaptor {
-  
-  createTreeNode(Token payload) {
-    return new TreePattern(payload);
-  }
-  
+class TreePatternTreeAdaptor extends CommonTreeAdaptor {  
+  createTreeNode(Token payload) => new TreePattern(payload);
 }

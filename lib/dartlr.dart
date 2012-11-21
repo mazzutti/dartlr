@@ -60,7 +60,6 @@ part "dartlr/debug/record_debug_event_listener.dart";
 part "dartlr/debug/remote_debug_event_socket_listener.dart";
 part "dartlr/debug/tracer.dart";
 part "dartlr/debug/trace_debug_event_listener.dart";
-part "dartlr/misc/cloneable.dart";
 part "dartlr/misc/double_key_map.dart";
 part "dartlr/misc/fast_queue.dart";
 part "dartlr/misc/int_array.dart";

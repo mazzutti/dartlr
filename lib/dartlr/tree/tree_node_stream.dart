@@ -10,7 +10,7 @@ abstract class TreeNodeStream extends IntStream {
   /** Where is this stream pulling nodes from?  This is not the name, but
    *  the object that provides node objects.
    */
-  Object get treeSource;
+  get treeSource;
 
   /** If the tree associated with this stream was created from a TokenStream,
    *  you can specify it here.  Used to do rule $text attribute in tree
@@ -36,7 +36,7 @@ abstract class TreeNodeStream extends IntStream {
    *  If you don't want to buffer up nodes, then this method makes no
    *  sense for you.
    */
-  Object at(int i);  
+  at(int i);  
   
   /** Get tree node at current input pointer + i ahead where i=1 is next node.
    *  i < 0 indicates nodes in the past.  So LT(-1) is previous node, but
@@ -49,14 +49,14 @@ abstract class TreeNodeStream extends IntStream {
    *  returns a tree node instead of a token.  Makes code gen identical
    *  for both parser and tree grammars. :)
    */
-  Object LT(int k);
+  LT(int k);
 
   /** Reset the tree node stream in such a way that it acts like
    *  a freshly constructed stream.
    */
-  void reset();
+  reset();
 
-  String toString([Object start, Object stop]);
+  String toString([start, stop]);
   
   /** Replace from start to stop child index of parent with t, which might
    *  be a list.  Number of children may be different
@@ -68,6 +68,6 @@ abstract class TreeNodeStream extends IntStream {
    *  If parent is null, don't do anything; must be at root of overall tree.
    *  Can't replace whatever points to the parent externally.  Do nothing.
    */
-  void replaceChildren(Object parent, int startChildIndex, int stopChildIndex, Object t);
+  replaceChildren(parent, int startChildIndex, int stopChildIndex, t);
 }
 

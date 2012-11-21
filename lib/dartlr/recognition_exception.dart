@@ -46,7 +46,7 @@ class RecognitionException implements Exception {
   /** If this is a tree parser exception, node is set to the node with
    *  the problem.
    */
-  Object node;
+  var node;
   
   /** The current char when an error occurred. For lexers. */
   int c;
@@ -87,7 +87,7 @@ class RecognitionException implements Exception {
     }
   }
 
-  void _extractInformationFromTreeNodeStream(IntStream inp) {
+  _extractInformationFromTreeNodeStream(IntStream inp) {
     TreeNodeStream nodes = input;
     node = nodes.LT(1);
     TreeAdaptor adaptor = nodes.treeAdaptor;
@@ -96,7 +96,7 @@ class RecognitionException implements Exception {
       token = payload;
       if (payload.line <= 0 ) {
         int i = -1;
-        Object priorNode = nodes.LT(i);
+        var priorNode = nodes.LT(i);
         while ( priorNode!=null ) {
           Token priorPayload = adaptor.getToken(priorNode);
           if ( priorPayload!=null && priorPayload.line  > 0 ) {           

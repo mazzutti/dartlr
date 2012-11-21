@@ -39,12 +39,12 @@ abstract class BaseRecognizer {
   
   IntStream get input;
     
-  void capture(String value) {
+  capture(String value) {
     _output = "${_output}$value";
   }
 
   /** reset the parser's state; subclasses must rewinds the input stream */
-  void reset() {
+  reset() {
     if (state == null) return;
     state.fsp = -1;
     state.errorRecovery = false;
@@ -67,8 +67,8 @@ abstract class BaseRecognizer {
    *  immediate exit from rule.  Rule would recover by resynchronizing
    *  to the set of symbols that can follow rule ref.
    */
-  Object matchSymbol(IntStream input, int ttype, BitSet follow) {
-    Object matchedSymbol = _getCurrentInputSymbol(input);
+  matchSymbol(IntStream input, int ttype, BitSet follow) {
+    var matchedSymbol = _getCurrentInputSymbol(input);
     if (input.LA(1) == ttype ) {
       input.consume();
       state.errorRecovery = false;
@@ -84,7 +84,7 @@ abstract class BaseRecognizer {
   }
 
   /** Match the wildcard: in a symbol */
-  void matchAny([IntStream input]) {
+  matchAny([IntStream input]) {
     state.errorRecovery = false;
     state.failed = false;
     if(input != null) input.consume();
@@ -97,7 +97,7 @@ abstract class BaseRecognizer {
     if (follow.member(Token.EOR_TOKEN_TYPE)) {
       BitSet viableTokensFollowingThisRule = _computeContextSensitiveRuleFOLLOW();
       follow = follow.or(viableTokensFollowingThisRule);
-        if (state._fsp >= 0 )
+        if (state.fsp >= 0 )
            follow.remove(Token.EOR_TOKEN_TYPE);       
     }
     if (follow.member(input.LA(1)) || follow.member(Token.EOR_TOKEN_TYPE)) 
@@ -120,14 +120,14 @@ abstract class BaseRecognizer {
   *
   *  If you override, make sure to update syntaxErrors if you care about that.
   */
-  void reportError(RecognitionException e) {    
+  reportError(RecognitionException e) {    
     if (state.errorRecovery) return;
     state.syntaxErrors++;
     state.errorRecovery = true;
     displayRecognitionError(tokenNames, e);
   }
 
-  void displayRecognitionError(List<String> tokenNames, RecognitionException e) {
+  displayRecognitionError(List<String> tokenNames, RecognitionException e) {
     String hdr = getErrorHeader(e);
     String msg = getErrorMessage(e, tokenNames);
     reportedErrors.add("$hdr $msg");
@@ -244,7 +244,7 @@ abstract class BaseRecognizer {
   }
 
   /** Override this method to change where error messages go */
-  void emitErrorMessage(String msg) {
+  emitErrorMessage(String msg) {
     stderr.writeString(msg);
   }
 
@@ -254,7 +254,7 @@ abstract class BaseRecognizer {
    *  handle mismatched symbol exceptions but there could be a mismatched
    *  token that the matchSymbol() routine could not recover from.
    */
-  void recover(RecognitionException re, [IntStream input]) {
+  recover(RecognitionException re, [IntStream input]) {
     if (state.lastErrorIndex == input.index)
       input.consume();
     state.lastErrorIndex = input.index;
@@ -264,9 +264,9 @@ abstract class BaseRecognizer {
     endResync();
   }
 
-  void beginResync() {}
+  beginResync() {}
 
-  void endResync() {}
+  endResync() {}
 
   /*  Compute the error recovery set for the current rule.  During
    *  rule invocation, the parser pushes the set of tokens that can
@@ -446,7 +446,7 @@ abstract class BaseRecognizer {
   *  is in the set of tokens that can follow the ')' token
   *  reference in rule atom.  It can assume that you forgot the ')'.
   */
-  Object _recoverFromMismatchedToken(IntStream input, int ttype, BitSet follow) {
+  _recoverFromMismatchedToken(IntStream input, int ttype, BitSet follow) {
     RecognitionException e = null;    
     if (mismatchIsUnwantedToken(input, ttype)) {       
       e = new UnwantedTokenException(ttype, input);
@@ -454,12 +454,12 @@ abstract class BaseRecognizer {
       input.consume();
       endResync();
       reportError(e);
-      Object matchedSymbol = _getCurrentInputSymbol(input);
+      var matchedSymbol = _getCurrentInputSymbol(input);
       input.consume();
       return matchedSymbol;
     }
     if (mismatchIsMissingToken(input, follow)) {     
-      Object inserted = _getMissingSymbol(input, e, ttype, follow);
+      var inserted = _getMissingSymbol(input, e, ttype, follow);
       e = new MissingTokenException(inserted, ttype, input);
       reportError(e);
       return inserted;
@@ -468,7 +468,7 @@ abstract class BaseRecognizer {
     throw exc;
   }
 
-  Object recoverFromMismatchedSet
+  recoverFromMismatchedSet
     (IntStream input, RecognitionException e, BitSet follow) {
     if (mismatchIsMissingToken(input, follow) ) {
       reportError(e);
@@ -486,7 +486,7 @@ abstract class BaseRecognizer {
    * 
    *  This is ignored for lexers.
    */
-  Object _getCurrentInputSymbol(IntStream input) => null;
+  _getCurrentInputSymbol(IntStream input) => null;
 
   /** Conjure up a missing token during error recovery.
   *
@@ -507,10 +507,10 @@ abstract class BaseRecognizer {
   *  If you change what tokens must be created by the lexer,
   *  override this method to create the appropriate tokens.
   */
-  Object _getMissingSymbol(IntStream input, 
+  _getMissingSymbol(IntStream input, 
       RecognitionException e, int expectedTokenType, BitSet follow) => null;
 
-  void consumeUntilTokenType(IntStream input, int tokenType) {
+  consumeUntilTokenType(IntStream input, int tokenType) {
     int ttype = input.LA(1);
     while (ttype != Token.EOF && ttype != tokenType) {
       input.consume();
@@ -519,7 +519,7 @@ abstract class BaseRecognizer {
   }
   
   /** Consume tokens until one matches the given token set */  
-  void consumeUntilBitSet(IntStream input, BitSet s) {
+  consumeUntilBitSet(IntStream input, BitSet s) {
     int ttype = input.LA(1);
     while (ttype != Token.EOF && !s.member(ttype)) {
       input.consume();
@@ -528,7 +528,7 @@ abstract class BaseRecognizer {
   }
 
   /** Push a rule's follow set using our own hardcoded stack */
-  void pushFollow(BitSet fset) {    
+  pushFollow(BitSet fset) {    
     if ((state.fsp + 1) >= state.following.length) {
       List<BitSet> f = new List<BitSet>(state.following.length*2);
       Arrays.copy(state.following, 0, f, 0, state.following.length);
@@ -564,7 +564,7 @@ abstract class BaseRecognizer {
   
   int getBacktrackingLevel() => state.backtracking;
 
-  void setBacktrackingLevel(int n) { 
+  setBacktrackingLevel(int n) { 
     state.backtracking = n; 
   }
   
@@ -639,7 +639,7 @@ abstract class BaseRecognizer {
   /** Record whether or not this rule parsed the input at this position
   *  successfully.
   */
-  void memoize(IntStream input, int ruleIndex, int ruleStartIndex) {
+  memoize(IntStream input, int ruleIndex, int ruleStartIndex) {
     int stopTokenIndex = state.failed ? MEMO_RULE_FAILED : input.index - 1;
     if (state.ruleMemo == null)
       print("!!!!!!!!! memo array is null for ${grammarFileName}");
@@ -660,7 +660,7 @@ abstract class BaseRecognizer {
     return n;
   }
 
-  void traceIn(String ruleName, int ruleIndex, [Object inputSymbol])  {
+  traceIn(String ruleName, int ruleIndex, [inputSymbol])  {
     print("enter $ruleName $inputSymbol");
     if (state.backtracking > 0) {
       print(" backtracking=${state.backtracking}");
@@ -668,7 +668,7 @@ abstract class BaseRecognizer {
     print(Platform.operatingSystem == "windows" ? "\r\n" : "\n");
   }
 
-  void traceOut(String ruleName, int ruleIndex, [Object inputSymbol]) {
+  traceOut(String ruleName, int ruleIndex, [inputSymbol]) {
     print("exit $ruleName $inputSymbol");
     if (state.backtracking > 0) {
       print(" backtracking=${state.backtracking}");

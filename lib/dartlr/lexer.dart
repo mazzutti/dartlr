@@ -23,7 +23,7 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
   
   int get HIDDEN => Token.HIDDEN_CHANNEL;
 
-  void reset() {
+  reset() {
     super.reset();
     if(_input != null) _input.seek(0);
     if(state == null) return;
@@ -78,15 +78,15 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
   *  if token == null at end of any token rule, it creates one for you
   *  and emits it.
   */
-  void skip() {
+  skip() {
     state.token = Token.SKIP_TOKEN;
   }
   
   /** This is the lexer entry point that sets instance var 'token' */
-  void mTokens();
+  mTokens();
  
   /** Set the char stream and reset the lexer */
-  void set charStream(CharStream input) {
+  set charStream(CharStream input) {
     _input = null;
     reset();
     _input = input;
@@ -115,7 +115,7 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
     return token;
   }
 
-  void match(s) {
+  match(s) {
     if(s is String) {
       int i = 0;
       while(i < s.length) {
@@ -149,11 +149,11 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
     }    
   }
 
-  void matchAny([IntStream input]) {
+  matchAny([IntStream input]) {
     _input.consume();
   }
 
-  void matchRange(int a, int b) {
+  matchRange(int a, int b) {
     if(_input.LA(1) < a || _input.LA(1) > b) {
       if(state.backtracking > 0) {
         state.failed = true;
@@ -184,11 +184,11 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
     return _input.substring(state.tokenStartCharIndex, charIndex - 1);
   }
 
-  void set text(String text) {
+  set text(String text) {
     state.text = text;
   }
 
-  void reportError(RecognitionException e) {
+  reportError(RecognitionException e) {
     displayRecognitionError(tokenNames, e);
   }
 
@@ -247,19 +247,19 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
    *  it all works out.  You can instead use the rule invocation stack
    *  to do sophisticated error recovery if you are in a fragment rule.
    */
-  void recover(RecognitionException re, [IntStream input]) {
+  recover(RecognitionException re, [IntStream input]) {
     if(input != null)
       super.recover(re, input);
     _input.consume();
   }
 
-  void traceIn(String ruleName, int ruleIndex, [Object inputSymbol])  {
+  traceIn(String ruleName, int ruleIndex, [inputSymbol])  {
     if(inputSymbol == null)
       inputSymbol = "${_input.LT(1)} line=${line}:${charPositionInLine}";
     super.traceIn(ruleName, ruleIndex, inputSymbol);
   }
 
-  void traceOut(String ruleName, int ruleIndex, [Object inputSymbol])  {
+  traceOut(String ruleName, int ruleIndex, [inputSymbol])  {
     if(inputSymbol == null)
       inputSymbol = "${_input.LT(1)} line=${line}:${charPositionInLine}";
     super.traceOut(ruleName, ruleIndex, inputSymbol);

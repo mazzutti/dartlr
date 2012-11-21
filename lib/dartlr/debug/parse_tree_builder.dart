@@ -22,20 +22,20 @@ class ParseTreeBuilder extends BlankDebugEventListener {
     callStack.add(root);
   }
 
-  ParseTree getTree() => callStack[0];
+  ParseTree get tree => callStack[0];
 
   /**  What kind of node to create.  You might want to override
    *   so I factored out creation here.
    */
-  ParseTree create(Object payload) => new ParseTree(payload);
+  ParseTree create(payload) => new ParseTree(payload);
 
-  ParseTree epsilonNode() => create(EPSILON_PAYLOAD);
+  ParseTree get epsilonNode => create(EPSILON_PAYLOAD);
 
   /** Backtracking or cyclic DFA, don't want to add nodes to tree */
-  void enterDecision(int d, bool couldBacktrack) {backtracking++;}
-  void exitDecision(int i) {backtracking--;}
+  enterDecision(int d, bool couldBacktrack) {backtracking++;}
+  exitDecision(int i) {backtracking--;}
 
-  void enterRule(String ruleName, [String grammarFileName]) {
+  enterRule(String ruleName, [String grammarFileName]) {
     if (backtracking > 0) return;
     ParseTree parentRuleNode = callStack.last;
     ParseTree ruleNode = create(ruleName);
@@ -43,15 +43,15 @@ class ParseTreeBuilder extends BlankDebugEventListener {
     callStack.add(ruleNode);
   }
 
-  void exitRule(String ruleName, [String grammarFileName]) {
+  exitRule(String ruleName, [String grammarFileName]) {
     if (backtracking > 0) return;
     ParseTree ruleNode = callStack.last;
-    if (ruleNode.getChildCount() == 0)
-      ruleNode.addChild(epsilonNode());
+    if (ruleNode.childCount == 0)
+      ruleNode.addChild(epsilonNode);
     callStack.removeLast();    
   }
 
-  void consumeToken(Token token) {
+  consumeToken(Token token) {
     if (backtracking > 0) return;
     ParseTree ruleNode = callStack.last;
     ParseTree elementNode = create(token);
@@ -60,12 +60,12 @@ class ParseTreeBuilder extends BlankDebugEventListener {
     ruleNode.addChild(elementNode);
   }
 
-  void consumeHiddenToken(Token token) {
+  consumeHiddenToken(Token token) {
     if (backtracking > 0) return;
     hiddenTokens.add(token);
   }
 
-  void recognitionException(RecognitionException e) {
+  recognitionException(RecognitionException e) {
     if (backtracking > 0) return;
     ParseTree ruleNode = callStack.last;
     ParseTree en = create(e);
