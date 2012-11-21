@@ -103,31 +103,31 @@ class DebugEventRepeater implements DebugEventListener {
     _listener.terminate(); 
   }
 
-  void consumeNode(Object t) { 
+  void consumeNode(t) { 
     _listener.consumeNode(t); 
   }
   
-  void nilNode(Object t) { 
+  void nilNode(t) { 
     _listener.nilNode(t); 
   }
   
-  void errorNode(Object t) { 
+  void errorNode(t) { 
     _listener.errorNode(t); 
   }
   
-  void createNode(Object node, [Token token]) { 
+  void createNode(node, [Token token]) { 
     _listener.createNode(node, token); 
   }
   
-  void becomeRoot(Object newRoot, Object oldRoot) { 
+  void becomeRoot(newRoot, oldRoot) { 
     _listener.becomeRoot(newRoot, oldRoot); 
   }
   
-  void addChild(Object root, Object child) { 
+  void addChild(root, child) { 
     _listener.addChild(root, child); 
   }
   
-  void setTokenBoundaries(Object t, int tokenStartIndex, int tokenStopIndex) {
+  void setTokenBoundaries(t, int tokenStartIndex, int tokenStopIndex) {
     _listener.setTokenBoundaries(t, tokenStartIndex, tokenStopIndex);
   }
 }
