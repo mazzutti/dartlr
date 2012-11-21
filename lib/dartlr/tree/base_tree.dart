@@ -73,7 +73,7 @@ abstract class BaseTree extends Tree {
     BaseTree childTree = t;
     if ( childTree.isNil() ) {
       if (_children != null && _children == childTree.children)
-        throw new Exception("attempt to add child list to itself");     
+        throw new ArgumentError("attempt to add child list to itself");     
       if (childTree.children != null) {
         if (children != null) {
           int n = childTree.children.length;
@@ -205,9 +205,9 @@ abstract class BaseTree extends Tree {
 
   void sanityCheckParentAndChildIndexes([Tree parent = null, int i = -1]) {
     if (parent != this.parent)
-      throw new Exception("parents don't match; expected $parent found ${parent}");
+      throw new ArgumentError("parents don't match; expected $parent found ${parent}");
     if (i != childIndex)
-      throw new Exception("child indexes don't match; expected $i found ${childIndex}");
+      throw new ArgumentError("child indexes don't match; expected $i found ${childIndex}");
     for (int c = 0; c < childCount; c++) {
       CommonTree child = getChild(c);
       child.sanityCheckParentAndChildIndexes(this, c);
