@@ -32,37 +32,14 @@ class DFA {
 
   DFA([this._recognizer]);
   
-  void set decisionNumber(int dn) {
-    _decisionNumber = dn;
-  }
-  
-  void set eot(List<int> eot) {
-    _eot = eot;
-  }
-  
-  void set eof(List<int> eof) {
-    _eof = eof;
-  }
-  
-  void set min_(List<int> min) {
-    _min = min;
-  }
-  
-  void set max_(List<int> max) {
-    _max = max;
-  }
-  
-  void set accept(List<int> accept) {
-    _accept = accept;
-  }
-  
-  void set special(List<int> special) {
-    _special = special;
-  }
-  
-  void set transition(List<List<int>> transition) {
-    _transition = transition;
-  }
+  set decisionNumber(int dn) => _decisionNumber = dn;
+  set eot(List<int> eot) => _eot = eot;
+  set eof(List<int> eof) => _eof = eof;  
+  set min_(List<int> min) => _min = min;   
+  set max_(List<int> max) => _max = max;
+  set accept(List<int> accept) => _accept = accept;  
+  set special(List<int> special) => _special = special;  
+  set transition(List<List<int>> transition) => _transition = transition;
   
   /** From the input stream, predict what alternative will succeed
    *  using this DFA (representing the covering regular approximation
@@ -146,7 +123,7 @@ class DFA {
     }
   }
 
-  void _noViableAlt(int s, IntStream input) {
+  _noViableAlt(int s, IntStream input) {
     if (_recognizer.state.backtracking > 0) {
       _recognizer.state.failed=true;
       return;
@@ -158,7 +135,7 @@ class DFA {
     throw nvae;
   }
 
-  void _error(NoViableAltException nvae) {}
+  _error(NoViableAltException nvae) {}
 
   int specialStateTransition(int s, IntStream input) => -1;
 
