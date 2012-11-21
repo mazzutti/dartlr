@@ -48,7 +48,7 @@ class FastQueue<T> {
 
   int get size => _data.length - _p;
 
-  int range() => _range;
+  int get range => _range;
 
   T head() => elementAt(0);
 

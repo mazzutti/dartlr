@@ -29,7 +29,7 @@ class ParseTreeBuilder extends BlankDebugEventListener {
    */
   ParseTree create(Object payload) => new ParseTree(payload);
 
-  ParseTree epsilonNode() => create(EPSILON_PAYLOAD);
+  ParseTree get epsilonNode => create(EPSILON_PAYLOAD);
 
   /** Backtracking or cyclic DFA, don't want to add nodes to tree */
   void enterDecision(int d, bool couldBacktrack) {backtracking++;}
@@ -47,7 +47,7 @@ class ParseTreeBuilder extends BlankDebugEventListener {
     if (backtracking > 0) return;
     ParseTree ruleNode = callStack.last;
     if (ruleNode.childCount == 0)
-      ruleNode.addChild(epsilonNode());
+      ruleNode.addChild(epsilonNode);
     callStack.removeLast();    
   }
 
