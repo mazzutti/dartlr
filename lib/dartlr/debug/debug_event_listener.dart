@@ -7,10 +7,10 @@ part of dartlr;
 /** All debugging events that a recognizer can trigger. */
 abstract class DebugEventListener {
   
-  static final String PROTOCOL_VERSION = "2";
+  static const String PROTOCOL_VERSION = "2";
   /** serialized version of true */
-  static final int TRUE = 1;
-  static final int FALSE = 0;
+  static const int TRUE = 1;
+  static const int FALSE = 0;
   
   /** The parser has just entered a rule.  No decision has been made about
    *  which alt is predicted.  This is fired AFTER init actions have been
@@ -185,7 +185,7 @@ abstract class DebugEventListener {
    *  the ID is not really meaningful as it's fixed--there is
    *  just one UP node and one DOWN navigation node.
    */
-  void consumeNode(Object t);
+  void consumeNode(t);
 
   /** Somebody (anybody) looked ahead.  Note that this actually gets
    *  triggered by both LA and LT calls.  The debugger will want to know
@@ -194,23 +194,23 @@ abstract class DebugEventListener {
    *  ahead into a file it doesn't have so LT events must pass the token
    *  even if the info is redundant.
    */
-  void LT(int i, Object t);
+  void LT(int i, t);
 
   /** A nil was created (even nil nodes have a unique ID...
    *  they are not "null" per se).  
    */
-  void nilNode(Object t);
+  void nilNode(t);
 
   /** Upon syntax error, recognizers bracket the error with an error node
    *  if they are building ASTs.
    */
-  void errorNode(Object t);
+  void errorNode(t);
 
   /** Announce a new node built from token elements such as type etc...
    * 
    *  Announce a new node built from an existing token, if one is given.
    */
-  void createNode(Object node, [Token token]);
+  void createNode(node, [Token token]);
 
   /** Make a node the new root of an existing root.  See
   *
@@ -225,14 +225,14 @@ abstract class DebugEventListener {
   *
   *  See [TreeAdaptor.becomeRoot()]
   */
-  void becomeRoot(Object newRoot, Object oldRoot);
+  void becomeRoot(newRoot, oldRoot);
 
   /** Make childID a child of rootID.
   *
   *  [TreeAdaptor.addChild()]
   */
-  void addChild(Object root, Object child);
+  void addChild(root, child);
 
   /** Set the token start/stop token index for a subtree root or node. */
-  void setTokenBoundaries(Object t, int tokenStartIndex, int tokenStopIndex);
+  void setTokenBoundaries(t, int tokenStartIndex, int tokenStopIndex);
 }
