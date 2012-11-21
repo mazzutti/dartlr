@@ -77,7 +77,7 @@ class BitSet {
     bits = newbits;
   } 
 
-  Object clone() {
+  clone() {
     BitSet s = new BitSet();    
     s.bits = new List<int>(bits.length);
     Arrays.copy(bits, 0, s.bits, 0, bits.length);  
@@ -96,7 +96,7 @@ class BitSet {
     return deg;
   }
 
-  bool operator ==(Object other) {
+  bool operator ==(other) {
     if ( other == null || !(other is BitSet)) return false;
     int n = math.min(bits.length, other.bits.length);    
     for (int i = 0; i < n; i++)

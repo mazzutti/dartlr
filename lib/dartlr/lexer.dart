@@ -253,13 +253,13 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
     _input.consume();
   }
 
-  void traceIn(String ruleName, int ruleIndex, [Object inputSymbol])  {
+  void traceIn(String ruleName, int ruleIndex, [inputSymbol])  {
     if(inputSymbol == null)
       inputSymbol = "${_input.LT(1)} line=${line}:${charPositionInLine}";
     super.traceIn(ruleName, ruleIndex, inputSymbol);
   }
 
-  void traceOut(String ruleName, int ruleIndex, [Object inputSymbol])  {
+  void traceOut(String ruleName, int ruleIndex, [inputSymbol])  {
     if(inputSymbol == null)
       inputSymbol = "${_input.LT(1)} line=${line}:${charPositionInLine}";
     super.traceOut(ruleName, ruleIndex, inputSymbol);

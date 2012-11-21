@@ -67,8 +67,8 @@ abstract class BaseRecognizer {
    *  immediate exit from rule.  Rule would recover by resynchronizing
    *  to the set of symbols that can follow rule ref.
    */
-  Object matchSymbol(IntStream input, int ttype, BitSet follow) {
-    Object matchedSymbol = _getCurrentInputSymbol(input);
+  matchSymbol(IntStream input, int ttype, BitSet follow) {
+    var matchedSymbol = _getCurrentInputSymbol(input);
     if (input.LA(1) == ttype ) {
       input.consume();
       state.errorRecovery = false;
@@ -446,7 +446,7 @@ abstract class BaseRecognizer {
   *  is in the set of tokens that can follow the ')' token
   *  reference in rule atom.  It can assume that you forgot the ')'.
   */
-  Object _recoverFromMismatchedToken(IntStream input, int ttype, BitSet follow) {
+  _recoverFromMismatchedToken(IntStream input, int ttype, BitSet follow) {
     RecognitionException e = null;    
     if (mismatchIsUnwantedToken(input, ttype)) {       
       e = new UnwantedTokenException(ttype, input);
@@ -454,12 +454,12 @@ abstract class BaseRecognizer {
       input.consume();
       endResync();
       reportError(e);
-      Object matchedSymbol = _getCurrentInputSymbol(input);
+      var matchedSymbol = _getCurrentInputSymbol(input);
       input.consume();
       return matchedSymbol;
     }
     if (mismatchIsMissingToken(input, follow)) {     
-      Object inserted = _getMissingSymbol(input, e, ttype, follow);
+      var inserted = _getMissingSymbol(input, e, ttype, follow);
       e = new MissingTokenException(inserted, ttype, input);
       reportError(e);
       return inserted;
@@ -468,7 +468,7 @@ abstract class BaseRecognizer {
     throw exc;
   }
 
-  Object recoverFromMismatchedSet
+  recoverFromMismatchedSet
     (IntStream input, RecognitionException e, BitSet follow) {
     if (mismatchIsMissingToken(input, follow) ) {
       reportError(e);
@@ -486,7 +486,7 @@ abstract class BaseRecognizer {
    * 
    *  This is ignored for lexers.
    */
-  Object _getCurrentInputSymbol(IntStream input) => null;
+  _getCurrentInputSymbol(IntStream input) => null;
 
   /** Conjure up a missing token during error recovery.
   *
@@ -507,7 +507,7 @@ abstract class BaseRecognizer {
   *  If you change what tokens must be created by the lexer,
   *  override this method to create the appropriate tokens.
   */
-  Object _getMissingSymbol(IntStream input, 
+  _getMissingSymbol(IntStream input, 
       RecognitionException e, int expectedTokenType, BitSet follow) => null;
 
   void consumeUntilTokenType(IntStream input, int tokenType) {
@@ -660,7 +660,7 @@ abstract class BaseRecognizer {
     return n;
   }
 
-  void traceIn(String ruleName, int ruleIndex, [Object inputSymbol])  {
+  void traceIn(String ruleName, int ruleIndex, [inputSymbol])  {
     print("enter $ruleName $inputSymbol");
     if (state.backtracking > 0) {
       print(" backtracking=${state.backtracking}");
@@ -668,7 +668,7 @@ abstract class BaseRecognizer {
     print(Platform.operatingSystem == "windows" ? "\r\n" : "\n");
   }
 
-  void traceOut(String ruleName, int ruleIndex, [Object inputSymbol]) {
+  void traceOut(String ruleName, int ruleIndex, [inputSymbol]) {
     print("exit $ruleName $inputSymbol");
     if (state.backtracking > 0) {
       print(" backtracking=${state.backtracking}");
