@@ -8,7 +8,7 @@ part of dartlr;
  * good enough to handle runtime requirements such as FOLLOW sets
  * for automatic error recovery.
  */
-class BitSet implements Cloneable {
+class BitSet {
   
   static const int _BITS = 64;
   static const int _LOG_BITS = 6;
