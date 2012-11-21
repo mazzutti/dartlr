@@ -62,12 +62,12 @@ abstract class RewriteRuleElementStream {
   *  Once we reset the stream, any future use will need duplicates.  Set
   *  the dirty bit.
   */
-  void reset() {
+  reset() {
     _cursor = 0;
     _dirty = true;
   }
 
-  void add(el) {
+  add(el) {
     if (el == null) return;
     if (_elements != null ) { 
       _elements.add(el);

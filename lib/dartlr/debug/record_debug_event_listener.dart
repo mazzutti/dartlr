@@ -12,7 +12,7 @@ class RecordDebugEventListener extends TraceDebugEventListener {
     events = new List<String>();
   }
   
-  void record(String event) {    
+  record(String event) {    
     events.add(event);
   }  
 }

@@ -24,19 +24,19 @@ class Parser extends BaseRecognizer {
 
   String get sourceName => _input.sourceName;  
 
-  void set tokenStream(TokenStream input) {
+  set tokenStream(TokenStream input) {
     _input = null;
     reset();
     _input = input;
   }
   
-  void set input(TokenStream input) {
+  set input(TokenStream input) {
     _input = null;
     reset();
     _input = input;
   }
   
-  void reset() {
+  reset() {
     super.reset();
     if (_input != null ) {
       _input.seek(0);
@@ -65,13 +65,13 @@ class Parser extends BaseRecognizer {
     return t;
   }
   
-  void traceIn(String ruleName, int ruleIndex, [inputSymbol])  {
+  traceIn(String ruleName, int ruleIndex, [inputSymbol])  {
     if(inputSymbol == null)
       inputSymbol = _input.LT(1);
     super.traceIn(ruleName, ruleIndex, inputSymbol);
   }
 
-  void traceOut(String ruleName, int ruleIndex, [inputSymbol]) {
+  traceOut(String ruleName, int ruleIndex, [inputSymbol]) {
     if(inputSymbol == null)
       inputSymbol = _input.LT(1);
     super.traceOut(ruleName, ruleIndex, inputSymbol);

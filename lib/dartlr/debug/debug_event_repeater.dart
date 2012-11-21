@@ -19,115 +19,115 @@ class DebugEventRepeater implements DebugEventListener {
 
   DebugEventRepeater(this._listener);
   
-  void enterRule(String ruleName, [String grammarFileName]) { 
+  enterRule(String ruleName, [String grammarFileName]) { 
     _listener.enterRule(ruleName, grammarFileName); 
   }
   
-  void exitRule(String ruleName, [String grammarFileName]) { 
+  exitRule(String ruleName, [String grammarFileName]) { 
     _listener.exitRule(ruleName, grammarFileName); 
   }
   
-  void enterAlt(int alt) { 
+  enterAlt(int alt) { 
     _listener.enterAlt(alt); 
   }
   
-  void enterSubRule(int decisionNumber) { 
+  enterSubRule(int decisionNumber) { 
     _listener.enterSubRule(decisionNumber); 
   }
   
-  void exitSubRule(int decisionNumber) { 
+  exitSubRule(int decisionNumber) { 
     _listener.exitSubRule(decisionNumber); 
   }
   
-  void enterDecision(int decisionNumber, bool couldBacktrack) { 
+  enterDecision(int decisionNumber, bool couldBacktrack) { 
     _listener.enterDecision(decisionNumber, couldBacktrack); 
   }
   
-  void exitDecision(int decisionNumber) { 
+  exitDecision(int decisionNumber) { 
     _listener.exitDecision(decisionNumber); 
   }
   
-  void location(int line, int pos) { 
+  location(int line, int pos) { 
     _listener.location(line, pos); 
   }
   
-  void consumeToken(Token token) { 
+  consumeToken(Token token) { 
     _listener.consumeToken(token); 
   }
   
-  void consumeHiddenToken(Token token) { 
+  consumeHiddenToken(Token token) { 
     _listener.consumeHiddenToken(token); 
   }
   
-  void LT(int i, Token t) { 
+  LT(int i, Token t) { 
     _listener.LT(i, t); 
   }
   
-  void mark(int i) { 
+  mark(int i) { 
     _listener.mark(i); 
   }
   
-  void rewind([int marker]) { 
+  rewind([int marker]) { 
     _listener.rewind(marker); 
   }
   
-  void beginBacktrack(int level) { 
+  beginBacktrack(int level) { 
     _listener.beginBacktrack(level); 
   }
   
-  void endBacktrack(int level, bool successful) { 
+  endBacktrack(int level, bool successful) { 
     _listener.endBacktrack(level, successful); 
   }
   
-  void recognitionException(RecognitionException e) { 
+  recognitionException(RecognitionException e) { 
     _listener.recognitionException(e); 
   }
   
-  void beginResync() { 
+  beginResync() { 
     _listener.beginResync(); 
   }
   
-  void endResync() { 
+  endResync() { 
     _listener.endResync(); 
   }
   
-  void semanticPredicate(bool result, String predicate) { 
+  semanticPredicate(bool result, String predicate) { 
     _listener.semanticPredicate(result, predicate); 
   }
   
-  void commence() { 
+  commence() { 
     _listener.commence(); 
   }
   
-  void terminate() { 
+  terminate() { 
     _listener.terminate(); 
   }
 
-  void consumeNode(t) { 
+  consumeNode(t) { 
     _listener.consumeNode(t); 
   }
   
-  void nilNode(t) { 
+  nilNode(t) { 
     _listener.nilNode(t); 
   }
   
-  void errorNode(t) { 
+  errorNode(t) { 
     _listener.errorNode(t); 
   }
   
-  void createNode(node, [Token token]) { 
+  createNode(node, [Token token]) { 
     _listener.createNode(node, token); 
   }
   
-  void becomeRoot(newRoot, oldRoot) { 
+  becomeRoot(newRoot, oldRoot) { 
     _listener.becomeRoot(newRoot, oldRoot); 
   }
   
-  void addChild(root, child) { 
+  addChild(root, child) { 
     _listener.addChild(root, child); 
   }
   
-  void setTokenBoundaries(t, int tokenStartIndex, int tokenStopIndex) {
+  setTokenBoundaries(t, int tokenStartIndex, int tokenStopIndex) {
     _listener.setTokenBoundaries(t, tokenStartIndex, tokenStopIndex);
   }
 }

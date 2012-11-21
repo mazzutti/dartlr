@@ -56,19 +56,19 @@ class BufferedTokenStream implements TokenStream {
     return _lastMarker;
   }
 
-  void release(int marker) {}
+  release(int marker) {}
 
-  void rewind([int marker]){
+  rewind([int marker]){
     if(marker == null) marker = _lastMarker; 
     seek(marker);
   }
 
-  void reset() {
+  reset() {
     _p = 0;
     _lastMarker = 0;
   }
 
-  void seek(int i) {
+  seek(int i) {
     _p = i; 
   }
 
@@ -81,20 +81,20 @@ class BufferedTokenStream implements TokenStream {
    *
    *  Walk past any token not on the channel the parser is listening to.
    */
-  void consume() {
+  consume() {
     if (_p == -1 ) _setup();
     _p++;
     _sync(_p);
   }
   
   /** Make sure index i in tokens has a token. */
-  void _sync(int i) {   
+  _sync(int i) {   
     int n = i - _tokens.length + 1;
     if ( n > 0 ) _fetch(n);
   }
 
   /** add n elements to buffer */
-  void _fetch(int n) {
+  _fetch(int n) {
     for (int i=1; i<=n; i++) {
       Token t = _tokenSource.nextToken();
       t.tokenIndex = _tokens.length; 
@@ -145,13 +145,13 @@ class BufferedTokenStream implements TokenStream {
     return _tokens[i];
   }
 
-  void _setup() {
+  _setup() {
     _sync(0); 
     _p = 0; 
   }
 
   /** Reset this token stream by setting its token source. */
-  void set tokenSource(TokenSource tokenSource) {
+  set tokenSource(TokenSource tokenSource) {
     _tokenSource = tokenSource;
     _tokens.clear();
     _p = -1;
@@ -218,7 +218,7 @@ class BufferedTokenStream implements TokenStream {
   }
 
   /** Get all tokens from lexer until EOF */
-  void fill() {
+  fill() {
     if (_p == -1 ) _setup();
     if (_tokens[_p].type == Token.EOF) return;
     int i = _p + 1;
@@ -227,6 +227,5 @@ class BufferedTokenStream implements TokenStream {
         i++;
         _sync(i);
     }
-  }
-  
+  }  
 }

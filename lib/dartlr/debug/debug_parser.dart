@@ -30,7 +30,7 @@ class DebugParser extends Parser {
   /** Provide a new debug event listener for this parser.  Notify the
   *  input stream too that it should send events to this listener.
   */
-  void set debugListener(DebugEventListener dbg) {
+  set debugListener(DebugEventListener dbg) {
     if (input is DebugTokenStream )
       (_input as DebugTokenStream).debugListener = dbg;
     _dbg = dbg;
@@ -39,11 +39,11 @@ class DebugParser extends Parser {
   DebugEventListener get debugListener => _dbg;
 
   
-  void reportError(RecognitionException exception) {
+  reportError(RecognitionException exception) {
     _reportError(exception);
   }
   
-  void _reportError(  e) {
+  _reportError(  e) {
     if(e is RecognitionException) {
       super.reportError(e);
       _dbg.recognitionException(e);
@@ -52,19 +52,19 @@ class DebugParser extends Parser {
     }
   }
 
-  void beginResync() {
+  beginResync() {
     _dbg.beginResync();
   }
 
-  void endResync() {
+  endResync() {
     _dbg.endResync();
   }
 
-  void beginBacktrack(int level) {
+  beginBacktrack(int level) {
     _dbg.beginBacktrack(level);
   }
 
-  void endBacktrack(int level, bool successful) {
+  endBacktrack(int level, bool successful) {
     _dbg.endBacktrack(level,successful);   
   } 
 }

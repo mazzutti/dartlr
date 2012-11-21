@@ -23,13 +23,13 @@ class DebugTreeNodeStream implements TreeNodeStream {
     _input.uniqueNavigationNodes = true;
   }
 
-  void set debugListener(DebugEventListener dbg) {
+  set debugListener(DebugEventListener dbg) {
     _dbg = dbg;
   }
 
   TreeAdaptor get treeAdaptor => _adaptor;
 
-  void consume() {
+  consume() {
     var node = _input.LT(1);
     _input.consume();
     _dbg.consumeNode(node);
@@ -63,22 +63,22 @@ class DebugTreeNodeStream implements TreeNodeStream {
 
   int get index => _input.index;
 
-  void rewind([int marker]) {
+  rewind([int marker]) {
     if(marker == null)
       marker = _lastMarker; 
     _dbg.rewind(marker);
     _input.rewind(marker);
   }
 
-  void release(int marker) {}
+  release(int marker) {}
 
-  void seek(int i) {
+  seek(int i) {
     _input.seek(i);
   }
 
   int get size => _input.size;
 
-  void reset() {}
+  reset() {}
 
   get treeSource => _input;
 
@@ -86,16 +86,16 @@ class DebugTreeNodeStream implements TreeNodeStream {
   
   TokenStream get tokenStream =>  _input.tokenStream;
   
-  void set tokenStream(TokenStream t) {
+  set tokenStream(TokenStream t) {
     _input.tokenStream = t;
   }
  
-  void set uniqueNavigationNodes(bool uniqueNavigationNodes) {
+  set uniqueNavigationNodes(bool uniqueNavigationNodes) {
     _input.uniqueNavigationNodes = uniqueNavigationNodes;
   }
   bool get uniqueNavigationNodes =>  _input.uniqueNavigationNodes;
 
-  void replaceChildren(parent, int startChildIndex, int stopChildIndex, t) {
+  replaceChildren(parent, int startChildIndex, int stopChildIndex, t) {
     _input.replaceChildren(parent, startChildIndex, stopChildIndex, t);
   }
 

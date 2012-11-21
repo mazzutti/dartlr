@@ -72,12 +72,12 @@ class BufferedTreeNodeStream implements TreeNodeStream {
   /** Walk tree with depth-first-search and fill nodes buffer.
    *  Don't do DOWN, UP nodes if its a list (t is isNil).
    */
-  void _fillBuffer() {
+  _fillBuffer() {
     fillBuffer(_root);
     _p = 0;
   }
 
-  void fillBuffer([t]) {
+  fillBuffer([t]) {
     bool nil = treeAdaptor.isNil(t);
     if (!nil)
       _nodes.add(t);
@@ -105,7 +105,7 @@ class BufferedTreeNodeStream implements TreeNodeStream {
   *  the tree structure.  When debugging we need unique nodes
   *  so instantiate new ones when _uniqueNavigationNodes is true.
   */
-  void _addNavigationNode(final int ttype) {
+  _addNavigationNode(final int ttype) {
     var navNode = null;
     if (ttype == Token.DOWN )
       if (uniqueNavigationNodes)
@@ -147,7 +147,7 @@ class BufferedTreeNodeStream implements TreeNodeStream {
 
   String get sourceName => tokenStream.sourceName;
 
-  void consume() {
+  consume() {
     if (_p == -1)
       _fillBuffer();
     _p++;
@@ -162,16 +162,16 @@ class BufferedTreeNodeStream implements TreeNodeStream {
     return _lastMarker;
   }
 
-  void release(int marker) {}
+  release(int marker) {}
 
   int get index => _p;
 
-  void rewind([int marker]) {
+  rewind([int marker]) {
     if(marker == null) marker = _lastMarker;
     seek(marker);
   }
 
-  void seek(int index) {
+  seek(int index) {
     if (_p == -1)
       _fillBuffer();
     _p = index;
@@ -180,7 +180,7 @@ class BufferedTreeNodeStream implements TreeNodeStream {
   /** Make stream jump to a new location, saving old location.
   *  Switch back with pop().
   */
-  void push(int index) {
+  push(int index) {
     if (_calls == null) 
       _calls = new IntArray();
     _calls.push(_p);
@@ -196,7 +196,7 @@ class BufferedTreeNodeStream implements TreeNodeStream {
     return ret;
   }
 
-  void reset() {
+  reset() {
     _p = 0;
     _lastMarker = 0;
     if (_calls != null)
@@ -215,7 +215,7 @@ class BufferedTreeNodeStream implements TreeNodeStream {
     return new _StreamIterator(_nodes, _eof);
   }
 
-  void replaceChildren(parent, int startChildIndex, int stopChildIndex, t) {
+  replaceChildren(parent, int startChildIndex, int stopChildIndex, t) {
     if (parent != null)
       treeAdaptor.replaceChildren(parent, startChildIndex, stopChildIndex, t);
   }
@@ -305,6 +305,6 @@ class _StreamIterator implements Iterator {
     return _eof;
   }
 
-  void remove() => throw new UnimplementedError("cannot remove nodes from stream");
+  remove() => throw new UnimplementedError("cannot remove nodes from stream");
 }
 

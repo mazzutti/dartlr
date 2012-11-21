@@ -45,7 +45,7 @@ class DebugTreeAdaptor implements TreeAdaptor {
     return t;
   }
 
-  void _simulateTreeConstruction(t) {
+  _simulateTreeConstruction(t) {
     _dbg.createNode(t);
     int n = _adaptor.getChildCount(t);
     for (int i=0; i < n; i++) {
@@ -71,7 +71,7 @@ class DebugTreeAdaptor implements TreeAdaptor {
     return _adaptor.isNil(tree);
   }
 
-  void addChild(t, child) {
+  addChild(t, child) {
     if (t == null || child == null) return;
     t = (t is Token) ? createTreeNode(child) : t;
     _adaptor.addChild(t,child);
@@ -111,7 +111,7 @@ class DebugTreeAdaptor implements TreeAdaptor {
     return _adaptor.getType(t);
   }
 
-  void setType(t, int type) {
+  setType(t, int type) {
     _adaptor.setType(t, type);
   }
 
@@ -119,7 +119,7 @@ class DebugTreeAdaptor implements TreeAdaptor {
     return _adaptor.getText(t);
   }
 
-  void setText(t, String text) {
+  setText(t, String text) {
     _adaptor.setText(t, text);
   }
 
@@ -127,7 +127,7 @@ class DebugTreeAdaptor implements TreeAdaptor {
     return _adaptor.getToken(t);
   }
 
-  void setTokenBoundaries(t, Token startToken, Token stopToken) {
+  setTokenBoundaries(t, Token startToken, Token stopToken) {
     _adaptor.setTokenBoundaries(t, startToken, stopToken);
     if ( t!=null && startToken != null && stopToken != null ) {
       _dbg.setTokenBoundaries(
@@ -147,7 +147,7 @@ class DebugTreeAdaptor implements TreeAdaptor {
     return _adaptor.getChild(t, i);
   }
 
-  void setChild(t, int i, child) {
+  setChild(t, int i, child) {
     _adaptor.setChild(t, i, child);
   }
 
@@ -171,21 +171,21 @@ class DebugTreeAdaptor implements TreeAdaptor {
     return _adaptor.getChildIndex(t);
   }
 
-  void setParent(t, parent) {
+  setParent(t, parent) {
     _adaptor.setParent(t, parent);
   }
 
-  void setChildIndex(t, int index) {
+  setChildIndex(t, int index) {
     _adaptor.setChildIndex(t, index);
   }
 
-  void replaceChildren(parent, int startChildIndex, int stopChildIndex, t) {
+  replaceChildren(parent, int startChildIndex, int stopChildIndex, t) {
     _adaptor.replaceChildren(parent, startChildIndex, stopChildIndex, t);
   }
 
   DebugEventListener get debugListener => _dbg;
 
-  void set debugListener(DebugEventListener dbg) {
+  set debugListener(DebugEventListener dbg) {
     _dbg = dbg;
   }
 

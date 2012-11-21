@@ -20,7 +20,7 @@ class TreeFilter extends TreeParser {
     _originalTokenStream = input.tokenStream;
   }
 
-  void applyOnce(t, TreeFilter_fptr whichRule) {
+  applyOnce(t, TreeFilter_fptr whichRule) {
     if (t == null) return;
     try {
       state = new RecognizerSharedState();
@@ -34,15 +34,15 @@ class TreeFilter extends TreeParser {
     }
   }
 
-  void downup(t) {
+  downup(t) {
     var v = new TreeVisitor(new CommonTreeAdaptor());
     var actions = new _TreeVisitorAction(this);
     v.visit(t, actions);
   }
       
-  void topdown() {}
+  topdown() {}
     
-  void bottomup() {}
+  bottomup() {}
     
 }
 
@@ -65,7 +65,7 @@ class _TreeVisitorAction implements TreeVisitorAction {
 }
 
 abstract class TreeFilter_fptr {
-  void rule();
+  rule();
 }
 
 class _TreeFilterTopdown_fptr implements TreeFilter_fptr {
@@ -74,7 +74,7 @@ class _TreeFilterTopdown_fptr implements TreeFilter_fptr {
   
   _TreeFilterTopdown_fptr(this._tf);  
   
-  void rule() => _tf.topdown();
+  rule() => _tf.topdown();
   
 }
 
@@ -84,7 +84,7 @@ class _TreeFilterBottomup_fptr implements TreeFilter_fptr {
   
   _TreeFilterBottomup_fptr(this._tf);  
   
-  void rule() => _tf.bottomup();
+  rule() => _tf.bottomup();
   
 }
 

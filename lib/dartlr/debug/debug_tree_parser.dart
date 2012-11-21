@@ -30,7 +30,7 @@ class DebugTreeParser extends TreeParser {
   /** Provide a new debug event listener for this parser.  Notify the
   *  input stream too that it should send events to this listener.
   */
-  void set debugListener(DebugEventListener dbg) {
+  set debugListener(DebugEventListener dbg) {
     if (input is DebugTreeNodeStream )
       (input as DebugTokenStream).debugListener = dbg;
     _dbg = dbg;
@@ -38,7 +38,7 @@ class DebugTreeParser extends TreeParser {
 
   DebugEventListener get debugListener => _dbg;
 
-  void reportError( e, [var stackTrace]) {
+  reportError( e, [var stackTrace]) {
     if(e is RecognitionException)
       _dbg.recognitionException(e);
     else {
@@ -54,19 +54,19 @@ class DebugTreeParser extends TreeParser {
     return o;
   }
 
-  void beginResync() {
+  beginResync() {
     _dbg.beginResync();
   }
 
-  void endResync() {
+  endResync() {
     _dbg.endResync();
   }
 
-  void beginBacktrack(int level) {
+  beginBacktrack(int level) {
     _dbg.beginBacktrack(level);
   }
 
-  void endBacktrack(int level, bool successful) {
+  endBacktrack(int level, bool successful) {
     _dbg.endBacktrack(level,successful);   
   }
 }

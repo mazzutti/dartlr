@@ -24,11 +24,11 @@ class FastQueue<T> {
   
   FastQueue(): _data = new List<T>(); 
 
-  void reset() { 
+  reset() { 
     clear(); 
   }
   
-  void clear() { 
+  clear() { 
     _p = 0; 
     _data.clear(); 
   }
@@ -42,7 +42,7 @@ class FastQueue<T> {
     return o;
   }
 
-  void add(T o) { 
+  add(T o) { 
     _data.add(o); 
   }
 

@@ -18,11 +18,11 @@ abstract class RuleReturnScope {
   
   get template =>  null;
   
-  void set start(s) {}
+  set start(s) {}
   
-  void set stop(s)  {}
+  set stop(s)  {}
   
-  void set tree(t) {}
+  set tree(t) {}
   
 }
 

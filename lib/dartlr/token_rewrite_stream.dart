@@ -69,30 +69,30 @@ class TokenRewriteStream extends CommonTokenStream {
     _init();
   }
 
-  void _init() {
+  _init() {
     _programs = new HashMap();
     _programs[DEFAULT_PROGRAM_NAME] =  new List();
     _lastRewriteTokenIndexes = new HashMap();
   }
 
 
-  void rollback(int instructionIndex, [String programName = DEFAULT_PROGRAM_NAME]) {
+  rollback(int instructionIndex, [String programName = DEFAULT_PROGRAM_NAME]) {
     List instructions = _programs[programName];
     if (instructions != null)
       _programs[programName] = 
          instructions.getRange(MIN_TOKEN_INDEX, instructionIndex - MIN_TOKEN_INDEX);    
   }
 
-  void deleteProgram([String programName = DEFAULT_PROGRAM_NAME]) {
+  deleteProgram([String programName = DEFAULT_PROGRAM_NAME]) {
     rollback(MIN_TOKEN_INDEX, programName);
   }
 
-  void insertAfter( d, text, [String programName = DEFAULT_PROGRAM_NAME]) {
+  insertAfter( d, text, [String programName = DEFAULT_PROGRAM_NAME]) {
     int index = (d is Token) ? d.tokenIndex : d;
     insertBefore(index + 1, text, programName);
   }
 
-  void insertBefore( d , text, [String programName = DEFAULT_PROGRAM_NAME]) {
+  insertBefore( d , text, [String programName = DEFAULT_PROGRAM_NAME]) {
     int  index = (d is Token) ? d.tokenIndex : d;   
     _RewriteOperation op = new _InsertBeforeOp(_tokens, index, text);
     List rewrites = _getProgram(programName);
@@ -100,7 +100,7 @@ class TokenRewriteStream extends CommonTokenStream {
     rewrites.add(op);   
   }
 
-  void replace( d1, text, [ d2 , String programName = DEFAULT_PROGRAM_NAME]) {
+  replace( d1, text, [ d2 , String programName = DEFAULT_PROGRAM_NAME]) {
     int to, from = ((d1 is Token) ? d1.tokenIndex : d1);
     if(d2 == null) 
       to = from;
@@ -115,7 +115,7 @@ class TokenRewriteStream extends CommonTokenStream {
     rewrites.add(op);
   }
 
-  void delete( d1, [ d2, String programName = DEFAULT_PROGRAM_NAME]) {    
+  delete( d1, [ d2, String programName = DEFAULT_PROGRAM_NAME]) {    
     int to, from = (d1 is Token) ? d1.tokenIndex : d1;
     if(d2 == null) to = from;
     else to = (d2 is Token) ? d2.tokenIndex : d2;
@@ -127,7 +127,7 @@ class TokenRewriteStream extends CommonTokenStream {
 
   int _getLastRewriteTokenIndex(String programName) => _lastRewriteTokenIndexes[programName];
 
-  void setLastRewriteTokenIndex(String programName, int i) {
+  setLastRewriteTokenIndex(String programName, int i) {
     _lastRewriteTokenIndexes[programName] = i;
   }
 

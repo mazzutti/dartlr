@@ -28,12 +28,12 @@ abstract class Tree {
   
    Tree get parent;
 
-   void set parent(Tree t);
+   set parent(Tree t);
   
   /** This node is what child index? 0..n-1 */
    int get childIndex;
   
-   void set childIndex(int index);
+   set childIndex(int index);
   
   /** Indicates the node is a nil node but may still have children, meaning
    *  the tree is a flat list.
@@ -59,15 +59,15 @@ abstract class Tree {
    List get ancestors;
 
   /** Set the parent and child index values for all children */
-   void freshenParentAndChildIndexes();
+   freshenParentAndChildIndexes();
 
   /** Add t as a child to this node.  If t is null, do nothing.  If t
    *  is nil, add all children of t to this' children.
    */
-   void addChild(Tree t);
+   addChild(Tree t);
 
   /** Set ith child (0..n-1) to t; t must be non-null and non-nil node */
-   void setChild(int i, Tree t);
+   setChild(int i, Tree t);
    operator[]=(int i, Tree t) => setChild(i,t);
 
    deleteChild(int i);
@@ -77,21 +77,21 @@ abstract class Tree {
    *  For huge child lists, inserting children can force walking rest of
    *  children to set their childindex; could be slow.
    */
-   void replaceChildren(int startChildIndex, int stopChildIndex, t); 
+   replaceChildren(int startChildIndex, int stopChildIndex, t); 
 
   /**  What is the smallest token index (indexing from 0) for this node
    *   and its children?
    */
    int get tokenStartIndex;
 
-   void set tokenStartIndex(int index);
+   set tokenStartIndex(int index);
 
   /**  What is the largest token index (indexing from 0) for this node
    *   and its children?
    */
    int get tokenStopIndex;
 
-   void set tokenStopIndex(int index);
+   set tokenStopIndex(int index);
 
    Tree dupNode();
 

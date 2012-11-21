@@ -20,7 +20,7 @@ class ANTLRFileStream extends ANTLRStringStream {
   
   String get sourceName => _fileName;
 
-  void load([Encoding encoding]) {
+  load([Encoding encoding]) {
     if (_fileName == null ) return;
     File f = new File(_fileName);   
     _data = f.readAsBytesSync();

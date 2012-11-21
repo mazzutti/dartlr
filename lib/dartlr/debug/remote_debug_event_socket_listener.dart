@@ -34,7 +34,7 @@ class RemoteDebugEventSocketListener {
     });
   }
 
-  void _openConnection(void cb(bool success)) {
+  _openConnection(cb(bool success)) {
     try {
       channel = new Socket(machine, port);
       channel.onConnect = () { 
@@ -48,7 +48,7 @@ class RemoteDebugEventSocketListener {
     }    
   }
 
-  void _closeConnection() {
+  _closeConnection() {
     try {
       inStream = null;
       outStream.close(); 
@@ -72,7 +72,7 @@ class RemoteDebugEventSocketListener {
     }
   }
 
-  void _dispatch(String line) {   
+  _dispatch(String line) {   
     List<String> elements = getEventElements(line);   
     if(elements == null || elements[0] == null) {
       stderr.writeString("unknown debug event: $line");
@@ -351,7 +351,7 @@ class ProxyToken extends Token {
   
   CharStream get inputStream => null;
   
-  void set inputStream(CharStream input) {}
+  set inputStream(CharStream input) {}
   
   String toString() {
     String channelStr = "";
@@ -376,9 +376,9 @@ class ProxyTree extends BaseTree {
       this.charPos = -1, this.tokenIndex = -1, this._text]);
 
   int get tokenStartIndex => tokenIndex;
-  void set tokenStartIndex(int index) {}
+  set tokenStartIndex(int index) {}
   int get tokenStopIndex => 0;
-  void set tokenStopIndex(int index) {}
+  set tokenStopIndex(int index) {}
   Tree dupNode() {return null;}
   int get type => _type;
   String get text => _text;

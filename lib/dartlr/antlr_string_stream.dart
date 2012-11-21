@@ -69,14 +69,14 @@ class ANTLRStringStream implements CharStream {
    *  when the object was created *except* the data array is not
    *  touched.
    */
-  void reset() {
+  reset() {
     _p = 0;
     line = 1;
     charPositionInLine = 0;
     _markDepth = 0;
   }
 
-  void consume() {   
+  consume() {   
     if(_p < _n) {
       charPositionInLine++;
       if (_data[_p] == '\n'.charCodeAt(0)) {       
@@ -120,7 +120,7 @@ class ANTLRStringStream implements CharStream {
     return _markDepth;
   }
 
-  void rewind([int marker]) {
+  rewind([int marker]) {
     if(marker == null) marker = _lastMarker;
     CharStreamState state = _markers[marker]; 
     seek(state.p);
@@ -129,7 +129,7 @@ class ANTLRStringStream implements CharStream {
     release(marker);
   }
 
-  void release(int marker) {
+  release(int marker) {
     _markDepth = marker;
     _markDepth--;
   }
@@ -137,7 +137,7 @@ class ANTLRStringStream implements CharStream {
   /** consume() ahead until _p == index; can't just set _p = index as we must
    *  update line and charPositionInLine.
    */
-  void seek(int index) {
+  seek(int index) {
     if (index <= _p ) {
       _p = index;
       return;

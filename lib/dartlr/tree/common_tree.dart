@@ -61,9 +61,7 @@ class CommonTree extends BaseTree {
     return _startIndex;
   } 
   
-  void set tokenStartIndex(int index) {
-    _startIndex = index;
-  }
+  set tokenStartIndex(int index) => _startIndex = index;
 
   int get tokenStopIndex {
     if (_stopIndex == -1 && token != null)
@@ -71,9 +69,7 @@ class CommonTree extends BaseTree {
     return _stopIndex;
   }
   
-  void set tokenStopIndex(int index) {
-    _stopIndex = index;
-  }
+  set tokenStopIndex(int index) => _stopIndex = index;
   
   Tree dupNode() => new CommonTree(this);
 
@@ -83,7 +79,7 @@ class CommonTree extends BaseTree {
    *  are set.  Walk depth first, visit bottom up.  Only updates nodes
    *  with at least one token index < 0.
    */
-  void setUnknownTokenBoundaries() {
+  setUnknownTokenBoundaries() {
       if (_children == null ) {
           if (_startIndex < 0 || _stopIndex < 0)
             _startIndex = _stopIndex = _token.tokenIndex;

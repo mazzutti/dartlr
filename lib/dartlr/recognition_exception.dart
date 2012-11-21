@@ -87,7 +87,7 @@ class RecognitionException implements Exception {
     }
   }
 
-  void _extractInformationFromTreeNodeStream(IntStream inp) {
+  _extractInformationFromTreeNodeStream(IntStream inp) {
     TreeNodeStream nodes = input;
     node = nodes.LT(1);
     TreeAdaptor adaptor = nodes.treeAdaptor;

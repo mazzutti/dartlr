@@ -15,49 +15,49 @@ class TraceDebugEventListener extends BlankDebugEventListener {
     }
   }
 
-  void enterRule(String ruleName, [String grammarFileName]) {
+  enterRule(String ruleName, [String grammarFileName]) {
     if(grammarFileName != null)
       record("enterRule, $grammarFileName, $ruleName");
     else 
       record("enterRule, $ruleName");
   }
   
-  void exitRule(String ruleName, [String grammarFileName]) {
+  exitRule(String ruleName, [String grammarFileName]) {
     if(grammarFileName != null)
       record("exitRule, $grammarFileName, $ruleName");
     else 
       record("exitRule, $ruleName");
   }
   
-  void mark(int i) {
+  mark(int i) {
     record("mark, $i");
   }
 
-  void rewind([int marker]) {
+  rewind([int marker]) {
     record("rewind, $marker");
   }
   
-  void enterSubRule(int decisionNumber) {
+  enterSubRule(int decisionNumber) {
     record("enterSubRule, $decisionNumber"); 
   }
   
-  void exitSubRule(int decisionNumber) {
+  exitSubRule(int decisionNumber) {
     record("exitSubRule, $decisionNumber"); 
   }
   
-  void location(int line, int pos) {
+  location(int line, int pos) {
     record("location, $line, $pos");
   }
   
-  void enterDecision(int decisionNumber, bool couldBacktrack) {
+  enterDecision(int decisionNumber, bool couldBacktrack) {
     record("enterDecision, $decisionNumber, $couldBacktrack");
   }
 
-  void exitDecision(int decisionNumber) {
+  exitDecision(int decisionNumber) {
     record("exitDecision, $decisionNumber");
   }
 
-  void consumeNode(t) {
+  consumeNode(t) {
     int ID = adaptor.getUniqueID(t);
     String text = adaptor.getText(t);
     int type = adaptor.getType(t);
@@ -72,7 +72,7 @@ class TraceDebugEventListener extends BlankDebugEventListener {
     record("consumeNode, $ID, $type, $line, $pos, $tokenIndex, $text");   
   }
   
-  void LT(int i, t) {
+  LT(int i, t) {
     if(t is Token) {
       record("LT, $i, "
       "${t.type}, ${t.channel}, ${t.line}, "
@@ -93,11 +93,11 @@ class TraceDebugEventListener extends BlankDebugEventListener {
     }
   }
  
-  void nilNode(t) {
+  nilNode(t) {
     record("nilNode, ${adaptor.getUniqueID(t)}");
   }
 
-  void createNode(node, [Token token]) {
+  createNode(node, [Token token]) {
     if(token != null) {
       int ID = adaptor.getUniqueID(node);
       String text = adaptor.getText(node);
@@ -111,75 +111,75 @@ class TraceDebugEventListener extends BlankDebugEventListener {
     }
   }
   
-  void errorNode(t) {
+  errorNode(t) {
     int ID = adaptor.getUniqueID(t);
     String text = t.toString();
     record("errorNode, $ID, ${Token.INVALID_TOKEN_TYPE}, $text");
   }
 
-  void becomeRoot(newRoot, oldRoot) {
+  becomeRoot(newRoot, oldRoot) {
     record("becomeRoot, ${adaptor.getUniqueID(newRoot)}, "
                         "${adaptor.getUniqueID(oldRoot)}");
   }
 
-  void addChild(root, child) {
+  addChild(root, child) {
     record("addChild, ${adaptor.getUniqueID(root)}, "
                          "${adaptor.getUniqueID(child)}");
   }
 
-  void setTokenBoundaries(t, 
+  setTokenBoundaries(t, 
                 int tokenStartIndex, int tokenStopIndex) {
     record("setTokenBoundaries, ${adaptor.getUniqueID(t)}, "
                           "$tokenStartIndex, $tokenStopIndex");
   }
   
-  void recognitionException(RecognitionException e) {    
+  recognitionException(RecognitionException e) {    
     record("exception, ${e.runtimeType.toString()}, "
        "${e.index}, ${e.line}, ${e.charPositionInLine}");
   }
   
-  void terminate() {
+  terminate() {
     record("terminate");
   }
   
-  void beginResync() {
+  beginResync() {
     record("beginResync");
   }
   
-  void endResync() {
+  endResync() {
     record("endResync");
   }
   
-  void enterAlt(int alt) {
+  enterAlt(int alt) {
     record("enterAlt, $alt");
   }
   
-  void consumeToken(Token token) {
+  consumeToken(Token token) {
     record("consumeToken, ${token.tokenIndex}, "
        "${token.type}, ${token.channel}, ${token.line}, "
            "${token.charPositionInLine}, ${token.text}");
   }
   
-  void consumeHiddenToken(Token token) {
+  consumeHiddenToken(Token token) {
     record("consumeHiddenToken, ${token.tokenIndex}, "
     "${token.type}, ${token.channel}, ${token.line}, "
         "${token.charPositionInLine}, ${token.text}");
   }
   
-  void semanticPredicate(bool result, String predicate) {
+  semanticPredicate(bool result, String predicate) {
     record("semanticPredicate, $result, $predicate");
   }
   
-  void beginBacktrack(int level) {
+  beginBacktrack(int level) {
     record("beginBacktrack, $level");
   }
 
-  void endBacktrack(int level, bool successful) {
+  endBacktrack(int level, bool successful) {
     record("endBacktrack, $level, "
       "${(successful ? DebugEventListener.TRUE : DebugEventListener.FALSE)}");
   }
   
-  void record(String event) {
+  record(String event) {
     print(event);
   }
 }

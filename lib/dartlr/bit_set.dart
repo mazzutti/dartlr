@@ -36,7 +36,7 @@ class BitSet {
   }
 
   /** or this element into this set (grow as necessary to accommodate) */
-  void add(int el) {
+  add(int el) {
     int n = _wordNumber(el);
     if (n >= bits.length) {
       growToInclude(el);
@@ -48,14 +48,14 @@ class BitSet {
   * Grows the set to a larger number of bits.
   * bit is the element that must fit in set
   */
-  void growToInclude(int bit) {
+  growToInclude(int bit) {
     int newSize = math.max(bits.length << 1, _numWordsToHold(bit));
     List<int> newbits = new List<int>(newSize);
     Arrays.copy(bits, 0, newbits, 0, bits.length);
     bits = newbits;
   }
 
-  void orInPlace(BitSet a) {
+  orInPlace(BitSet a) {
     if (a == null) return;   
     if (a.bits.length > bits.length)
       _setSize(a.bits.length);   
@@ -68,7 +68,7 @@ class BitSet {
   * Sets the size of a set.
   * nwords is how many words the new set should be
   */
-  void _setSize(int nwords) {
+  _setSize(int nwords) {
     List<int> newbits = new List<int>(nwords);
     int n = math.min(nwords, bits.length);
     Arrays.copy(bits, 0, newbits, 0, n);
@@ -120,7 +120,7 @@ class BitSet {
     return (bits[n] & _bitMask(el)) != 0;
   }
 
-  void remove(int el) {
+  remove(int el) {
     int n = _wordNumber(el);
     if (n < bits.length)
       bits[n] &= ~_bitMask(el);    

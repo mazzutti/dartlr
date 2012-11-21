@@ -38,7 +38,7 @@ class CommonTreeNodeStream extends LookaheadStream<Object> implements TreeNodeSt
     _it = new TreeIterator(_root, treeAdaptor);
   }
 
-  void reset() {
+  reset() {
       super.reset();
       _it.reset();
       _hasNilRoot = false;
@@ -85,7 +85,7 @@ class CommonTreeNodeStream extends LookaheadStream<Object> implements TreeNodeSt
   /** Make stream jump to a new location, saving old location.
    *  Switch back with pop().
    */
-  void push(int i) {
+  push(int i) {
     if (_calls == null)
       _calls = new IntArray();
     _calls.push(_p);
@@ -101,7 +101,7 @@ class CommonTreeNodeStream extends LookaheadStream<Object> implements TreeNodeSt
     return ret;
   }
 
-  void replaceChildren(parent, int startChildIndex, int stopChildIndex, t) {
+  replaceChildren(parent, int startChildIndex, int stopChildIndex, t) {
     if (parent != null)
       treeAdaptor.replaceChildren(parent, startChildIndex, stopChildIndex, t);
   }

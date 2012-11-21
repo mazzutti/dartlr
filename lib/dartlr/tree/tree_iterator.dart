@@ -35,7 +35,7 @@ class TreeIterator implements Iterator {
     eof = _adaptor.createFromTokenType(Token.EOF, "EOF");
   }
 
-  void reset() {
+  reset() {
     _firstTime = true;
     _tree = _root;
     _nodes.clear();

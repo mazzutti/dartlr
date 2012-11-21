@@ -58,7 +58,7 @@ abstract class BaseTreeAdaptor implements TreeAdaptor {
   *  make sure that this is consistent with have the user will build
   *  ASTs.
   */
-  void addChild(t, child) {
+  addChild(t, child) {
     if (t!= null && child != null) t.addChild(child);
   }
 
@@ -150,10 +150,10 @@ abstract class BaseTreeAdaptor implements TreeAdaptor {
   }
 
   int getType(t) => t.type;
-  void setType(t, int type) =>throw new UnimplementedError("don't know enough about Tree node");
+  setType(t, int type) =>throw new UnimplementedError("don't know enough about Tree node");
 
   String getText(t) => t.text;
-  void setText(t, String text) =>throw new UnimplementedError("don't know enough about Tree node");
+  setText(t, String text) =>throw new UnimplementedError("don't know enough about Tree node");
 
   getChild(t, int i) => t.getChild(i);
 

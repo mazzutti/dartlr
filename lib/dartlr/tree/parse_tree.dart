@@ -24,11 +24,11 @@ class ParseTree extends BaseTree {
 
   int get tokenStartIndex => 0;
   
-  void set tokenStartIndex(int index) {}
+  set tokenStartIndex(int index) {}
 
   int get tokenStopIndex => 0; 
 
-  void set tokenStopIndex(int index) {}
+  set tokenStopIndex(int index) {}
 
   String toString() {
     if (payload is Token) {
@@ -65,7 +65,7 @@ class ParseTree extends BaseTree {
     return buf.toString();
   }
 
-  void _toStringLeaves(StringBuffer buf) {
+  _toStringLeaves(StringBuffer buf) {
     if (payload is Token ) {
       buf.add(toStringWithHiddenTokens());
       return;

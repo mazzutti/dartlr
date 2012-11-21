@@ -54,7 +54,7 @@ abstract class TreeNodeStream extends IntStream {
   /** Reset the tree node stream in such a way that it acts like
    *  a freshly constructed stream.
    */
-  void reset();
+  reset();
 
   String toString([start, stop]);
   
@@ -68,6 +68,6 @@ abstract class TreeNodeStream extends IntStream {
    *  If parent is null, don't do anything; must be at root of overall tree.
    *  Can't replace whatever points to the parent externally.  Do nothing.
    */
-  void replaceChildren(parent, int startChildIndex, int stopChildIndex, t);
+  replaceChildren(parent, int startChildIndex, int stopChildIndex, t);
 }
 

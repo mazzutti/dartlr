@@ -18,7 +18,7 @@ class ANTLRReaderStream extends ANTLRStringStream {
     load(r, size, readChunkSize);
   }
 
-  void load(InputStream r, int size, int readChunkSize) {
+  load(InputStream r, int size, int readChunkSize) {
     if (r == null ) return;     
     try {
       _data = new List<int>(size);

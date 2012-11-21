@@ -18,11 +18,11 @@ class DebugTokenStream implements TokenStream {
     input.LT(1);
   }
 
-  void set debugListener(DebugEventListener dbg) {
+  set debugListener(DebugEventListener dbg) {
     _dbg = dbg;
   }
 
-  void consume() {
+  consume() {
     if (_initialStreamState)
       _consumeInitialHiddenTokens();
     int a = input.index;
@@ -36,7 +36,7 @@ class DebugTokenStream implements TokenStream {
     }
   }
 
-  void _consumeInitialHiddenTokens() {
+  _consumeInitialHiddenTokens() {
     int firstOnChannelTokenIndex = input.index;
     for (int i = 0; i < firstOnChannelTokenIndex; i++)
       _dbg.consumeHiddenToken(input.at(i));
@@ -69,7 +69,7 @@ class DebugTokenStream implements TokenStream {
 
   int get range => input.range;
 
-  void rewind([int marker]) {
+  rewind([int marker]) {
     if(marker != null ) {
       _dbg.rewind(marker);
       input.rewind(marker);
@@ -79,9 +79,9 @@ class DebugTokenStream implements TokenStream {
     }
   }
 
-  void release(int marker) {}
+  release(int marker) {}
 
-  void seek(int i) {
+  seek(int i) {
     input.seek(i);
   }
 
