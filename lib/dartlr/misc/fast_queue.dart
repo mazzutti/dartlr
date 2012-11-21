@@ -50,7 +50,7 @@ class FastQueue<T> {
 
   int get range => _range;
 
-  T head() => elementAt(0);
+  T get head => elementAt(0);
 
   /** Return element i elements ahead of current element.  i==0 gets
    *  current element.  This is not an absolute index into the data list
