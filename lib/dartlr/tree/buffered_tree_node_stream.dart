@@ -97,13 +97,8 @@ class BufferedTreeNodeStream implements TreeNodeStream {
       */
   int _getNodeIndex(node) {
     if (_p == -1)
-      _fillBuffer();
-    for (int i = 0; i < _nodes.length; i++) {
-      t = _nodes[i];
-      if (t == node)
-        return i;
-    }
-    return -1;
+    _fillBuffer();
+    return _nodes.indexOf(node);
   }
 
   /** As we flatten the tree, we use UP, DOWN nodes to represent
