@@ -10,15 +10,10 @@ abstract class CharStream extends IntStream {
   static const int EOF = -1;  
 
   /** ANTLR tracks the line information automatically */
-  int get line;
+  int line;
   
   /** The index of the character relative to the beginning of the line 0..n-1 */
-  int get charPositionInLine;
-
-  /** Because this stream can rewind, we need to be able to reset the line */
-  void set line(int line);
-
-  void set charPositionInLine(int pos);
+  int charPositionInLine;
   
   /** For infinite streams, you don't need this; primarily I'm providing
    *  a useful interface for action code.  Just make sure actions don't
