@@ -67,6 +67,7 @@ import "functional/t101parser_test.dart" as t101parser;
 //logical tests
 import "logical/dfa_test.dart" as dfa;
 import "logical/bit_set_test.dart" as bitSet;
+import "logical/antlr_file_stream_test.dart" as antlr_file_stream_test;
 
 class TestRunner {
   void run() {
@@ -129,6 +130,7 @@ class TestRunner {
     t101parser.main();
     
     dfa.main();
-    bitSet.main();    
+    bitSet.main();   
+    antlr_file_stream_test.main();
   }  
 }
