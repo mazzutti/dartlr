@@ -35,8 +35,8 @@ class DFA {
   set decisionNumber(int dn) => _decisionNumber = dn;
   set eot(List<int> eot) => _eot = eot;
   set eof(List<int> eof) => _eof = eof;  
-  set min_(List<int> min) => _min = min;   
-  set max_(List<int> max) => _max = max;
+  set min(List<int> min) => _min = min;   
+  set max(List<int> max) => _max = max;
   set accept(List<int> accept) => _accept = accept;  
   set special(List<int> special) => _special = special;  
   set transition(List<List<int>> transition) => _transition = transition;
