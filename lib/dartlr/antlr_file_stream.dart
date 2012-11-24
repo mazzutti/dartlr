@@ -12,17 +12,34 @@ part of dartlr;
  */
 class ANTLRFileStream extends ANTLRStringStream {
   
-  String _fileName;
+  Path _path;
 
-  ANTLRFileStream(this._fileName, [Encoding encoding]){
+  /// Creates the ANTLR file stream for a file given by [path]. 
+  ///
+  /// [path] is either a string denoting a native file path, or a 
+  /// [Path] object. 
+  ///
+  /// Throws [ArgumentError] if [path] is null.  
+  ANTLRFileStream(path, [Encoding encoding=Encoding.UTF_8]) : super(""){
+    if (path == null) throw new ArgumentError("path must not be null");
+    if (path is String) {
+      _path = new Path.fromNative(path);
+    } else if (path is Path){ 
+      _path = path;
+    } else {
+      throw new ArgumentError("expected String or Path, got $path");
+    }
     this.load(encoding);
   }
   
-  String get sourceName => _fileName;
+  /// the file path 
+  Path get path => _path;
 
+  /// Loads the entire file in memory 
+  /// Throws [FileIOException] if the file with [path] doesn't exist 
   load([Encoding encoding=Encoding.UTF_8]) {
-    if (_fileName == null ) return;
-    File f = new File(_fileName);   
+    File f = new File.fromPath(_path);
+    if (!f.existsSync()) throw new FileIOException("file '$_path' doesn't exist");
     _data = f.readAsStringSync(encoding).charCodes;
     _n = _data.length;   
   }   
