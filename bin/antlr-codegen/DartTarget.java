@@ -107,29 +107,32 @@ public class DartTarget extends Target {
 	
 	
 	private void replacePredicates(ST st, Grammar grammar) {
-		Object predicates = st.getAttribute("predicates");
-		if(predicates instanceof String) {									
-			st.remove("predicates");
-			predicates = ((String) predicates).replaceFirst("this.", "");
-			if(((String) predicates).charAt(0) == '!')
-				predicates = "!(recognizer as " + grammar.name + "Parser)." + 
-			                          ((String) predicates).substring(1);
-			else
-				predicates  = "(recognizer as " 
-                                + grammar.name + "Parser)." + predicates;
-			st.add("predicates", predicates);
+		Object predicates = st.getAttribute("predicates");		
+		if(predicates instanceof String) {	
+		    String pred = (String)predicates;	
+			st.remove("predicates");			
+			pred = pred.replaceAll("this\\.", "recognizer.");
+			// create an anonymous clousure and invoke it immediately
+			pred = "() {return (" + pred + ");}()";
+			st.add("predicates", pred);
 		}
 	}
 	
 	@SuppressWarnings({ "rawtypes"})
 	private void adjustePred(ST st, Grammar grammar) {
-		List preds;
 		if(st != null) {
 			adjustLeftRigthEvalPred((ST) st.getAttribute("left"), grammar);
 			adjustLeftRigthEvalPred((ST) st.getAttribute("right"), grammar);
 
-			preds = (List) st.getAttribute("pred");									
-			if(preds != null) replacePred(preds, st, grammar);			
+			Object obj = st.getAttribute("pred");
+			if (obj == null) return;
+		    List<ST> preds = new ArrayList<ST>();			
+			if (obj instanceof List) {
+			   preds.addAll((List<ST>)obj);
+			} else if (obj instanceof ST) {
+			   preds.add((ST)obj);
+			}
+			replacePred(preds, st, grammar);			
 		}
 	}
 	
@@ -138,6 +141,7 @@ public class DartTarget extends Target {
 		List newPreds = new ArrayList(); 
 		if(preds != null) {					
 			for(Object p : preds) {
+			    /*
 				String str = p.toString();
 				str = str.replaceFirst("this.", "");
 				if(str.charAt(0) == '!')
@@ -145,7 +149,13 @@ public class DartTarget extends Target {
                         + grammar.name + "Parser)." + str.substring(1));
 				else
 					newPreds.add("(recognizer as " 
-                                    +grammar.name+ "Parser)." + str);										
+                                    +grammar.name+ "Parser)." + str);	
+                */
+                String pred = p.toString();
+                pred = pred.replaceAll("this\\.", "recognizer.");
+                // create an anonymous clousure and invoke it immediately
+                pred = "(){return (" + pred + ");}()";
+                newPreds.add(pred);								
 			}					
 			st.remove("pred");
 			st.add("pred", newPreds);

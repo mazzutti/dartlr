@@ -1168,7 +1168,7 @@ andPredicates(left,right) ::= "(<left>&&<right>)"
 
 orPredicates(operands) ::= "(<first(operands)><rest(operands):{o | || <o>}>)"
 
-notPredicate(pred) ::= "(!<evalPredicate(pred,{}, obj)>)"
+notPredicate(pred) ::= "(!<evalPredicate(pred,{})>)"
 
 evalPredicate(pred,description) ::= "(<pred>)"
 
@@ -1455,8 +1455,8 @@ class DFA_<grammar.recognizerName>_<dfa.decisionNumber> extends DFA {
     decisionNumber = <dfa.decisionNumber>;
     eot = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_eot;
     eof = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_eof;
-    min = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_min;
-    max = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_max;
+    min_ = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_min;
+    max_ = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_max;
     accept = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_accept;
     special = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_special;
     transition = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_transition;
