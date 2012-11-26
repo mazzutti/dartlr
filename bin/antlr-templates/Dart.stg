@@ -42,6 +42,9 @@ boolLiteral ::= [
 
 /** The overall file structure of a recognizer; stores methods for rules
  *  and cyclic DFAs plus support code.
+ *
+ * @lexerEvalPredicates  a list generate getters which are called from the
+ *                       generated DFA
  */
 outputFile(LEXER,PARSER,TREE_PARSER, actionScope, actions,
            docComment, recognizer,
@@ -49,7 +52,7 @@ outputFile(LEXER,PARSER,TREE_PARSER, actionScope, actions,
 	   bitsets, buildTemplate, buildAST, rewriteMode, profile,
 	   backtracking, synpreds, memoize, numRules,
 	   fileName, ANTLRVersion, generatedTimestamp, trace,
-	   scopes, superClass, literals) ::=
+	   scopes, superClass, literals, lexerEvalPredicates) ::=
 <<
 // $ANTLR <ANTLRVersion> <name>.g <generatedTimestamp>
 
@@ -69,6 +72,8 @@ class <grammar.recognizerName> extends <@superClassName><superClass><@end> {
   <tokens:{it |static const int <it.name> = <it.type>;}; separator="\n">  
   <scopes:{it |<if(it.isDynamicGlobalScope)><membersForGAScope(it)><endif>}>
   <actions.lexer.members>  
+  
+  <lexerEvalPredicates; separator="\n">
   
   <if(cyclicDFAs)>Map\<String, DFA\> dfas;<endif>
 
@@ -1168,9 +1173,9 @@ andPredicates(left,right) ::= "(<left>&&<right>)"
 
 orPredicates(operands) ::= "(<first(operands)><rest(operands):{o | || <o>}>)"
 
-notPredicate(pred) ::= "(!<evalPredicate(pred,{}, obj)>)"
+notPredicate(pred) ::= "(!<evalPredicate(pred,{})>)"
 
-evalPredicate(pred,description) ::= "(<pred>)"
+evalPredicate(pred,description,pred_orig="", closure="") ::= "(<pred>)"
 
 evalSynPredicate(pred,description) ::= "<pred>()"
 
@@ -1455,8 +1460,8 @@ class DFA_<grammar.recognizerName>_<dfa.decisionNumber> extends DFA {
     decisionNumber = <dfa.decisionNumber>;
     eot = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_eot;
     eof = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_eof;
-    min = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_min;
-    max = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_max;
+    min_ = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_min;
+    max_ = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_max;
     accept = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_accept;
     special = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_special;
     transition = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_transition;
