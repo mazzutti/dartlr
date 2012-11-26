@@ -64,9 +64,9 @@ parserMembers() ::= <<
 @returnScope.ruleReturnMembers() ::= <<
 <ASTLabelType> _tree;
 
-Object get tree => _tree;
+get tree => _tree;
 
-void set tree(Object t) {
+void set tree(t) {
   _tree = t;
 } 
 >>

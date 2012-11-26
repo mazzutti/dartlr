@@ -4,6 +4,10 @@
 
 library dartlr_test_runner;
 
+import "dart:io";
+import "package:unittest/unittest.dart";
+import "package:dartlr/dartlr.dart";
+
 
 //functional tests
 import "functional/t001lexer_test.dart" as t001lexer;
@@ -63,6 +67,7 @@ import "functional/t058rewriteAST_test.dart" as t058rewriteAST;
 import "functional/t059debug_test.dart" as t059debug;
 import "functional/t100parser_test.dart" as t100parser;
 import "functional/t101parser_test.dart" as t101parser;
+import "functional/t102parser_test.dart" as t102parser;
 
 //logical tests
 import "logical/dfa_test.dart" as dfa;
@@ -128,9 +133,14 @@ class TestRunner {
     t059debug.main();
     t100parser.main();
     t101parser.main();
+    t102parser.main();
     
     dfa.main();
     bitSet.main();   
     antlr_file_stream_test.main();
   }  
+}
+
+main() {
+  new TestRunner().run();
 }
