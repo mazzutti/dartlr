@@ -12,9 +12,8 @@ options {
    * example of two state variables used in syntactical predicates, just
    * for the sake of this test case. In a real grammar we wouldn't need
    * two boolean flags.
-   * 'counter' only used to write more complex predicate expressions. 
-   */
-   
+   * 'counter' is only used to write a more complex predicate expression. 
+   */   
   bool inKeywords = false;
   bool inIdents   = true;
   int counter = 0;
@@ -37,16 +36,11 @@ fragment IDENT_CHAR: CHAR | '-' | DIGIT;
 fragment KEYWORD_CHAR: CHAR | '_' | DIGIT;
 
 IDENT:
-  /*
-   * Note the 'this' keyword in these expression. In order to refer to lexer members
-   * you it is compulsory. The code fragment will be included in the DFA code where
-   * 'this' will be replaced by the variable 'recognizer'.
-   */  
-   {!this.inKeywords && this.inIdents}?=>  
+   {!inKeywords && inIdents}?=>  
    IDENT_CHAR+;
   
 KEYWORD: 
-   {this.inKeywords && !this.inIdents && this.counter >= 0}?=> 
+   {inKeywords && !inIdents && counter >= 0}?=> 
    KEYWORD_CHAR+;
    
 WS:  (' ' | '\t' | '\n' | '\r' | '\f') {$channel=HIDDEN;};
