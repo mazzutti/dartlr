@@ -119,8 +119,10 @@ abstract class BaseRecognizer {
   *    5. next matchSymbol() will reset errorRecovery mode
   *
   *  If you override, make sure to update syntaxErrors if you care about that.
+  *  
+  *  [e] is the reported exception. [st] is the (optional) statck trace
   */
-  reportError(RecognitionException e) {    
+  reportError(RecognitionException e, [st=null]) {    
     if (state.errorRecovery) return;
     state.syntaxErrors++;
     state.errorRecovery = true;

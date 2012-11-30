@@ -43,49 +43,49 @@ repository yet.
 ## Get antlr3 and build it 
   * Clone it from github
 
-  ``` 
-  git clone git://github.com/antlr/antlr3.git
+  ```bash
+  $> git clone git://github.com/antlr/antlr3.git
   ```
 
   * Prepare build environment 
 
   Build relies on maven. If not installed yet, you have to install it first. On Ubuntu do
-  ```
-  sudo apt-get install maven
+  ```bash
+  $> sudo apt-get install maven
   ```
 
   * Build antlr
 
-  ```
-  cd antlr 
-  mvn -N install
-  mvn -Dmaven.test.skip=true package assembly:assembly
+  ```bash
+  $> cd antlr 
+  $> mvn -N install
+  $> mvn -Dmaven.test.skip=true -Dgpg.skip=true package assembly:assembly
   ```
   If the third step fails, run it again. 
 
 ## Create symbolic links to the files supplied by dartlr
 
-   ```
-   cd antlr3
+```bash
+$> cd antlr3
 
-   # /path/to/dartlr is the full path to your local dartlr repository 
-   ln -s /path/to/dartlr/antlr-templates tool/target/classes/org/antlr/codegen/templates/Dart  
-   ln -s /path/to/dartlr/antlr-codegen/DartTarget.java tool/src/main/java/org/antlr/codegen/DartTarget.java
-   ```
+# /path/to/dartlr is the full path to your local dartlr repository 
+$> ln -s /path/to/dartlr/antlr-templates tool/target/classes/org/antlr/codegen/templates/Dart  
+$> ln -s /path/to/dartlr/antlr-codegen/DartTarget.java tool/src/main/java/org/antlr/codegen/DartTarget.java
+```
 
 ## Build again
 
-   ```
-   mvn -Dmaven.test.skip=true package assembly:assembly
-   ```    
+```bash
+$> mvn -Dmaven.test.skip=true -Dgpg.skip=true package assembly:assembly 
+```    
 
-This should create the file tool/target/antlr-master-3.4.1-SNAPSHOT-completejar.jar which includes support for
+This should create the file tool/target/antlr-master-{version}-SNAPSHOT-completejar.jar which includes support for
 Dart code generation.
 
 ## Test it
   * Create a trivial grammar in the file trivial.g
 
-  ```
+  ```antlr
   lexer grammar trivial;
   options {
     language = Dart;
@@ -97,8 +97,8 @@ Dart code generation.
 
 Make sure that the antlr jar you've built in the previous steps is on the classpath.
  
-```
-java org.antlr.Tool trivial.g
+```bash
+$> java org.antlr.Tool trivial.g
 ```
 This should create the files trivial.dart and trivial.tokens.
 
@@ -106,7 +106,7 @@ This should create the files trivial.dart and trivial.tokens.
 
 1. Write an ANTLR grammar specification for a language
 
-   ```
+   ```antlr
    grammar SomeLanguage;
    
    options {
@@ -117,14 +117,14 @@ This should create the files trivial.dart and trivial.tokens.
    top: expr ( ',' expr )*
      ;
     
-   and so on...
+   // and so on...
    ```
 
 2. Run the ANTLR tool with the `java -jar path/to/antlr3.jar` command to 
    generate output:
    
-   ```
-   $ java -jar path/to/antlr-3.4.1-with-dart.jar [OPTIONS] lang.g
+   ```bash
+   $> java -jar path/to/antlr-3.5.1-with-dart.jar [OPTIONS] lang.g
    # creates:
    #   langParser.dart
    #   langLexer.dart
@@ -133,19 +133,37 @@ This should create the files trivial.dart and trivial.tokens.
    
    alternatively, you can do:
    
-   ``` 
-   $ export CLASSPATH=path/to/antlr-3.4.1-with-dart.jar:$CLASSPATH
+   ```bash 
+   $> export CLASSPATH=path/to/antlr-3.5.1-with-dart.jar:$CLASSPATH
    
-   $ java org.antlr.Tool [OPTIONS] $grammar
-
-   NOTES: Probably you will need to edit the `import` `part` and `part of` directives in the 
-	  lexer and parser generated to reflect your local path.
-	 
-	  More samples can be found in the test folder.
-	 
-3. Make sure your pubspec.yaml includes a dependency to 'dartlr'
-
+   $> java org.antlr.Tool [OPTIONS] $grammar
    ```
+
+   NOTES: Probably you will need to edit the `@header{}` section in your grammar. 
+   
+   Use 
+   ```antlr
+   @header {
+   library your_library_name;
+   import "package:dartlr/dartlr.dart";
+   }
+   ``` 
+   if the parser and lexer should be generated in a dedicated Dart library. 
+   
+   Use 
+   ```antlr
+   @header {
+   part of your_library_name;
+   // no import statement here, add it to the parent library file 
+   }
+   ```
+   if the  parser and lexer should be generated as part of another library.
+    	
+   More samples can be found in the test folder.
+	 
+3. Make sure your `pubspec.yaml` includes a dependency to `dartlr`
+
+   ```yaml
    dependencies:
    	 dartlr:
    	   git: git@github.com:tiagomazzutti/dartlr.git 	 
@@ -164,10 +182,9 @@ This should create the files trivial.dart and trivial.tokens.
     var tokens = new CommonTokenStream(lexer);
     var parser = new SomeLanguageParser(tokens);
   
-    var result = parser.<entry_rule>();
-    
-    ...
-    
+    var result = parser.<entry_rule>();    
+    // ...
+  
   }
   ```
 

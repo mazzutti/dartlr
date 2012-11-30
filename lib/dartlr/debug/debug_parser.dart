@@ -38,14 +38,14 @@ class DebugParser extends Parser {
 
   DebugEventListener get debugListener => _dbg;
 
-  
-  reportError(RecognitionException exception) {
-    _reportError(exception);
+  @override
+  reportError(RecognitionException exception, [st]) {
+    _reportError(exception, st);
   }
   
-  _reportError(  e) {
+  _reportError(e, [st]) {
     if(e is RecognitionException) {
-      super.reportError(e);
+      super.reportError(e, st);
       _dbg.recognitionException(e);
     } else {
       stderr.writeString(e.getMessage());
