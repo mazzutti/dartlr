@@ -124,7 +124,7 @@ This should create the files trivial.dart and trivial.tokens.
    generate output:
    
    ```bash
-   $> java -jar path/to/antlr-3.4.1-with-dart.jar [OPTIONS] lang.g
+   $> java -jar path/to/antlr-3.5.1-with-dart.jar [OPTIONS] lang.g
    # creates:
    #   langParser.dart
    #   langLexer.dart
@@ -134,7 +134,7 @@ This should create the files trivial.dart and trivial.tokens.
    alternatively, you can do:
    
    ```bash 
-   $> export CLASSPATH=path/to/antlr-3.4.1-with-dart.jar:$CLASSPATH
+   $> export CLASSPATH=path/to/antlr-3.5.1-with-dart.jar:$CLASSPATH
    
    $> java org.antlr.Tool [OPTIONS] $grammar
    ```
@@ -182,10 +182,9 @@ This should create the files trivial.dart and trivial.tokens.
     var tokens = new CommonTokenStream(lexer);
     var parser = new SomeLanguageParser(tokens);
   
-    var result = parser.<entry_rule>();
-    
-    ...
-    
+    var result = parser.<entry_rule>();    
+    // ...
+  
   }
   ```
 
