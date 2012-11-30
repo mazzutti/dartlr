@@ -85,7 +85,7 @@ Dart code generation.
 ## Test it
   * Create a trivial grammar in the file trivial.g
 
-  ```
+  ```antlr
   lexer grammar trivial;
   options {
     language = Dart;
@@ -117,7 +117,7 @@ This should create the files trivial.dart and trivial.tokens.
    top: expr ( ',' expr )*
      ;
     
-   and so on...
+   // and so on...
    ```
 
 2. Run the ANTLR tool with the `java -jar path/to/antlr3.jar` command to 
@@ -142,7 +142,7 @@ This should create the files trivial.dart and trivial.tokens.
    NOTES: Probably you will need to edit the `@header{}` section in your grammar. 
    
    Use 
-   ```
+   ```antlr
    @header {
    library your_library_name;
    import "package:dartlr/dartlr.dart";
@@ -151,7 +151,7 @@ This should create the files trivial.dart and trivial.tokens.
    if the parser and lexer should be generated in a dedicated Dart library. 
    
    Use 
-   ```
+   ```antlr
    @header {
    part of your_library_name;
    // no import statement here, add it to the parent library file 
