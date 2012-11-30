@@ -52,7 +52,7 @@ outputFile(LEXER,PARSER,TREE_PARSER, actionScope, actions,
 	   bitsets, buildTemplate, buildAST, rewriteMode, profile,
 	   backtracking, synpreds, memoize, numRules,
 	   fileName, ANTLRVersion, generatedTimestamp, trace,
-	   scopes, superClass, literals, lexerEvalPredicates) ::=
+	   scopes, superClass, literals, evalPredicates) ::=
 <<
 // $ANTLR <ANTLRVersion> <name>.g <generatedTimestamp>
 
@@ -73,7 +73,7 @@ class <grammar.recognizerName> extends <@superClassName><superClass><@end> {
   <scopes:{it |<if(it.isDynamicGlobalScope)><membersForGAScope(it)><endif>}>
   <actions.lexer.members>  
   
-  <lexerEvalPredicates; separator="\n">
+  <evalPredicates; separator="\n">
   
   <if(cyclicDFAs)>Map\<String, DFA\> dfas;<endif>
 
@@ -179,8 +179,8 @@ Token nextToken() {
         emit();
         return state.token;
       }
-		} on RecognitionException catch(re) {
-		   reportError(re);
+		} on RecognitionException catch(re,st) {
+		   reportError(re,st);
 		   recover(re);
 		}
   }
@@ -227,7 +227,7 @@ class <grammar.recognizerName> extends <@superClassName><superClass><@end> {
   <grammar.delegators: {g|<g.recognizerName> <g:delegateName()>;}; separator="\n">  
   <last(grammar.delegators):{g|<g.recognizerName> gParent;}>      
   <scopes:{it |<if(it.isDynamicGlobalScope)><membersForGAScope(it)><endif>}>
-  
+  <evalPredicates; separator="\n">
   <if(cyclicDFAs)>Map\<String, DFA\> dfas;<endif>
   
   <rules:declareScopeListMember()>
@@ -367,7 +367,7 @@ bool <name>() {
   int start = input.mark();
   try {
     <name>_fragment(); // can never throw exception
-  } on RecognitionException catch(re) {
+  } on RecognitionException catch(re,st) {
     print("impossible: $re");
   }
   bool success = !state.failed;
@@ -434,8 +434,8 @@ rule(ruleName,ruleDescriptor,block,emptyRule,description,exceptions,finally,memo
 <if(actions.(actionScope).rulecatch)>
   <actions.(actionScope).rulecatch>
 <else>
-  on RecognitionException catch(re) {
-    reportError(re);
+  on RecognitionException catch(re,st) {
+    reportError(re,st);
     recover(re, input);
 	  <@setErrorReturnValue()>
   }<\n>
@@ -1460,8 +1460,8 @@ class DFA_<grammar.recognizerName>_<dfa.decisionNumber> extends DFA {
     decisionNumber = <dfa.decisionNumber>;
     eot = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_eot;
     eof = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_eof;
-    min_ = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_min;
-    max_ = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_max;
+    min = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_min;
+    max = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_max;
     accept = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_accept;
     special = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_special;
     transition = <grammar.recognizerName>.DFA_<grammar.recognizerName>_<dfa.decisionNumber>_transition;

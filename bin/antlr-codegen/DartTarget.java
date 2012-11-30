@@ -395,7 +395,7 @@ public class DartTarget extends Target {
       getters.addAll(EvalPredicateRewriter.apply(dfa.specialStateSTs));
     }
     if (!getters.isEmpty()) {
-      outputFileST.add("lexerEvalPredicates", getters);
+      outputFileST.add("evalPredicates", getters);
     }
     this.adjustHeader(outputFileST, grammar);
     super.genRecognizerFile(tool, generator, grammar, outputFileST);
