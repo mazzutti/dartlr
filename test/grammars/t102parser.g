@@ -21,9 +21,12 @@ options {
   /*
    * Custom error handler. Aborts parsing after the first detected syntax error.
    */
-  reportError(e) {
+  reportError(e, [st=null]) {
     StringBuffer sb = new StringBuffer();
     sb.add("lexer error: ").add(e.toString());
+    if (st != null) {
+       sb.add("\n").add(st.toString());
+    }
     print(sb.toString());
     throw new RuntimeError(sb.toString());
   }  

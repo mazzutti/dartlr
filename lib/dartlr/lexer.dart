@@ -188,7 +188,8 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
     state.text = text;
   }
 
-  reportError(RecognitionException e) {
+  @override
+  reportError(RecognitionException e, [st=null]) {
     displayRecognitionError(tokenNames, e);
   }
 
