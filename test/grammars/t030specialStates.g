@@ -14,12 +14,12 @@ void recover(RecognitionException re, [IntStream input]) {
 }
 
 @init {
-this.cond = true;
+cond = true;
 }
 
 r
-    : ( {this.cond}? NAME
-        | {!this.cond}? NAME WS+ NAME
+    : ( {cond}? NAME
+        | {!cond}? NAME WS+ NAME
         )
         ( WS+ NAME )?
         EOF

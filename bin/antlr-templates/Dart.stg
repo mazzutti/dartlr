@@ -43,7 +43,7 @@ boolLiteral ::= [
 /** The overall file structure of a recognizer; stores methods for rules
  *  and cyclic DFAs plus support code.
  *
- * @lexerEvalPredicates  a list generate getters which are called from the
+ *  @evalPredicates  a list generate getters which are called from the
  *                       generated DFA
  */
 outputFile(LEXER,PARSER,TREE_PARSER, actionScope, actions,
@@ -275,6 +275,8 @@ class <grammar.recognizerName> extends <@superClassName><superClass><@end> {
   String get grammarFileName => "<grammar.name>.g";
   
   String get recognizerClassName => "<grammar.recognizerName>";
+  
+  <evalPredicates; separator="\n">
   
   <members>
 
@@ -1169,13 +1171,13 @@ s = <targetStateNumber>;<\n>
 
 // D F A  E X P R E S S I O N S
 
-andPredicates(left,right) ::= "(<left>&&<right>)"
+andPredicates(left,right) ::= "<left><\n>  &&<right>"
 
-orPredicates(operands) ::= "(<first(operands)><rest(operands):{o | || <o>}>)"
+orPredicates(operands) ::= "<first(operands)><rest(operands):{o | || <o>}>"
 
-notPredicate(pred) ::= "(!<evalPredicate(pred,{})>)"
+notPredicate(pred) ::= "!<evalPredicate(pred,{})>"
 
-evalPredicate(pred,description,pred_orig="", closure="") ::= "(<pred>)"
+evalPredicate(pred,description,pred_orig="", closure="") ::= "<pred>"
 
 evalSynPredicate(pred,description) ::= "<pred>()"
 

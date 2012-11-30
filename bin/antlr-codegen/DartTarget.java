@@ -141,10 +141,10 @@ public class DartTarget extends Target {
    */
   private static class EvalPredicateRewriter implements STVisitor {
 
-    static List<String> apply(List<ST> l) {
+    static List<String> apply(List<ST> l, String recName) {
       EvalPredicateRewriter rewriter = new EvalPredicateRewriter();
       STWalker walker = new STWalker(rewriter);
-      walker.walk(l);
+      walker.walk(l, recName);
       return rewriter.getters;
     }
 
@@ -154,10 +154,10 @@ public class DartTarget extends Target {
      * @param st the template
      * @return the list of generated getters
      */
-    static List<String> apply(ST st) {
+    static List<String> apply(ST st, String recName) {
       EvalPredicateRewriter rewriter = new EvalPredicateRewriter();
       STWalker walker = new STWalker(rewriter);
-      walker.walk(st);
+      walker.walk(st, recName);
       return rewriter.getters;
     }
 
@@ -165,7 +165,7 @@ public class DartTarget extends Target {
     Set<ST> visited = new HashSet<ST>();
 
     @Override
-    public void visit(ST st) {
+    public void visit(ST st, String recName) {
       if (st == null)
         return;
       if (!"/evalPredicate".equals(st.getName()))
@@ -183,7 +183,7 @@ public class DartTarget extends Target {
         String pred = (String) o;
         String getterName = "evalPredicate_" + newGid();
         getters.add(String.format("get %s => (%s);", getterName, pred));
-        newPreds.add(String.format("(recognizer.%s)", getterName));
+        newPreds.add(String.format("(recognizer as %s).%s", recName, getterName));
       }
       if (!newPreds.isEmpty()) {
         st.remove("pred");
@@ -200,9 +200,9 @@ public class DartTarget extends Target {
    */
   private static class PredicatesAttrRewriter implements STVisitor {
 
-    static List<String> apply(List<ST> l) {
+    static List<String> apply(List<ST> l, String recName) {
       PredicatesAttrRewriter rewriter = new PredicatesAttrRewriter();
-      new STWalker(rewriter).walk(l);
+      new STWalker(rewriter).walk(l, recName);
       return rewriter.getters;
     }
 
@@ -212,9 +212,9 @@ public class DartTarget extends Target {
      * @param st the template
      * @return the list of generated getters
      */
-    static List<String> apply(ST st) {
+    static List<String> apply(ST st, String recName) {
       PredicatesAttrRewriter rewriter = new PredicatesAttrRewriter();
-      new STWalker(rewriter).walk(st);
+      new STWalker(rewriter).walk(st, recName);
       return rewriter.getters;
     }
 
@@ -222,7 +222,7 @@ public class DartTarget extends Target {
     private final Set<ST> visited = new HashSet<ST>();
 
     @Override
-    public void visit(ST st) {
+    public void visit(ST st, String recName) {
       if (st == null)
         return;
       String predicates = convert(st.getAttribute("predicates"), String.class);
@@ -234,12 +234,68 @@ public class DartTarget extends Target {
       String getterName = "evalPredicate_" + newGid();
       getters.add(String.format("get %s => (%s);", getterName, predicates));
       st.remove("predicates");
-      st.add("predicates", String.format("(recognizer.%s)", getterName));
+      st.add("predicates", String.format("(recognizer as %s).%s", recName, getterName));
     }
   }
+  
+  /**
+   * Rewrites the attribute 'pred' for any ST with name '/evalSynPredicate'. The template is used in
+   * special state STs of DFAs. The attribute value is a guard method invocation in target language. This
+   * rewriter extracts  and replaces the method invocation with a generator method invocation.
+   */
+  private static class EvalSynPredicateRewriter implements STVisitor {
+
+	  static List<String> apply(List<ST> l, String recName) {
+		  EvalSynPredicateRewriter rewriter = new EvalSynPredicateRewriter();
+	      STWalker walker = new STWalker(rewriter);
+	      walker.walk(l, recName);
+	      return rewriter.getters;
+	    }
+
+	    /**
+	     * Apply the rewriter to a template
+	     * 
+	     * @param st the template
+	     * @return the list of generated getters
+	     */
+	    static List<String> apply(ST st, String recName) {
+	      EvalSynPredicateRewriter rewriter = new EvalSynPredicateRewriter();
+	      STWalker walker = new STWalker(rewriter);
+	      walker.walk(st, recName);
+	      return rewriter.getters;
+	    }
+
+	    List<String> getters = new ArrayList<String>();
+	    Set<ST> visited = new HashSet<ST>();
+
+	    @Override
+	    public void visit(ST st, String recName) {
+	      if (st == null)
+	        return;
+	      if (!"/evalSynPredicate".equals(st.getName()))
+	        return;
+	      if (visited.contains(st))
+	        return;
+	      visited.add(st);
+	      List<?> preds = convert(st.getAttribute("pred"), List.class);
+	      if (preds == null)
+	        return;
+	      List<String> newPreds = new ArrayList<String>();
+	      for (Object o : preds) {
+	        if (o == null || !(o instanceof String))
+	          continue;
+	        String pred = (String) o;
+	        newPreds.add(String.format("(recognizer as %s).%s", recName, pred));
+	      }
+	      if (!newPreds.isEmpty()) {
+	        st.remove("pred");
+	        st.add("pred", newPreds);
+	      }
+	    }
+	  }
 
   private static interface STVisitor {
-    void visit(ST st);
+    void visit(ST st, String recName);
   }
 
   private static class STWalker {
@@ -249,41 +305,41 @@ public class DartTarget extends Target {
       this.visitor = visitor;
     }
 
-    public void walk(List<ST> l) {
+    public void walk(List<ST> l, String recName) {
       if (l == null)
         return;
       for (ST st : l)
-        walk(st);
+        walk(st, recName);
     }
 
-    public void walk(ST st) {
-      visitor.visit(st);
+    public void walk(ST st, String recName) {
+      visitor.visit(st, recName);
       if (st.getAttributes() == null)
         return;
       for (String key : st.getAttributes().keySet())
-        dispatch(st.getAttribute(key));
+        dispatch(st.getAttribute(key), recName);
     }
 
-    protected void dispatch(Object v) {
+    protected void dispatch(Object v, String recName) {
       if (v == null)
         return;
       if (v instanceof ST) {
-        walk((ST) v);
+        walk((ST) v, recName);
       } else if (v instanceof AttributeList) {
-        walk((AttributeList<?>) v);
+        walk((AttributeList<?>) v, recName);
       } else if (v instanceof Aggregate) {
-        walk((Aggregate) v);
+        walk((Aggregate) v, recName);
       }
     }
 
-    protected void walk(Aggregate a) {
+    protected void walk(Aggregate a, String recName) {
       for (Object v : a.properties.values())
-        dispatch(v);
+        dispatch(v, recName);
     }
 
-    protected void walk(AttributeList<?> l) {
+    protected void walk(AttributeList<?> l, String recName) {
       for (Object v : l)
-        dispatch(v);
+        dispatch(v, recName);
     }
   }
 
@@ -324,7 +380,7 @@ public class DartTarget extends Target {
       buf.append((char) c);
     } else {
       // must be something unprintable...use \\uXXXX
-// turn on the bit above max 
+      // turn on the bit above max 
       // "\\uFFFF" value so that we pad with zeros
       // then only take last 4 digits
       String hex = Integer.toHexString(c | 0x10000).toUpperCase().substring(1, 5);
@@ -389,10 +445,13 @@ public class DartTarget extends Target {
   protected void genRecognizerFile(Tool tool, CodeGenerator generator, Grammar grammar,
       ST outputFileST) throws IOException {
     List<String> getters = new ArrayList<String>();
-
+    
+    String recName = grammar.name + Grammar.grammarTypeToFileNameSuffix[grammar.type];
+    
     for (DFA dfa : getDfas(outputFileST)) {
-      getters.addAll(PredicatesAttrRewriter.apply(dfa.specialStateSTs));
-      getters.addAll(EvalPredicateRewriter.apply(dfa.specialStateSTs));
+      getters.addAll(PredicatesAttrRewriter.apply(dfa.specialStateSTs, recName));
+      getters.addAll(EvalPredicateRewriter.apply(dfa.specialStateSTs, recName));
+      getters.addAll(EvalSynPredicateRewriter.apply(dfa.specialStateSTs, recName));
     }
     if (!getters.isEmpty()) {
       outputFileST.add("evalPredicates", getters);

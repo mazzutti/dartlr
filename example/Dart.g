@@ -94,8 +94,8 @@ Object _recoverFromMismatchedToken(IntStream input,
 
 void _error(String message) {
   this.hasErrors = true;
-  int line = this._state.tokenStartLine;
-  int column = this._state.tokenStartCharPositionInLine;
+  int line = state.tokenStartLine;
+  int column = state.tokenStartCharPositionInLine;
   String sourceName = this._input.sourceName;
   if (sourceName == null) {
     sourceName = "<unknown source>";
