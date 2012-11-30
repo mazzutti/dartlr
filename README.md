@@ -59,7 +59,7 @@ repository yet.
   ```bash
   $> cd antlr 
   $> mvn -N install
-  $> mvn -Dmaven.test.skip=true package assembly:assembly
+  $> mvn -Dmaven.test.skip=true -Dgpg.skip=true package assembly:assembly
   ```
   If the third step fails, run it again. 
 
