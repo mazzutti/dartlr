@@ -65,19 +65,19 @@ repository yet.
 
 ## Create symbolic links to the files supplied by dartlr
 
-   ```bash
-   $> cd antlr3
+```bash
+$> cd antlr3
 
-   # /path/to/dartlr is the full path to your local dartlr repository 
-   $> ln -s /path/to/dartlr/antlr-templates tool/target/classes/org/antlr/codegen/templates/Dart  
-   $> ln -s /path/to/dartlr/antlr-codegen/DartTarget.java tool/src/main/java/org/antlr/codegen/DartTarget.java
-   ```
+# /path/to/dartlr is the full path to your local dartlr repository 
+$> ln -s /path/to/dartlr/antlr-templates tool/target/classes/org/antlr/codegen/templates/Dart  
+$> ln -s /path/to/dartlr/antlr-codegen/DartTarget.java tool/src/main/java/org/antlr/codegen/DartTarget.java
+```
 
 ## Build again
 
-   ```bash
-   $> mvn -Dmaven.test.skip=true -Dgpg.skip=true package assembly:assembly 
-   ```    
+```bash
+$> mvn -Dmaven.test.skip=true -Dgpg.skip=true package assembly:assembly 
+```    
 
 This should create the file tool/target/antlr-master-{version}-SNAPSHOT-completejar.jar which includes support for
 Dart code generation.
