@@ -25,7 +25,7 @@ abstract class Tree {
    int get line;
   
    int get charPositionInLine;
-  
+   
    Tree parent;
   
   /** This node is what child index? 0..n-1 */
