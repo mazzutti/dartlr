@@ -226,7 +226,7 @@ public class DartTarget extends Target {
       if (st == null)
         return;
       String predicates = convert(st.getAttribute("predicates"), String.class);
-      if (predicates == null)
+      if (predicates == null || predicates.contains("synpred"))
         return;
       if (visited.contains(st))
         return;
@@ -270,29 +270,33 @@ public class DartTarget extends Target {
 
 	    @Override
 	    public void visit(ST st, String recName) {
-	      if (st == null)
-	        return;
-	      if (!"/evalSynPredicate".equals(st.getName()))
-	        return;
-	      if (visited.contains(st))
-	        return;
-	      visited.add(st);
-	      List<?> preds = convert(st.getAttribute("pred"), List.class);
-	      if (preds == null)
-	        return;
-	      List<String> newPreds = new ArrayList<String>();
-	      for (Object o : preds) {
-	        if (o == null || !(o instanceof String))
-	          continue;
-	        String pred = (String) o;
-	        newPreds.add(String.format("(recognizer as %s).%s", recName, pred));
-	      }
-	      if (!newPreds.isEmpty()) {
-	        st.remove("pred");
-	        st.add("pred", newPreds);
-	      }
-	    }
+	      if (st != null || !visited.contains(st)) {
+             visited.add(st);
+	         if ("/evalSynPredicate".equals(st.getName())) {	             
+	              List<?> preds = convert(st.getAttribute("pred"), List.class);
+	              if (preds != null) {	            
+	                  List<String> newPreds = new ArrayList<String>();
+	                  for (Object o : preds) {
+	                    if (o != null && o instanceof String) {
+	                       String pred = (String) o;
+	                       newPreds.add(String.format("(recognizer as %s).%s", recName, pred));
+                        }
+	                  }
+                      if (!newPreds.isEmpty()) {
+	                    st.remove("pred");
+	                    st.add("pred", newPreds);
+	                  }
+                  }
+              } else if ("/cyclicDFAEdge".equals(st.getName()) || "/dfaEdge".equals(st.getName())) {
+                  String predicates = convert(st.getAttribute("predicates"), String.class);
+                  if (predicates != null && !predicates.contains("evalPredicate")){
+                    st.remove("predicates");
+	                st.add("predicates", String.format("(recognizer as %s).%s", recName, predicates));
+                  }     
+	          }
+          }
 	  }
+  }
 
   private static interface STVisitor {
     void visit(ST st, String recName);
@@ -487,11 +491,11 @@ public class DartTarget extends Target {
 
   @SuppressWarnings({"rawtypes", "unchecked"})
   private void adjustHeader(ST outputFileST, Grammar grammar) {
-    if (grammar.type == 4) {
-      HashMap _header = (HashMap) ((HashMap) outputFileST.getAttribute("actions")).get("parser");
+    HashMap actions = convert(outputFileST.getAttribute("actions"), HashMap.class);
+    if (grammar.type == 4) {           
+      HashMap _header = (HashMap) actions.get("parser");
       header = (List) _header.get("header");
     } else if (grammar.type == 1 && header != null) {
-      HashMap actions = (HashMap) outputFileST.getAttribute("actions");
       outputFileST.remove("actions");
       ((HashMap) actions.get("lexer")).put("header", header);
       outputFileST.add("actions", actions);

@@ -276,8 +276,6 @@ class <grammar.recognizerName> extends <@superClassName><superClass><@end> {
   
   String get recognizerClassName => "<grammar.recognizerName>";
   
-  <evalPredicates; separator="\n">
-  
   <members>
 
   <rules; separator="\n\n">

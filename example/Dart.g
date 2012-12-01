@@ -78,9 +78,9 @@ String getErrorHeader(RecognitionException exception) {
   return "sourceName:\${exception.line}:\${(exception.charPositionInLine + 1)}:";
 }
 
-void reportError(RecognitionException exception) {
+void reportError(RecognitionException exception, [st=null]) {
   this.hasErrors = true;
-  super.reportError(exception);
+  super.reportError(exception, st);
 }
 
 // Disable single token insertion and deletion, see:
@@ -123,9 +123,9 @@ String getErrorHeader(RecognitionException exception) {
   return "sourceName:\${exception.line}:\${(exception.charPositionInLine + 1)}:";
 }
 
-void reportError(RecognitionException exception) {
+void reportError(RecognitionException exception, [st=null]) {
   this.hasErrors = true;
-  super.reportError(exception);
+  super.reportError(exception, st);
 }
 
 // Disable single token insertion and deletion, see:
