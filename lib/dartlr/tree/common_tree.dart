@@ -38,10 +38,8 @@ class CommonTree extends BaseTree {
   String get text => token == null ? null : token.text;
 
   int get line {
-    if (token == null || token.line == 0) {
-      if (childCount > 0)
-        return this[0].line;     
-      return 0;
+    if (token == null || token.line == 0 || token.line == null) {
+      return childCount > 0 ? this[0].line : 0;
     }
     return token.line;
   }

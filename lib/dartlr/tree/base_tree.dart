@@ -25,20 +25,7 @@ abstract class BaseTree extends Tree {
    */
   List get children => _children;
 
-  /** BaseTree doesn't track child indexes. */
-  int get childIndex => 0;
-  
-  set childIndex(int index){}
-
-  /** BaseTree doesn't track parent pointers. */
-  Tree get parent => null; 
-  
-  set parent(Tree t) {}
-  
-  int get line => 0;
-
-  int get charPositionInLine => 0;
-  
+    
   /** Override in a subclass to change the impl of children list */
   List _createChildrenList() => new List();
 
@@ -194,7 +181,7 @@ abstract class BaseTree extends Tree {
     }
   }
   
-  freshenParentAndChildIndexesDeeply([int offset = 0]) {
+  freshenParentAndChildIndexesDeeply([int offset = 0]) {    
     for (int c = offset; c < childCount; c++) {
       this[c]
         ..childIndex = c
