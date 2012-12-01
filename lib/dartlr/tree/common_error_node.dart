@@ -20,7 +20,7 @@ class CommonErrorNode extends CommonTree {
   
   int get type => Token.INVALID_TOKEN_TYPE;
 
-  bool isNil() => false; 
+  bool get isNil => false; 
 
   String get text {
     String badText = null;

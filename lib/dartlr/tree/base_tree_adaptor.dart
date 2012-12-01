@@ -31,7 +31,7 @@ abstract class BaseTreeAdaptor implements TreeAdaptor {
     return t;
   }
 
-  bool isNil(tree) => (tree as Tree).isNil();
+  bool isNil(tree) => (tree as Tree).isNil;
 
   /** This is generic in the sense that it will work with any kind of
    *  tree (not just [Tree] interface).  It invokes the adaptor routines
@@ -93,7 +93,7 @@ abstract class BaseTreeAdaptor implements TreeAdaptor {
     Tree oldRootTree = oldRoot;
     if (oldRoot == null)
       return newRoot;
-    if (newRootTree.isNil()) {
+    if (newRootTree.isNil) {
         int nc = newRootTree.childCount;
         if (nc == 1) newRootTree = newRootTree.getChild(0);
         else if (nc > 1) {
@@ -107,7 +107,7 @@ abstract class BaseTreeAdaptor implements TreeAdaptor {
   /** Transform ^(nil x) to x and nil to null */
   rulePostProcessing(root) {
     Tree r = root;
-    if (r != null && r.isNil()) {
+    if (r != null && r.isNil) {
       if (r.childCount == 0)
         r = null;
       else if (r.childCount == 1) {

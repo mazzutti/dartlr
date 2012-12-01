@@ -18,8 +18,6 @@ class ParseTree extends BaseTree {
 
   Tree dupNode() => null;
 
-  int get type => 0;
-
   String get text => toString();
 
   int get tokenStartIndex => 0;

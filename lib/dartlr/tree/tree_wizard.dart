@@ -100,7 +100,7 @@ class TreeWizard {
       new TreePatternParser(tokenizer, this, new TreePatternTreeAdaptor());
     final TreePattern tpattern = parser.pattern();   
     if (tpattern == null ||
-       tpattern.isNil() ||
+       tpattern.isNil ||
        tpattern.runtimeType.toString() == "WildcardTreePattern")
       return null;
     int rootTokenType = tpattern.type;
@@ -141,7 +141,7 @@ class TreeWizard {
     TreePatternParser parser =
       new TreePatternParser(tokenizer, this, new TreePatternTreeAdaptor());
     final TreePattern tpattern = parser.pattern();    
-    if (tpattern == null || tpattern.isNil() ||
+    if (tpattern == null || tpattern.isNil ||
        tpattern.runtimeType.toString() ==  "WildcardTreePattern") return;
     final Map labels = new HashMap();
     int rootTokenType = tpattern.type;

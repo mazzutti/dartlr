@@ -18,10 +18,7 @@ class CommonTree extends BaseTree {
   /** Who is the parent node of this node; if null, implies node is root */
   CommonTree parent;
   
-  /** What index is this node in the child list? Range: 0..n-1 */
-  int childIndex = -1;
-  
-  CommonTree([CommonTree node]) : super(node) {
+  CommonTree([CommonTree node]) : super(node:node) {
     if(node != null) {
       _token = node.token;
       _startIndex = node.tokenStartIndex;
@@ -71,7 +68,7 @@ class CommonTree extends BaseTree {
   
   Tree dupNode() => new CommonTree(this);
 
-  bool isNil() => token == null;
+  bool get isNil => token == null;
   
   /** For every node in this subtree, make sure it's start/stop token's
    *  are set.  Walk depth first, visit bottom up.  Only updates nodes
@@ -95,7 +92,7 @@ class CommonTree extends BaseTree {
   }  
 
   String toString() {
-    if (isNil()) return "nil";
+    if (isNil) return "nil";
     if (type == Token.INVALID_TOKEN_TYPE)
       return "<errornode>";
     if (token == null)      

@@ -245,57 +245,56 @@ public class DartTarget extends Target {
    */
   private static class EvalSynPredicateRewriter implements STVisitor {
 
-	  static List<String> apply(List<ST> l, String recName) {
-		  EvalSynPredicateRewriter rewriter = new EvalSynPredicateRewriter();
-	      STWalker walker = new STWalker(rewriter);
-	      walker.walk(l, recName);
-	      return rewriter.getters;
-	    }
+	static List<String> apply(List<ST> l, String recName) {
+	  EvalSynPredicateRewriter rewriter = new EvalSynPredicateRewriter();
+	  STWalker walker = new STWalker(rewriter);
+	  walker.walk(l, recName);
+	  return rewriter.getters;
+	}
 
-	    /**
-	     * Apply the rewriter to a template
-	     * 
-	     * @param st the template
-	     * @return the list of generated getters
-	     */
-	    static List<String> apply(ST st, String recName) {
-	      EvalSynPredicateRewriter rewriter = new EvalSynPredicateRewriter();
-	      STWalker walker = new STWalker(rewriter);
-	      walker.walk(st, recName);
-	      return rewriter.getters;
-	    }
+    /**
+	* Apply the rewriter to a template
+	* 
+	* @param st the template
+	* @return the list of generated getters
+	*/
+	static List<String> apply(ST st, String recName) {
+	  EvalSynPredicateRewriter rewriter = new EvalSynPredicateRewriter();
+	  STWalker walker = new STWalker(rewriter);
+	  walker.walk(st, recName);
+	  return rewriter.getters;
+	}
 
-	    List<String> getters = new ArrayList<String>();
-	    Set<ST> visited = new HashSet<ST>();
+	List<String> getters = new ArrayList<String>();
+	Set<ST> visited = new HashSet<ST>();
 
-	    @Override
-	    public void visit(ST st, String recName) {
-	      if (st != null || !visited.contains(st)) {
-             visited.add(st);
-	         if ("/evalSynPredicate".equals(st.getName())) {	             
-	              List<?> preds = convert(st.getAttribute("pred"), List.class);
-	              if (preds != null) {	            
-	                  List<String> newPreds = new ArrayList<String>();
-	                  for (Object o : preds) {
-	                    if (o != null && o instanceof String) {
-	                       String pred = (String) o;
-	                       newPreds.add(String.format("(recognizer as %s).%s", recName, pred));
-                        }
-	                  }
-                      if (!newPreds.isEmpty()) {
-	                    st.remove("pred");
-	                    st.add("pred", newPreds);
-	                  }
-                  }
-              } else if ("/cyclicDFAEdge".equals(st.getName()) || "/dfaEdge".equals(st.getName())) {
-                  String predicates = convert(st.getAttribute("predicates"), String.class);
-                  if (predicates != null && !predicates.contains("evalPredicate")){
-                    st.remove("predicates");
-	                st.add("predicates", String.format("(recognizer as %s).%s", recName, predicates));
-                  }     
-	          }
+	@Override
+	public void visit(ST st, String recName) {
+	  if (st != null || !visited.contains(st)) {
+        visited.add(st);
+	    if ("/evalSynPredicate".equals(st.getName())) {	             
+	      List<?> preds = convert(st.getAttribute("pred"), List.class);
+	      if (preds != null) {	            
+	        List<String> newPreds = new ArrayList<String>();
+	        for (Object o : preds)
+	          if (o != null && o instanceof String) {
+	            String pred = (String) o;
+	            newPreds.add(String.format("(recognizer as %s).%s", recName, pred));
+              }
+            if (!newPreds.isEmpty()) {
+	          st.remove("pred");
+	          st.add("pred", newPreds);
+	        }
           }
-	  }
+        } else if ("/cyclicDFAEdge".equals(st.getName()) || "/dfaEdge".equals(st.getName())) {
+          String predicates = convert(st.getAttribute("predicates"), String.class);
+          if (predicates != null && !predicates.contains("evalPredicate")){
+            st.remove("predicates");
+	        st.add("predicates", String.format("(recognizer as %s).%s", recName, predicates));
+          }     
+	    }
+      }
+    }
   }
 
   private static interface STVisitor {

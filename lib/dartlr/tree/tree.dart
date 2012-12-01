@@ -19,24 +19,22 @@ abstract class Tree {
   static final Tree INVALID_NODE = new CommonTree.fromToken(Token.INVALID_TOKEN);   
   
   /** Return a token type; needed for tree parsing */
-   int get type;
+   int get type => 0;
   
   /** In case we don't have a token payload, what is the line for errors? */
-   int get line;
+   int get line => -1;
   
-   int get charPositionInLine;
+   int charPositionInLine;
    
    Tree parent;
   
-  /** This node is what child index? 0..n-1 */
-   int get childIndex;
-  
-   set childIndex(int index);
+   /** What index is this node in the child list? Range: 0..n-1 */
+   int childIndex = -1;
   
   /** Indicates the node is a nil node but may still have children, meaning
    *  the tree is a flat list.
    */
-   bool isNil(); 
+   bool get isNil; 
   
    toStringTree();
   

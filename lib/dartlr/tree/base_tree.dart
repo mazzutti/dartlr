@@ -18,7 +18,9 @@ abstract class BaseTree extends Tree {
    *  as there are no fields other than the children list, which cannot
    *  be copied as the children are not considered part of this node.
    */
-  BaseTree([Tree node]);
+  BaseTree({Tree node:null, int charPos:-1}) {
+    charPositionInLine = charPos;
+  }
   
   /** Get the children internal List; note that if you directly mess with
    *  the list, do so at your own risk.
@@ -29,7 +31,7 @@ abstract class BaseTree extends Tree {
   /** Override in a subclass to change the impl of children list */
   List _createChildrenList() => new List();
 
-  bool isNil() => false;
+  bool get isNil => false;
   
   Tree getChild(int i) {
     if (_children == null || i >= _children.length) return null;
@@ -58,7 +60,7 @@ abstract class BaseTree extends Tree {
   addChild(Tree t) {
     if (t == null) return;
     BaseTree childTree = t;
-    if ( childTree.isNil() ) {
+    if ( childTree.isNil ) {
       if (_children != null && _children == childTree.children)
         throw new ArgumentError("attempt to add child list to itself");     
       if (childTree.children != null) {
@@ -96,7 +98,7 @@ abstract class BaseTree extends Tree {
 
   setChild(int i, Tree t) {
     if (t == null) return; 
-    if (t.isNil())
+    if (t.isNil)
       throw new ArgumentError("Can't set single child to a list");
     if (_children == null )
       _children = _createChildrenList();    
@@ -135,7 +137,7 @@ abstract class BaseTree extends Tree {
     int replacingWithHowMany;
     BaseTree newTree = t;
     List newChildren = null;
-    if (newTree.isNil())
+    if (newTree.isNil)
       newChildren = newTree.children;
     else {
       newChildren = new List();
@@ -232,7 +234,7 @@ abstract class BaseTree extends Tree {
     if (children == null || children.length == 0)
       return toString();
     StringBuffer buf = new StringBuffer();
-    if (!isNil()) {
+    if (!isNil) {
       buf.add("(");
       buf.add(toString());
       buf.add(' ');
@@ -243,7 +245,7 @@ abstract class BaseTree extends Tree {
         buf.add(' ');
       buf.add(t.toStringTree());
     }
-    if (!isNil())
+    if (!isNil)
       buf.add(")");
     return buf.toString();
   } 

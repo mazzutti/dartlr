@@ -368,12 +368,16 @@ class ProxyTree extends BaseTree {
   int ID;
   int _type;
   int line = 0;
-  int charPos = -1;
   int tokenIndex = -1;
   String _text;
   
-  ProxyTree(this.ID, [this._type, this.line = 0, 
-      this.charPos = -1, this.tokenIndex = -1, this._text]);
+  ProxyTree(this.ID, 
+            [this._type, 
+             this.line = 0, 
+             int charPos = -1, 
+             this.tokenIndex = -1, 
+             this._text])
+    : super(charPos:charPos); 
 
   int get tokenStartIndex => tokenIndex;
   set tokenStartIndex(int index) {}
