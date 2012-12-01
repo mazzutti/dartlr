@@ -39,9 +39,7 @@ class CommonTree extends BaseTree {
 
   int get line {
     if (token == null || token.line == 0 || token.line == null) {
-      if (childCount > 0)
-        return this[0].line;     
-      return 0;
+      return childCount > 0 ? this[0].line : 0;
     }
     return token.line;
   }
