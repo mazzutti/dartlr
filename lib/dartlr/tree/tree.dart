@@ -26,9 +26,7 @@ abstract class Tree {
   
    int get charPositionInLine;
   
-   Tree get parent;
-
-   set parent(Tree t);
+   Tree parent;
   
   /** This node is what child index? 0..n-1 */
    int get childIndex;
@@ -82,16 +80,12 @@ abstract class Tree {
   /**  What is the smallest token index (indexing from 0) for this node
    *   and its children?
    */
-   int get tokenStartIndex;
-
-   set tokenStartIndex(int index);
+   int tokenStartIndex;
 
   /**  What is the largest token index (indexing from 0) for this node
    *   and its children?
    */
-   int get tokenStopIndex;
-
-   set tokenStopIndex(int index);
+   int tokenStopIndex;
 
    Tree dupNode();
 
