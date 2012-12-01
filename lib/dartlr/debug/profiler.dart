@@ -17,7 +17,7 @@ class Profiler extends BlankDebugEventListener {
   static const String Version = "3";
   static const String RUNTIME_STATS_FILENAME = "runtime.stats";
 
-  DebugParser _parser = null;
+  DebugParser parser = null;
 
   int _ruleLevel = 0;
   Token _lastRealTokenTouchedInDecision;
@@ -32,7 +32,7 @@ class Profiler extends BlankDebugEventListener {
   int _backtrackDepth;  
   ProfileStats stats;
 
-  Profiler([this._parser]) {
+  Profiler([this.parser]) {
     _uniqueRules = new HashSet<String>();
     _currentGrammarFileName =  new List<String>();
     _currentRuleName = new List<String>(); 
@@ -88,7 +88,7 @@ class Profiler extends BlankDebugEventListener {
   enterDecision(int decisionNumber, bool couldBacktrack) {
     _lastRealTokenTouchedInDecision = null;
     stats.numDecisionEvents++;
-    TokenStream input = _parser.tokenStream;
+    TokenStream input = parser.tokenStream;
     int startingLookaheadIndex = input.index;    
     if(dump) 
       print("enterDecision canBacktrack=$couldBacktrack "
@@ -261,10 +261,6 @@ class Profiler extends BlankDebugEventListener {
     stderr.writeString(getDecisionStatsDump());
   }
 
-  set parser(DebugParser p) {
-    _parser = p;
-  }
-
   String toNotifyString() {
     StringBuffer buf = new StringBuffer();
     buf.add(Version);
@@ -411,7 +407,7 @@ class Profiler extends BlankDebugEventListener {
 
   int getNumberOfHiddenTokens(int i, int j) {
     int n = 0;
-    TokenStream input = _parser.tokenStream;
+    TokenStream input = parser.tokenStream;
     for (int ti = i; ti < input.size && ti <= j; ti++) {
       Token t = input.at(ti);
       if(t.channel != Token.DEFAULT_CHANNEL)

@@ -38,12 +38,12 @@ class DebugTreeParser extends TreeParser {
 
   DebugEventListener get debugListener => _dbg;
 
-  reportError( e, [var stackTrace]) {
+  reportError( e, [st=null]) {
     if(e is RecognitionException)
       _dbg.recognitionException(e);
     else {
       stderr.writeString(e.getMessage());
-      stderr.writeString(stackTrace);
+      stderr.writeString(st);
     }
   }
 

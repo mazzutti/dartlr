@@ -183,7 +183,7 @@ abstract class BaseTree extends Tree {
   
   freshenParentAndChildIndexesDeeply([int offset = 0]) {    
     for (int c = offset; c < childCount; c++) {
-      this[c]
+      (this[c] as BaseTree)
         ..childIndex = c
         ..parent = this
         ..freshenParentAndChildIndexesDeeply();

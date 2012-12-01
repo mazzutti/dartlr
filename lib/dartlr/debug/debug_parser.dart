@@ -39,7 +39,7 @@ class DebugParser extends Parser {
   DebugEventListener get debugListener => _dbg;
 
   @override
-  reportError(RecognitionException exception, [st]) {
+  reportError(RecognitionException exception, [st=null]) {
     _reportError(exception, st);
   }
   
