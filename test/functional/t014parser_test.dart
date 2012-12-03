@@ -40,7 +40,7 @@ main() {
    
     parser.document();
     expect(parser.errors.length, equals(1));
-    expect(parser.errors[0].indexOf("line 1:3"), equals(1));
+    expect(parser.errors[0].indexOf("line 1:3"), equals(0));
     expect(parser.events.length, equals(0));
   });
   
@@ -52,7 +52,7 @@ main() {
     List expected = [["call", "gnarz"]];
     parser.document();    
     expect(parser.errors.length, equals(1));
-    expect(parser.errors[0].indexOf("line 1:10"), equals(1));
+    expect(parser.errors[0].indexOf("line 1:10"), equals(0));
     expect(parser.events.length, equals(expected.length));
     for (int i = 0; i < expected.length; i++) {
       expect(parser.events[i][0], equals(expected[i][0]));

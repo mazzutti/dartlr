@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 /**A stripped-down version of org.antlr.misc.BitSet that is just
  * good enough to handle runtime requirements such as FOLLOW sets

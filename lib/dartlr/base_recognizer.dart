@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 /** A generic recognizer that can handle recognizers generated from
  *  lexer, parser, and tree grammars.  This is all the parsing
@@ -38,6 +38,10 @@ abstract class BaseRecognizer {
   String get output => _output;
   
   IntStream get input;
+  
+  Logger get logger {
+    return new Logger("${recognizerClassName}");
+  }
     
   capture(String value) {
     _output = "${_output}$value";
@@ -133,7 +137,7 @@ abstract class BaseRecognizer {
     String hdr = getErrorHeader(e);
     String msg = getErrorMessage(e, tokenNames);
     reportedErrors.add("$hdr $msg");
-    emitErrorMessage("\n$hdr $msg");
+    emitErrorMessage("$hdr $msg");
   }
 
   /** What error message should be generated for the various
@@ -247,7 +251,7 @@ abstract class BaseRecognizer {
 
   /** Override this method to change where error messages go */
   emitErrorMessage(String msg) {
-    stderr.writeString(msg);
+    logger.log(Level.SEVERE, msg);
   }
 
   /** Recover from an error found on the input stream.  This is
@@ -667,7 +671,7 @@ abstract class BaseRecognizer {
     if (state.backtracking > 0) {
       print(" backtracking=${state.backtracking}");
     }
-    print(Platform.operatingSystem == "windows" ? "\r\n" : "\n");
+    print('\n');
   }
 
   traceOut(String ruleName, int ruleIndex, [inputSymbol]) {
@@ -677,7 +681,7 @@ abstract class BaseRecognizer {
       if (state.failed) print(" failed");
       else print(" succeeded");
     }
-    print(Platform.operatingSystem == "windows" ? "\r\n" : "\n");
+    print('\n');
   }
 
 }

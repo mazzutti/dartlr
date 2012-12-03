@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 /** A record of the rules used to match a token sequence.  The tokens
  *  end up as the leaves of this tree and rule nodes are the interior nodes.

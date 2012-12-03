@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 /** Do a depth first walk of a tree, applying pre() and post() actions
  *  as we discover and finish nodes.

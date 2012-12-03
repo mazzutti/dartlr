@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 class DebugTreeParser extends TreeParser {
  
@@ -12,7 +12,8 @@ class DebugTreeParser extends TreeParser {
   /** Used to differentiate between fixed lookahead and cyclic DFA decisions
    *  while profiling.
    */
-  bool isCyclicDecision = false;
+  bool isCyclicDecision = false;  
+  
 
   /** Create a normal parser except wrap the token stream in a debug
    *  proxy that fires consume events.
@@ -42,8 +43,8 @@ class DebugTreeParser extends TreeParser {
     if(e is RecognitionException)
       _dbg.recognitionException(e);
     else {
-      stderr.writeString(e.getMessage());
-      stderr.writeString(st);
+      logger.log(Level.SEVERE, e.getMessage());
+      if(st != null) logger.log(Level.SEVERE, st);
     }
   }
 

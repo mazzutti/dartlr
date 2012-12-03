@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 /** A token stream that pulls tokens from the code source on-demand and
  *  without tracking a complete buffer of the tokens. This stream buffers

@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 /** What does a tree look like?  ANTLR has a number of support classes
  *  such as [CommonTreeNodeStream] that work on these kinds of trees.  You

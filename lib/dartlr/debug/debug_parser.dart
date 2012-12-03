@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 class DebugParser extends Parser {
   
@@ -48,7 +48,7 @@ class DebugParser extends Parser {
       super.reportError(e, st);
       _dbg.recognitionException(e);
     } else {
-      stderr.writeString(e.getMessage());
+      logger.log(Level.SEVERE, e.getMessage());
     }
   }
 

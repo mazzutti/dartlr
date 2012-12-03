@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 /** Buffer all input tokens but do on-demand fetching of new tokens from
  *  lexer. Useful when the parser or lexer has to set context/mode info before

@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 /** A simple event repeater (proxy) that delegates all functionality to the
  *  listener sent into the ctor.  Useful if you want to listen in on a few

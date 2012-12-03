@@ -7,6 +7,7 @@ library dartlr_test_runner;
 import "dart:io";
 import "package:unittest/unittest.dart";
 import "package:dartlr/dartlr.dart";
+import "package:logging/logging.dart";
 
 
 //functional tests
@@ -142,5 +143,13 @@ class TestRunner {
 }
 
 main() {
+  
+  Logger root = Logger.root;
+  hierarchicalLoggingEnabled = true;
+  root.level = Level.ALL;
+  root.on.record.add((LogRecord record) {
+    print('${record.time}: ${record.loggerName}: ${record.level}: ${record.message}');
+  });
+  
   new TestRunner().run();
 }

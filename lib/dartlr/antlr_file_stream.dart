@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_backend;
 
 /** This is a char buffer stream that is loaded from a file
  *  all at once when you construct the object.  This looks very
@@ -40,7 +40,7 @@ class ANTLRFileStream extends ANTLRStringStream {
   load([Encoding encoding=Encoding.UTF_8]) {
     File f = new File.fromPath(_path);
     if (!f.existsSync()) throw new FileIOException("file '$_path' doesn't exist");
-    _data = f.readAsStringSync(encoding).charCodes;
-    _n = _data.length;   
+    data = f.readAsStringSync(encoding).charCodes;
+    size = data.length;   
   }   
 }

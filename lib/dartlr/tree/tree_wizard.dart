@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 /** Build and navigate trees with this object.  Must know about the names
  *  of tokens so you have to pass in a map or array of token names (from which

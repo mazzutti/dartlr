@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 /** A queue that can dequeue and get(i) in O(1) and grow arbitrarily large.
  *  A linked list is fast at dequeue but slow at get(i).  An array is

@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 /** A DFA implemented as a set of transition tables.
  *
@@ -31,6 +31,8 @@ class DFA {
   static const bool debug = false;
 
   DFA([this._recognizer]);
+  
+  Logger get logger => new Logger("${_recognizer.recognizerClassName}:DFA"); 
   
   set decisionNumber(int dn) => _decisionNumber = dn;
   set eot(List<int> eot) => _eot = eot;
@@ -81,7 +83,7 @@ class DFA {
           if (snext < 0) {
            if (_eot[s] >= 0) {
               if (debug) 
-                stderr.writeString("EOT transition");
+                logger.log(Level.ALL, "EOT transition");
               s = _eot[s];
               input.consume();
               continue;
@@ -94,25 +96,24 @@ class DFA {
           continue;
         }
         if (_eot[s] >= 0 ) {
-          if (debug) stderr.writeString("EOT transition");
+          if (debug) logger.log(Level.ALL, "EOT transition");
           s = _eot[s];
           input.consume();
           continue;
         }
         if (c == Token.EOF && _eof[s] >= 0) {
           if (debug) 
-            stderr.writeString("accept via EOF; predict "
+            logger.log(Level.ALL, "accept via EOF; predict "
               "${_accept[_eof[s]]} from ${_eof[s]}");
           return _accept[_eof[s]];
         }
        if (debug) {
-         stderr.writeString("min[$s]=${_min[s]}");
-         stderr.writeString("max[$s]=${_max[s]}");
-         stderr.writeString("eot[$s]=${_eot[s]}");
-         stderr.writeString("eof[$s]=${_eof[s]}");
+         logger.log(Level.ALL, "min[$s]=${_min[s]}");
+         logger.log(Level.ALL, "max[$s]=${_max[s]}");
+         logger.log(Level.ALL, "eot[$s]=${_eot[s]}");
+         logger.log(Level.ALL, "eof[$s]=${_eof[s]}");
          for (int p = 0; p < _transition[s].length; p++)
-           stderr.writeString("${_transition[s][p]} ");         
-         stderr.writeString(Platform.operatingSystem == "windows" ? "\r\n" : "\n");
+           logger.log(Level.ALL, "${_transition[s][p]} ");         
         }
         _noViableAlt(s,input);
         return 0;

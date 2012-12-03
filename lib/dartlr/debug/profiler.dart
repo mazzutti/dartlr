@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 /** Using the debug event interface, track what is happening in the parser
  *  and record statistics about the runtime.
@@ -10,14 +10,18 @@ part of dartlr;
 class Profiler extends BlankDebugEventListener {
   
   static const String DATA_SEP = "\t";
-  static final String newline = 
-      (Platform.operatingSystem == "windows") ? "\r\n" : "\n";
+  static final String newline =  "\n";
 
   static const bool dump = false;
   static const String Version = "3";
   static const String RUNTIME_STATS_FILENAME = "runtime.stats";
 
   DebugParser parser = null;
+  
+  Logger get logger {
+    new Logger(
+      "${ parser != null ? "${parser.recognizerClassName}:" : ""}Profiler");
+  }
 
   int _ruleLevel = 0;
   Token _lastRealTokenTouchedInDecision;
@@ -257,8 +261,8 @@ class Profiler extends BlankDebugEventListener {
     stats.averageDecisionPercentBacktracks *= 100;
     stats.avgkPerDecisionEvent /= stats.numDecisionEvents;
     stats.avgkPerBacktrackingDecisionEvent /= stats.numBacktrackOccurrences;
-    stderr.writeString(toString());
-    stderr.writeString(getDecisionStatsDump());
+    logger.log(Level.SEVERE, toString());
+    logger.log(Level.SEVERE, getDecisionStatsDump());
   }
 
   String toNotifyString() {

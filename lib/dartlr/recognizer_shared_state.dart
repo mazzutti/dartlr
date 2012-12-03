@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 /** The set of fields needed by an abstract recognizer to recognize input
  *  and recover from errors etc...  As a separate state object, it can be

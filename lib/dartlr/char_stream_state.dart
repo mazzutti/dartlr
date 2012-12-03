@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 /** When walking ahead with cyclic DFA or for syntactic predicates,
  *  we need to record the state of the input stream (char index,

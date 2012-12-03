@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 /** A lookahead queue that knows how to mark/release locations
  *  in the buffer for backtracking purposes. Any markers force the [FastQueue]

@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 /** A generic list of elements tracked in an alternative to be used in
  *  a -> rewrite rule.  We need to subclass to fill in the next() method,

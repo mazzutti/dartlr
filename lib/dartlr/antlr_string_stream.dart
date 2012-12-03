@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 /** A pretty quick CharStream that pulls all data from an list
  *  directly.  Every method call counts in the lexer.  
@@ -10,10 +10,10 @@ part of dartlr;
 class ANTLRStringStream implements CharStream {
  
   /** The data being scanned */
-  List<int> _data;
+  List<int> data;
   
   /** How many characters are actually in the buffer */
-  int _n;
+  int size;
   
   /** 0..n-1 index into string of next char */
   int _p = 0;
@@ -45,13 +45,13 @@ class ANTLRStringStream implements CharStream {
    */
   ANTLRStringStream([String input=""]) {
     if(input == null) throw new ArgumentError("input must not be null");
-    _data = input.charCodes;
-    _n = input.length;
+    data = input.charCodes;
+    size = input.length;
   }
   
   ANTLRStringStream.fromList(List<int> data, int numberOfActualCharsInArray) {    
-    _data = data;
-    _n = numberOfActualCharsInArray;
+    data = data;
+    size = numberOfActualCharsInArray;
   }
   
   int LT(int i) => LA(i);
@@ -62,7 +62,7 @@ class ANTLRStringStream implements CharStream {
    */
   int get index => _p;
   
-  int get size => _n;
+  //int get size => _n;
   
   String get sourceName => _name;
 
@@ -78,9 +78,9 @@ class ANTLRStringStream implements CharStream {
   }
 
   consume() {   
-    if(_p < _n) {
+    if(_p < size) {
       charPositionInLine++;
-      if (_data[_p] == '\n'.charCodeAt(0)) {       
+      if (data[_p] == '\n'.charCodeAt(0)) {       
         line++;
         charPositionInLine = 0;
       }
@@ -95,9 +95,9 @@ class ANTLRStringStream implements CharStream {
       if ((_p + i - 1) < 0 ) 
         return CharStream.EOF;    
     }
-    if ((_p + i - 1) >= _n )         
+    if ((_p + i - 1) >= size )         
             return CharStream.EOF;
-    return _data[_p + i - 1];
+    return data[_p + i - 1];
   } 
 
   int mark() {
@@ -149,8 +149,8 @@ class ANTLRStringStream implements CharStream {
   }
 
   String substring(int start, int stop) => 
-    new String.fromCharCodes(_data.getRange(start, stop - start + 1));   
+    new String.fromCharCodes(data.getRange(start, stop - start + 1));   
 
-  String toString() => new String.fromCharCodes(_data);
+  String toString() => new String.fromCharCodes(data);
   
 }

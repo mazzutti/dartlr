@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 /** A generic tree implementation with no payload.  You must subclass to
  *  actually have any user data.  ANTLR v3 uses a list of children approach

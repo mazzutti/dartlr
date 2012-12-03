@@ -2,7 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-part of dartlr;
+part of dartlr_common;
 
 /** The most common stream of tokens where every token is buffered up
  *  and tokens are filtered for a certain channel (the parser will only
