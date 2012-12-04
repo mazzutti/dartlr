@@ -17,6 +17,8 @@ class RewriteRuleNodeStream extends RewriteRuleElementStream {
 
   _toTree(el) => _adaptor.dupNode(el);
 
-  _dup(el) => throw new UnsupportedError("dup can't be called for a node stream.");  
+  _dup(el) {
+    throw new UnsupportedError("dup can't be called for a node stream.");  
+  }
 }
 

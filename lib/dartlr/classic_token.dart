@@ -24,7 +24,9 @@ class ClassicToken implements Token {
   }
   
   CharStream get inputStream => null;
-  set inputStream(CharStream input) => throw new UnimplementedError("not implemented");
+  set inputStream(CharStream input) {
+    throw new UnimplementedError("not implemented");
+  }
   
   String toString() {
     String channelStr = "";
