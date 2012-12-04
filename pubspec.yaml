@@ -11,10 +11,6 @@ authors:
 homepage: https://github.com/tiagomazzutti/dartlr.git
   
 dependencies:
-  unittest:
-    sdk: unittest
-  logging:
-    sdk: logging
-  meta:
-    sdk: meta
-    
+  unittest: any
+  logging: any
+  meta: any
