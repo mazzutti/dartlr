@@ -23,6 +23,8 @@ class RewriteRuleTokenStream extends RewriteRuleElementStream {
    */
   _toTree(el) => el;
 
-  _dup(el) => throw new UnsupportedError("dup can't be called for a token stream.");
+  _dup(el) {
+    throw new UnsupportedError("dup can't be called for a token stream.");
+  }
 }
 
