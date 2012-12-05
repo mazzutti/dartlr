@@ -150,10 +150,14 @@ abstract class BaseTreeAdaptor implements TreeAdaptor {
   }
 
   int getType(t) => t.type;
-  setType(t, int type) =>throw new UnimplementedError("don't know enough about Tree node");
+  setType(t, int type) {
+    throw new UnimplementedError("don't know enough about Tree node");
+  }
 
   String getText(t) => t.text;
-  setText(t, String text) =>throw new UnimplementedError("don't know enough about Tree node");
+  setText(t, String text) {
+    throw new UnimplementedError("don't know enough about Tree node");
+  }
 
   getChild(t, int i) => t.getChild(i);
 
