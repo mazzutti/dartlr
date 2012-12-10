@@ -69,6 +69,8 @@ import "functional/t059debug_test.dart" as t059debug;
 import "functional/t100parser_test.dart" as t100parser;
 import "functional/t101parser_test.dart" as t101parser;
 import "functional/t102parser_test.dart" as t102parser;
+import "functional/t103rulecatch_test.dart" as t103rulecatch;
+import "functional/t104rulecatch_test.dart" as t104rulecatch;
 
 //logical tests
 import "logical/dfa_test.dart" as dfa;
@@ -135,6 +137,8 @@ class TestRunner {
     t100parser.main();
     t101parser.main();
     t102parser.main();
+    t103rulecatch.main();
+    t104rulecatch.main();
     
     dfa.main();
     bitSet.main();   

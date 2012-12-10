@@ -31,6 +31,7 @@ import org.stringtemplate.v4.misc.Aggregate;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -59,12 +60,14 @@ public class DartTarget extends Target {
         return;
       for (String key : aggregate.properties.keySet()) {
         Object value = aggregate.get(key);
-        if (value instanceof ST) {
+        if (value == null) {
+          log(level, String.format("aggregate key:%s, value is null", key));
+        } else if (value instanceof ST) {
           log(level, String.format("aggregate key: %s", key));
           dump(level + 1, (ST) value);
         } else if (value instanceof AttributeList) {
           log(level, String.format("aggregate key: %s", key));
-          dump(level + 1, (AttributeList) value);
+          dump(level + 1, (AttributeList<?>) value);
         } else {
           log(level,
               String.format("aggregate key: %s, type: %s, value: %s", key, value.getClass(), value));
@@ -142,30 +145,22 @@ public class DartTarget extends Target {
   private static class EvalPredicateRewriter implements STVisitor {
 
     static List<String> apply(List<ST> l, String recName) {
-      EvalPredicateRewriter rewriter = new EvalPredicateRewriter();
+      EvalPredicateRewriter rewriter = new EvalPredicateRewriter(recName);
       STWalker walker = new STWalker(rewriter);
-      walker.walk(l, recName);
+      walker.walk(l);
       return rewriter.getters;
     }
 
-    /**
-     * Apply the rewriter to a template
-     * 
-     * @param st the template
-     * @return the list of generated getters
-     */
-    static List<String> apply(ST st, String recName) {
-      EvalPredicateRewriter rewriter = new EvalPredicateRewriter();
-      STWalker walker = new STWalker(rewriter);
-      walker.walk(st, recName);
-      return rewriter.getters;
+    private List<String> getters = new ArrayList<String>();
+    private Set<ST> visited = new HashSet<ST>();
+    private String recognizerName;
+    
+    public EvalPredicateRewriter(String recognizerName) {
+    	this.recognizerName = recognizerName;
     }
-
-    List<String> getters = new ArrayList<String>();
-    Set<ST> visited = new HashSet<ST>();
 
     @Override
-    public void visit(ST st, String recName) {
+    public void visit(ST st) {
       if (st == null)
         return;
       if (!"/evalPredicate".equals(st.getName()))
@@ -183,7 +178,7 @@ public class DartTarget extends Target {
         String pred = (String) o;
         String getterName = "evalPredicate_" + newGid();
         getters.add(String.format("get %s => (%s);", getterName, pred));
-        newPreds.add(String.format("(recognizer as %s).%s", recName, getterName));
+        newPreds.add(String.format("(recognizer as %s).%s", recognizerName, getterName));
       }
       if (!newPreds.isEmpty()) {
         st.remove("pred");
@@ -196,33 +191,26 @@ public class DartTarget extends Target {
    * Rewrites literal expression in all ST attributes with name 'predicates'. Extracts the
    * expression in a named getter and replaces it with the getter invocation.
    * <p>
-   * This rewritter is applied to the special state STs of each DFA.
+   * This rewriter is applied to the special state STs of each DFA.
    */
   private static class PredicatesAttrRewriter implements STVisitor {
 
     static List<String> apply(List<ST> l, String recName) {
-      PredicatesAttrRewriter rewriter = new PredicatesAttrRewriter();
-      new STWalker(rewriter).walk(l, recName);
-      return rewriter.getters;
-    }
-
-    /**
-     * Apply the rewriter to a template
-     * 
-     * @param st the template
-     * @return the list of generated getters
-     */
-    static List<String> apply(ST st, String recName) {
-      PredicatesAttrRewriter rewriter = new PredicatesAttrRewriter();
-      new STWalker(rewriter).walk(st, recName);
+      PredicatesAttrRewriter rewriter = new PredicatesAttrRewriter(recName);
+      new STWalker(rewriter).walk(l);
       return rewriter.getters;
     }
 
     private final List<String> getters = new ArrayList<String>();
     private final Set<ST> visited = new HashSet<ST>();
+    private String recognizerName;
+
+    public PredicatesAttrRewriter(String recognizerName) {
+    	this.recognizerName = recognizerName;
+    }
 
     @Override
-    public void visit(ST st, String recName) {
+    public void visit(ST st) {
       if (st == null)
         return;
       String predicates = convert(st.getAttribute("predicates"), String.class);
@@ -234,7 +222,71 @@ public class DartTarget extends Target {
       String getterName = "evalPredicate_" + newGid();
       getters.add(String.format("get %s => (%s);", getterName, predicates));
       st.remove("predicates");
-      st.add("predicates", String.format("(recognizer as %s).%s", recName, getterName));
+      st.add("predicates", String.format("(recognizer as %s).%s", recognizerName, getterName));
+    }
+  }
+  
+  /**
+   * Rewrites exception declarations in rules. It splits them into the
+   * exception type and the name of the exception variable, because 
+   * the Dart catch clause to generate looks as follows:
+   * <pre>
+   *    on <ExceptionType> catch(<ExceptionVar>) {
+   *    }
+   * </pre<
+   * 
+   */
+  private static class RuleExceptionRewriter implements STVisitor {
+    /**
+     * Apply the rewriter to a template
+     * 
+     * @param st the template
+     */
+    static void  apply(ST st) {
+      RuleExceptionRewriter rewriter = new RuleExceptionRewriter();
+      new STWalker(rewriter).walk(st);
+    }
+
+    /**
+     * Splits a 'decl' attribute into a exception type and
+     * an exception variable.
+     */
+    protected void rewriteException(Aggregate ex) {
+    	Object value = ex.get("decl");
+    	if (value == null) return;
+    	if (! (value instanceof String)) return;
+    	String decl = (String) value;
+    	decl = decl.trim();
+    	String[] tokens = decl.split("\\s+");
+    	if (tokens == null) return;    	
+    	switch(tokens.length) {
+    	case 1:
+        	ex.properties.put("exceptionVar", tokens[0]);    	
+    		break;
+    	case 2:
+    		ex.properties.put("exceptionType", tokens[0]);
+        	ex.properties.put("exceptionVar", tokens[1]);    	
+    		break;
+    	}    	
+    }
+    
+    @Override
+    public void visit(ST st) {
+      if (st == null) return;
+      if (! "/rule".equals(st.getName())) return;
+      Object value = st.getAttribute("exceptions");
+      if (value == null) return;
+      if (value instanceof Aggregate) {
+    	 rewriteException((Aggregate)value);
+      } else if (value instanceof AttributeList) {
+    	  for (Object ex: (AttributeList<?>)value) {
+    		  if (ex == null) continue;
+    		  if (! (ex instanceof Aggregate)) continue;
+    		  rewriteException((Aggregate)ex);
+    	  }
+      } else {
+    	  // ignore
+      }
     }
   }
   
@@ -246,30 +298,22 @@ public class DartTarget extends Target {
   private static class EvalSynPredicateRewriter implements STVisitor {
 
 	static List<String> apply(List<ST> l, String recName) {
-	  EvalSynPredicateRewriter rewriter = new EvalSynPredicateRewriter();
+	  EvalSynPredicateRewriter rewriter = new EvalSynPredicateRewriter(recName);
 	  STWalker walker = new STWalker(rewriter);
-	  walker.walk(l, recName);
+	  walker.walk(l);
 	  return rewriter.getters;
 	}
-
-    /**
-	* Apply the rewriter to a template
-	* 
-	* @param st the template
-	* @return the list of generated getters
-	*/
-	static List<String> apply(ST st, String recName) {
-	  EvalSynPredicateRewriter rewriter = new EvalSynPredicateRewriter();
-	  STWalker walker = new STWalker(rewriter);
-	  walker.walk(st, recName);
-	  return rewriter.getters;
+	
+	private List<String> getters = new ArrayList<String>();
+	private Set<ST> visited = new HashSet<ST>();
+	private String recognizerName;
+	
+	public EvalSynPredicateRewriter(String recognizerName) {
+		this.recognizerName = recognizerName;
 	}
-
-	List<String> getters = new ArrayList<String>();
-	Set<ST> visited = new HashSet<ST>();
 
 	@Override
-	public void visit(ST st, String recName) {
+	public void visit(ST st) {
 	  if (st != null || !visited.contains(st)) {
         visited.add(st);
 	    if ("/evalSynPredicate".equals(st.getName())) {	             
@@ -279,7 +323,7 @@ public class DartTarget extends Target {
 	        for (Object o : preds)
 	          if (o != null && o instanceof String) {
 	            String pred = (String) o;
-	            newPreds.add(String.format("(recognizer as %s).%s", recName, pred));
+	            newPreds.add(String.format("(recognizer as %s).%s", recognizerName, pred));
               }
             if (!newPreds.isEmpty()) {
 	          st.remove("pred");
@@ -290,7 +334,7 @@ public class DartTarget extends Target {
           String predicates = convert(st.getAttribute("predicates"), String.class);
           if (predicates != null && !predicates.contains("evalPredicate")){
             st.remove("predicates");
-	        st.add("predicates", String.format("(recognizer as %s).%s", recName, predicates));
+	        st.add("predicates", String.format("(recognizer as %s).%s", recognizerName, predicates));
           }     
 	    }
       }
@@ -298,51 +342,44 @@ public class DartTarget extends Target {
   }
 
   private static interface STVisitor {
-    void visit(ST st, String recName);
+    void visit(ST st);
   }
 
   private static class STWalker {
     private final STVisitor visitor;
-
+    
     public STWalker(STVisitor visitor) {
       this.visitor = visitor;
     }
 
-    public void walk(List<ST> l, String recName) {
-      if (l == null)
-        return;
-      for (ST st : l)
-        walk(st, recName);
+    public void walk(List<ST> l) {
+      if (l == null) return;
+      for (ST st : l) walk(st);
     }
 
-    public void walk(ST st, String recName) {
-      visitor.visit(st, recName);
-      if (st.getAttributes() == null)
-        return;
-      for (String key : st.getAttributes().keySet())
-        dispatch(st.getAttribute(key), recName);
+    public void walk(ST st) {
+      visitor.visit(st);
+      if (st.getAttributes() == null) return;
+      for (String key : st.getAttributes().keySet()) dispatch(st.getAttribute(key));
     }
 
-    protected void dispatch(Object v, String recName) {
-      if (v == null)
-        return;
+    protected void dispatch(Object v) {
+      if (v == null) return;
       if (v instanceof ST) {
-        walk((ST) v, recName);
+        walk((ST) v);
       } else if (v instanceof AttributeList) {
-        walk((AttributeList<?>) v, recName);
+        walk((AttributeList<?>) v);
       } else if (v instanceof Aggregate) {
-        walk((Aggregate) v, recName);
+        walk((Aggregate) v);
       }
     }
 
-    protected void walk(Aggregate a, String recName) {
-      for (Object v : a.properties.values())
-        dispatch(v, recName);
+    protected void walk(Aggregate a) {
+      for (Object v : a.properties.values()) dispatch(v);
     }
 
-    protected void walk(AttributeList<?> l, String recName) {
-      for (Object v : l)
-        dispatch(v, recName);
+    protected void walk(AttributeList<?> l) {
+      for (Object v : l) dispatch(v);
     }
   }
 
@@ -447,8 +484,7 @@ public class DartTarget extends Target {
   @Override
   protected void genRecognizerFile(Tool tool, CodeGenerator generator, Grammar grammar,
       ST outputFileST) throws IOException {
-    List<String> getters = new ArrayList<String>();
-    
+    List<String> getters = new ArrayList<String>();   
     String recName = grammar.name + Grammar.grammarTypeToFileNameSuffix[grammar.type];
     
     for (DFA dfa : getDfas(outputFileST)) {
@@ -459,6 +495,8 @@ public class DartTarget extends Target {
     if (!getters.isEmpty()) {
       outputFileST.add("evalPredicates", getters);
     }
+    
+    RuleExceptionRewriter.apply(outputFileST);    
     this.adjustHeader(outputFileST, grammar);
     super.genRecognizerFile(tool, generator, grammar, outputFileST);
   }
