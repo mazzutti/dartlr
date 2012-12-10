@@ -428,7 +428,7 @@ rule(ruleName,ruleDescriptor,block,emptyRule,description,exceptions,finally,memo
     <(ruleDescriptor.actions.after):execAction()>
   }
 <if(exceptions)>
-  <exceptions:{e|<catch(decl=e.decl,action=e.action)><\n>}>
+  <exceptions:{e|<catch(e)><\n>}>
 <else>
 <if(!emptyRule)>
 <if(actions.(actionScope).rulecatch)>
@@ -455,10 +455,16 @@ rule(ruleName,ruleDescriptor,block,emptyRule,description,exceptions,finally,memo
 // $ANTLR end "<ruleName>"
 >>
 
-catch(decl,action) ::= <<
-catch (<e.decl>) {
+catch(e) ::= <<
+<if(e.exceptionType)>
+on <e.exceptionType> catch(<e.exceptionVar>) {
   <e.action>
 }
+<else>
+catch(<e.exceptionVar>) {
+  <e.action>
+}
+<endif>
 >>
 
 ruleDeclarations() ::= <<
