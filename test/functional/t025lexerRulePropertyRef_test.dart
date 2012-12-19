@@ -18,7 +18,7 @@ main() {
 
     while (true) {
       token = lexer.nextToken();
-      if (token.type === Token.EOF)
+      if (token.type == Token.EOF)
         break;
     }
 

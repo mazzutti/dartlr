@@ -79,11 +79,11 @@ $> ln -s /path/to/dartlr/antlr-codegen/DartTarget.java tool/src/main/java/org/an
 $> mvn -Dmaven.test.skip=true -Dgpg.skip=true package assembly:assembly 
 ```    
 
-This should create the file tool/target/antlr-master-{version}-SNAPSHOT-completejar.jar which includes support for
+This should create the file `tool/target/antlr-master-{version}-SNAPSHOT-completejar.jar` which includes support for
 Dart code generation.
 
 ## Test it
-  * Create a trivial grammar in the file trivial.g
+  * Create a trivial grammar in the file `trivial.g`
 
   ```antlr
   lexer grammar trivial;
@@ -100,7 +100,7 @@ Make sure that the antlr jar you've built in the previous steps is on the classp
 ```bash
 $> java org.antlr.Tool trivial.g
 ```
-This should create the files trivial.dart and trivial.tokens.
+This should create the files `trivial.dart` and `trivial.tokens`.
 
 # USAGE
 
@@ -163,10 +163,17 @@ This should create the files trivial.dart and trivial.tokens.
 	 
 3. Make sure your `pubspec.yaml` includes a dependency to `dartlr`
 
+   `dartlr` is hosted on pub.dartlang.org, the most simple dependency statement is therefore
+   ```yaml
+   dependencies:
+   	 dartlr: any
+   ```
+   
+   Alternatively, you can add a dependency to dartlr's GitHub repository: 
    ```yaml
    dependencies:
    	 dartlr:
-   	   git: git@github.com:tiagomazzutti/dartlr.git 	 
+   	   git: git@github.com:tiagomazzutti/dartlr.git 
    ```	 
 
 4. Try out the results directly:
