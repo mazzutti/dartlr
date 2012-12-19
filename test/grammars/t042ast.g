@@ -154,8 +154,8 @@ r30
 
 r31
     : modifier type ID ('=' expression)? ';'
-        -> {this.flag === 0}? ^(VARDEF ID modifier* type expression?)
-        -> {this.flag === 1}? ^(VARIABLE ID modifier* type expression?)
+        -> {this.flag == 0}? ^(VARDEF ID modifier* type expression?)
+        -> {this.flag == 1}? ^(VARIABLE ID modifier* type expression?)
         ->                   ^(FIELD ID modifier* type expression?)
     ;
 

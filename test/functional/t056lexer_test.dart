@@ -153,7 +153,7 @@ main() {
     Token token;
     do {
       token = lexer.nextToken();
-    } while (token.type !== t056lexer12.EOF);
+    } while (token.type != t056lexer12.EOF);
     expect(lexer.output, equals("ababab"));
   });
   
@@ -163,7 +163,7 @@ main() {
     Token token;
     do {
       token = lexer.nextToken();
-    } while (token.type !== t056lexer13.EOF);
+    } while (token.type != t056lexer13.EOF);
     expect(lexer.output, equals("aa"));
   });
   
@@ -173,7 +173,7 @@ main() {
     Token token;
     do {
       token = lexer.nextToken();
-    } while (token.type !== t056lexer14.EOF);
+    } while (token.type != t056lexer14.EOF);
     expect(lexer.output, equals(r'\"'));
   });
 }

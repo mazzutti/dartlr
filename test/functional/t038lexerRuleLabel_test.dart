@@ -19,7 +19,7 @@ main() {
     Token token;
     while (true) {
       token = lexer.nextToken();
-      if (token.type === Token.EOF)
+      if (token.type == Token.EOF)
           break;
     } 
     expect(lexer.reportedErrors.length, equals(expected));
