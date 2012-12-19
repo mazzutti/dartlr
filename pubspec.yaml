@@ -1,5 +1,5 @@
 name: dartlr
-version: 0.0.2
+version: 0.0.3
 description: >
   Dart code generation for the parser generator antlr.
   Generates Dart code compatible with the M1 release.
