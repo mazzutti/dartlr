@@ -43,24 +43,24 @@ repository yet.
 ## Get antlr3 and build it 
   * Clone it from github
 
-  ```bash
-  $> git clone git://github.com/antlr/antlr3.git
-  ```
+```bash
+$> git clone git://github.com/antlr/antlr3.git
+```
 
   * Prepare build environment 
 
   Build relies on maven. If not installed yet, you have to install it first. On Ubuntu do
-  ```bash
-  $> sudo apt-get install maven
-  ```
+```bash
+$> sudo apt-get install maven
+```
 
   * Build antlr
 
-  ```bash
-  $> cd antlr 
-  $> mvn -N install
-  $> mvn -Dmaven.test.skip=true -Dgpg.skip=true package assembly:assembly
-  ```
+```bash
+$> cd antlr3 
+$> mvn -N install
+$> mvn -Dmaven.test.skip=true -Dgpg.skip=true package assembly:assembly
+```
   If the third step fails, run it again. 
 
 ## Create symbolic links to the files supplied by dartlr
@@ -85,14 +85,14 @@ Dart code generation.
 ## Test it
   * Create a trivial grammar in the file `trivial.g`
 
-  ```antlr
-  lexer grammar trivial;
-  options {
-    language = Dart;
-  }
-  ZERO: '0';
-  ```
-  
+```antlr
+lexer grammar trivial;
+options {
+  language = Dart;
+}
+ZERO: '0';
+```
+
   * Run antlr
 
 Make sure that the antlr jar you've built in the previous steps is on the classpath.
@@ -106,94 +106,94 @@ This should create the files `trivial.dart` and `trivial.tokens`.
 
 1. Write an ANTLR grammar specification for a language
 
-   ```antlr
-   grammar SomeLanguage;
-   
-   options {
-     language = Dart;    // <- this option must be set to Dart
-     output   = AST;
-   }
-   
-   top: expr ( ',' expr )*
-     ;
-    
-   // and so on...
-   ```
+```antlr
+grammar SomeLanguage;
+
+options {
+  language = Dart;    // <- this option must be set to Dart
+  output   = AST;
+}
+
+top: expr ( ',' expr )*
+   ;
+
+// and so on...
+```
 
 2. Run the ANTLR tool with the `java -jar path/to/antlr3.jar` command to 
    generate output:
-   
-   ```bash
-   $> java -jar path/to/antlr-3.5.1-with-dart.jar [OPTIONS] lang.g
-   # creates:
-   #   langParser.dart
-   #   langLexer.dart
-   #   lang.tokens
-   ```
-   
+
+```bash
+$> java -jar path/to/antlr-3.5.1-with-dart.jar [OPTIONS] lang.g
+# creates:
+#   langParser.dart
+#   langLexer.dart
+#   lang.tokens
+```
+
    alternatively, you can do:
-   
-   ```bash 
-   $> export CLASSPATH=path/to/antlr-3.5.1-with-dart.jar:$CLASSPATH
-   
-   $> java org.antlr.Tool [OPTIONS] $grammar
-   ```
+
+```bash 
+$> export CLASSPATH=path/to/antlr-3.5.1-with-dart.jar:$CLASSPATH
+
+$> java org.antlr.Tool [OPTIONS] $grammar
+```
 
    NOTES: Probably you will need to edit the `@header{}` section in your grammar. 
    
    Use 
-   ```antlr
-   @header {
-   library your_library_name;
-   import "package:dartlr/dartlr.dart";
-   }
-   ``` 
+```antlr
+@header {
+  library your_library_name;
+  import "package:dartlr/dartlr.dart";
+}
+```
    if the parser and lexer should be generated in a dedicated Dart library. 
-   
+
    Use 
-   ```antlr
-   @header {
-   part of your_library_name;
-   // no import statement here, add it to the parent library file 
-   }
-   ```
+```antlr
+@header {
+  part of your_library_name;
+  // no import statement here, add it to the parent library file 
+}
+```
    if the  parser and lexer should be generated as part of another library.
-    	
+
    More samples can be found in the test folder.
-	 
+
 3. Make sure your `pubspec.yaml` includes a dependency to `dartlr`
 
    `dartlr` is hosted on pub.dartlang.org, the most simple dependency statement is therefore
-   ```yaml
-   dependencies:
-   	 dartlr: any
-   ```
+```yaml
+dependencies:
+  dartlr: any
+```
    
    Alternatively, you can add a dependency to dartlr's GitHub repository: 
-   ```yaml
-   dependencies:
-   	 dartlr:
-   	   git: git@github.com:tiagomazzutti/dartlr.git 
-   ```	 
+```yaml
+dependencies:
+  dartlr: 
+    git: git@github.com:tiagomazzutti/dartlr.git 
+```
 
 4. Try out the results directly:
 
- ```dart
- import "package:dartlr/dartlr.dart";
- import "SomeLanguageLexer.dart";
- import "SomeLanguageParser.dart";
+```dart
+import "package:dartlr/dartlr.dart";
+import "SomeLanguageLexer.dart";
+import "SomeLanguageParser.dart";
 
-  main() {
-  
-    var lexer = new SomeLanguageLexer(charStream);
-    var tokens = new CommonTokenStream(lexer);
-    var parser = new SomeLanguageParser(tokens);
-  
-    var result = parser.<entry_rule>();    
-    // ...
-  
-  }
-  ```
+main() {
+
+  var lexer = new SomeLanguageLexer(charStream);
+  var tokens = new CommonTokenStream(lexer);
+  var parser = new SomeLanguageParser(tokens);
+
+  var result = parser.<entry_rule>();    
+  // ...
+
+}
+```
 
 # REPORTING BUGS
 

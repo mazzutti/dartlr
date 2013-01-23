@@ -292,17 +292,23 @@ class _StreamIterator implements Iterator {
   int i = 0;
   List _nodes;
   var _eof;
+  var current;
   
   _StreamIterator(this._nodes, this._eof);
   
   bool get hasNext => i < _nodes.length;
 
-  next() {
-    int current = i;
-    i++;
-    if (current < _nodes.length)
-      return _nodes[current];
-    return _eof;
+  bool moveNext() {
+    if(i <= _nodes.length - 1) {
+      int _current = i;
+      i++;
+      if (_current < _nodes.length) {
+        current = _nodes[_current];
+        return true;
+      }
+    } 
+    current = _eof;
+    return false;
   }
 
   remove() {

@@ -1,3 +1,5 @@
+
+
 /*
  [The "BSD license"]
  Copyright (c) 2005-2006 Terence Parr
@@ -32,16 +34,16 @@
  */
 
 parserMembers() ::= <<
-	DebugTreeAdaptor _debugAdaptor;
-	void set treeDebugAdaptor(TreeAdaptor adaptor) {
-	<if(grammar.grammarIsRoot)>
-	  _debugAdaptor = new DebugTreeAdaptor(debugListener,adaptor);
-	<else>
-	  _debugAdaptor = adaptor; // delegator sends dbg adaptor
-	<endif><\n>
-	  <grammar.directDelegates:{g|<g:delegateName()>.treeDebugAdaptor = _debugAdaptor;}>
-	}
-	TreeAdaptor get treeDebugAdaptor => _debugAdaptor;<\n>
+  DebugTreeAdaptor _debugAdaptor;
+  void set treeDebugAdaptor( TreeAdaptor adaptor ) {
+<if(grammar.grammarIsRoot)>
+    _debugAdaptor = new DebugTreeAdaptor( debugListener, adaptor );
+<else>
+    _debugAdaptor = adaptor; // delegator sends dbg adaptor
+<endif><\n>
+    <grammar.directDelegates:{g|<g:delegateName()>.treeDebugAdaptor = _debugAdaptor;}>
+  }
+  TreeAdaptor get treeDebugAdaptor => _debugAdaptor;<\n>
 >>
 
 parserCtorBody() ::= <<
@@ -49,10 +51,8 @@ parserCtorBody() ::= <<
 >>
 
 createListenerAndHandshake() ::= <<
-debugListener = 
-    new DebugEventSocketProxy(this,<if(TREE_PARSER)>input.treeAdaptor<else>_adaptor<endif>, port, callback);
-input = new Debug<inputStreamType>(input,debugListener);
-
+debugListener = new DebugEventSocketProxy( this, <if(TREE_PARSER)>input.treeAdaptor<else>_adaptor<endif>, port, callback );
+input = new Debug<inputStreamType>( input, debugListener );
 >>
 
 @ctorForRootGrammar.finally() ::= <<
@@ -63,7 +63,7 @@ _adaptor = new CommonTreeAdaptor();
 _adaptor = new CommonTreeAdaptor();
 >>
 
-@ctorForPredefinedListener.superClassRef() ::= ":super(input, dbg)"
+@ctorForPredefinedListener.superClassRef() ::= ": super( input, dbg )"
 
 @ctorForPredefinedListener.finally() ::=<<
 <if(grammar.grammarIsRoot)> <! don't create new adaptor for delegates !>
@@ -71,5 +71,5 @@ _adaptor = new CommonTreeAdaptor();
 <endif>
 >>
 
-@rewriteElement.pregen() ::= "debugListener.location(<e.line>,<e.pos>);"
+@rewriteElement.pregen() ::= "debugListener.location( <e.line>, <e.pos> );"
 

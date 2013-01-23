@@ -16,6 +16,7 @@ class TreeIterator implements Iterator {
   var _tree;
   bool _firstTime = true;
   
+  
   /** If we emit UP/DOWN nodes, we need to spit out multiple nodes per
    *  next() call.
    */
@@ -24,6 +25,7 @@ class TreeIterator implements Iterator {
   var up;
   var down;
   var eof;
+  var current;
  
   TreeIterator(this._tree, [this._adaptor]) {
     if(_adaptor == null)  
@@ -49,21 +51,28 @@ class TreeIterator implements Iterator {
     return _adaptor.getParent(_tree) != null;
   }
 
-  next() {
+  bool moveNext() {
     if (_firstTime) {
       _firstTime = false;
       if (_adaptor.getChildCount(_tree) == 0) { 
         _nodes.add(eof);
-        return _tree;
       }
-      return _tree;
+      current = _tree;
+      return true;
     }
-    if (_nodes != null && _nodes.size > 0) return _nodes.remove();
-    if (_tree == null) return eof;
+    if (_nodes != null && _nodes.size > 0) {
+      current = _nodes.remove();
+      return true;
+    }
+    if (_tree == null) {
+      current = eof;
+      return false;
+    } 
     if (_adaptor.getChildCount(_tree) > 0) {
       _tree = _adaptor.getChild(_tree, 0);
       _nodes.add(_tree); 
-      return down;
+      current = down;
+      return true;
     }
     var parent = _adaptor.getParent(_tree);
     while (parent != null && _adaptor.getChildIndex
@@ -75,12 +84,14 @@ class TreeIterator implements Iterator {
     if (parent == null) {
       _tree = null;
       _nodes.add(eof);
-      return _nodes.remove();
+      current = _nodes.remove();
+      return false;
     }
     int nextSiblingIndex = _adaptor.getChildIndex(_tree) + 1;
     _tree = _adaptor.getChild(parent, nextSiblingIndex);
     _nodes.add(_tree);
-    return _nodes.remove();
+    current = _nodes.remove();
+    return true;
   }
 }
 

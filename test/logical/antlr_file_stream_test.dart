@@ -12,8 +12,7 @@ main() {
   });
       
   test("create with path", () {
-    var path = new Path.fromNative("test/test-data/trivial.g");
-    print(path);
+    var path = new Path.raw("test/test-data/trivial.g");
     var s = new ANTLRFileStream(path);
     expect(s.path.toString(), endsWith("test/test-data/trivial.g"));
   });

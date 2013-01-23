@@ -132,19 +132,21 @@ main() {
   ];
   
   test('testUnpackEncodedString', () {
-    Iterator<List<int>> it = expectedIntLists.iterator();
+    Iterator<List<int>> it = expectedIntLists.iterator;
     for(String encodedString in  encodedStrings) {
       List<int> unpackedList = DFA.unpackEncodedString(encodedString);
-      expect(unpackedList, equals(it.next()));
+      it.moveNext();
+      expect(unpackedList, equals(it.current));
     }
   });
   
   test("testUnpackEncodedStringToUnsignedChars", () {
-    Iterator<List<int>> it = expectedUnsignedIntLists.iterator();
+    Iterator<List<int>> it = expectedUnsignedIntLists.iterator;
     for(String encodedString in  encodedStrings) {
       List<int> unpackedList = 
           DFA.unpackEncodedStringToUnsignedChars(encodedString);
-      expect(unpackedList, equals(it.next()));
+      it.moveNext();
+      expect(unpackedList, equals(it.current));
     }
   });  
 }

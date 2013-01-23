@@ -50,19 +50,24 @@ class CommonTreeNodeStream extends LookaheadStream<Object> implements TreeNodeSt
   *  If nil rooted tree, don't give initial nil and DOWN nor final UP.
   */
   nextElement() {
-    var t = _it.next();   
+    _it.moveNext();
+    var t = _it.current;   
     if (t == _it.up) {
       _level--;
-      if (_level == 0 && _hasNilRoot) 
-        return _it.next(); 
+      if (_level == 0 && _hasNilRoot) {
+        _it.moveNext();
+        return _it.current; 
+      }
     }
     else if (t == _it.down) 
       _level++;
     if (_level == 0 && treeAdaptor.isNil(t)) { 
       _hasNilRoot = true;
-      t = _it.next();
+      _it.moveNext();
+      t = _it.current;
       _level++;
-      t = _it.next();
+      _it.moveNext();
+      t = _it.current;
     }
     return t;
   }

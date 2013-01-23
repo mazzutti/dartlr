@@ -48,9 +48,9 @@ retval.tree = _adaptor.errorNode(input, retval.start, input.LT(-1), re);
 /** ID and output=AST */
 tokenRef(token,label,elementIndex,terminalOptions) ::= <<
 <super.tokenRef(...)>
-<if(backtracking)>if(<actions.(actionScope).synpredgate>) {<endif>
+<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
 <label>_tree = <createNodeFromToken(...)>;
-_adaptor.addChild(root_0, <label>_tree);
+_adaptor.addChild( root_0, <label>_tree );
 <if(backtracking)>}<endif>
 >>
 
@@ -60,9 +60,9 @@ tokenRefBang(token,label,elementIndex,terminalOptions) ::= "<super.tokenRef(...)
 /** ID^ and output=AST */
 tokenRefRuleRoot(token,label,elementIndex,terminalOptions) ::= <<
 <super.tokenRef(...)>
-<if(backtracking)>if(<actions.(actionScope).synpredgate>) {<endif>
+<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
 <label>_tree = <createNodeFromToken(...)>;
-root_0 = _adaptor.becomeRoot(<label>_tree, root_0);
+root_0 = _adaptor.becomeRoot( <label>_tree, root_0 );
 <if(backtracking)>}<endif>
 >>
 
@@ -97,9 +97,9 @@ tokenRefRuleRootAndListLabel(token,label,terminalOptions,elementIndex) ::= <<
 // rather than just added on code.  Investigate that refactoring when
 // I have more time.
 
-matchSet(s,label,terminalOptions,elementIndex,postmatchCode) ::= <%
-<super.matchSet(postmatchCode={<if(backtracking)>if(<actions.(actionScope).synpredgate>)<\n>  <endif>_adaptor.addChild(root_0, <createNodeFromToken(...)>);}, ...)>
-%>
+matchSet(s,label,terminalOptions,elementIndex,postmatchCode) ::= <<
+<super.matchSet(postmatchCode={<if(backtracking)>if ( <actions.(actionScope).synpredgate> )<\n>  <endif>_adaptor.addChild( root_0, <createNodeFromToken(...)> );}, ...)>
+>>
 
 matchRuleBlockSet(s,label,terminalOptions,elementIndex,postmatchCode,treeLevel="0") ::= <<
 <matchSet(...)>
@@ -112,9 +112,9 @@ matchSetBang(s,label,elementIndex,terminalOptions,postmatchCode) ::= "<super.mat
 
 matchSetRuleRoot(s,label,terminalOptions,elementIndex,debug) ::= <<
 <if(label)>
-<label>=input.LT(1);<\n>
+<label>=input.LT( 1 );<\n>
 <endif>
-<super.matchSet(postmatchCode={<if(backtracking)>if(<actions.(actionScope).synpredgate>)<\n>  <endif>root_0 = _adaptor.becomeRoot(<createNodeFromToken(...)>, root_0);},...)>
+<super.matchSet(postmatchCode={<if(backtracking)>if ( <actions.(actionScope).synpredgate> )<\n>  <endif>root_0 = _adaptor.becomeRoot( <createNodeFromToken(...)>, root_0 );},...)>
 >>
 
 // RULE REF AST
@@ -122,7 +122,7 @@ matchSetRuleRoot(s,label,terminalOptions,elementIndex,debug) ::= <<
 /** rule when output=AST */
 ruleRef(rule,label,elementIndex,args,scope) ::= <<
 <super.ruleRef(...)>
-<if(backtracking)>if(<actions.(actionScope).synpredgate>)<\n>  <endif>_adaptor.addChild(root_0, <label>.tree);
+<if(backtracking)>if ( <actions.(actionScope).synpredgate> )<\n>  <endif>_adaptor.addChild( root_0, <label>.tree );
 >>
 
 /** rule! is same as normal rule ref */
@@ -131,7 +131,7 @@ ruleRefBang(rule,label,elementIndex,args,scope) ::= "<super.ruleRef(...)>"
 /** rule^ */
 ruleRefRuleRoot(rule,label,elementIndex,args,scope) ::= <<
 <super.ruleRef(...)>
-<if(backtracking)>if(<actions.(actionScope).synpredgate>)<\n>  <endif>root_0 = _adaptor.becomeRoot(<label>.tree, root_0);
+<if(backtracking)>if ( <actions.(actionScope).synpredgate> )<\n>  <endif>root_0 = _adaptor.becomeRoot( <label>.tree, root_0 );
 >>
 
 /** x+=rule when output=AST */
@@ -156,9 +156,9 @@ ruleRefRuleRootAndListLabel(rule,label,elementIndex,args,scope) ::= <<
 
 wildcard(token,label,elementIndex,terminalOptions) ::= <<
 <super.wildcard(...)>
-<if(backtracking)>if(<actions.(actionScope).synpredgate>) {<endif>
-  <label>_tree = _adaptor.createTreeNode(<label>);
-  _adaptor.addChild(root_0, <label>_tree);
+<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
+  <label>_tree = _adaptor.createTreeNode( <label> );
+  _adaptor.addChild( root_0, <label>_tree );
 <if(backtracking)>}<endif>
 >>
 
@@ -166,25 +166,21 @@ wildcardBang(label,elementIndex) ::= "<super.wildcard(...)>"
 
 wildcardRuleRoot(token,label,elementIndex,terminalOptions) ::= <<
 <super.wildcard(...)>
-<if(backtracking)>if(<actions.(actionScope).synpredgate>) {<endif>
-  <label>_tree = _adaptor.createTreeNode(<label>);
-  root_0 = _adaptor.becomeRoot(<label>_tree, root_0);
+<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
+  <label>_tree = _adaptor.createTreeNode( <label> );
+  root_0 = _adaptor.becomeRoot( <label>_tree, root_0 );
 <if(backtracking)>}<endif>
 >>
 
-createNodeFromToken(label,terminalOptions) ::= <%
-<if(terminalOptions.node)>
-new <terminalOptions.node>(<label>) <! new MethodNode(IDLabel) !>
-<else>
-_adaptor.createTreeNode(<label>)
-<endif>
-%>
+createNodeFromToken(label,terminalOptions) ::= <<
+<if(terminalOptions.node)>new <terminalOptions.node>( <label> ) <! new MethodNode(IDLabel) !><else>_adaptor.createTreeNode( <label> )<endif>
+>>
 
 ruleCleanUp() ::= <<
 <super.ruleCleanUp()>
-<if(backtracking)>if(<actions.(actionScope).synpredgate>) {<\n><endif>
-  retval.tree = _adaptor.rulePostProcessing(root_0);
-  _adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<\n><endif>
+  retval.tree = _adaptor.rulePostProcessing( root_0 );
+  _adaptor.setTokenBoundaries( retval.tree, retval.start, retval.stop );
 <if(backtracking)>}<endif>
 >>
 

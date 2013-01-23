@@ -50,12 +50,12 @@ ruleDeclarations() ::= <<
  *  mode, does nothing.
  */
 noRewrite(rewriteBlockLevel, treeLevel) ::= <<
-<if(backtracking)>if(<actions.(actionScope).synpredgate>) {<\n>  <endif>
+<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<\n><endif>
 <if(rewriteMode)>
   retval.tree = _first_0;
-    if(_adaptor.getParent(retval.tree) != null && 
-      _adaptor.isNil(_adaptor.getParent(retval.tree)))
-  retval.tree = _adaptor.getParent(retval.tree);
+  if ( _adaptor.getParent( retval.tree ) != null && _adaptor.isNil( _adaptor.getParent( retval.tree ) ) ) {
+    retval.tree = _adaptor.getParent( retval.tree );
+  }
 <endif>
 <if(backtracking)>}<endif>
 >>
@@ -63,47 +63,42 @@ noRewrite(rewriteBlockLevel, treeLevel) ::= <<
 /** match ^(root children) in tree parser; override here to
  *  add tree construction actions.
  */
-tree(root, actionsAfterRoot, children, nullableChildList,
-     enclosingTreeLevel, treeLevel) ::= <<
-_last = input.LT(1);
-{
+tree(root, actionsAfterRoot, children, nullableChildList, enclosingTreeLevel, treeLevel) ::= <<
+_last = input.LT( 1 );
 <ASTLabelType> _save_last_<treeLevel> = _last;
 <ASTLabelType> _first_<treeLevel> = null;
-<if(!rewriteMode)>
-<ASTLabelType> root_<treeLevel> = _adaptor.nil();
-<endif>
+<if(!rewriteMode)><ASTLabelType> root_<treeLevel> = _adaptor.nil();<endif>
 <root:element()>
 <if(rewriteMode)>
-<if(backtracking)>if(<actions.(actionScope).synpredgate>)<endif>
+<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
 <if(root.el.rule)>
-  if(_first_<enclosingTreeLevel> == null) 
+  if ( _first_<enclosingTreeLevel> == null ) {
     _first_<enclosingTreeLevel> = <root.el.label>.tree;
+  }
 <else>
-  if(_first_<enclosingTreeLevel> == null) 
+  if ( _first_<enclosingTreeLevel> == null ) {
     _first_<enclosingTreeLevel> = <root.el.label>;
-<endif>
-<endif>
+  }
+<endif><endif>
 <actionsAfterRoot:element()>
 <if(nullableChildList)>
-	if(input.LA(1) == Token.DOWN) {
-	  matchSymbol(input, Token.DOWN, null); 
-	  <checkRuleBacktrackFailure()>
-	  <children:element()>
-	  matchSymbol(input, Token.UP, null); 
-	  <checkRuleBacktrackFailure()>
-	}
+  if ( input.LA( 1 ) == Token.DOWN ) {
+    matchSymbol( input, Token.DOWN, null ); 
+    <checkRuleBacktrackFailure()>
+    <children:element()>
+    matchSymbol( input, Token.UP, null ); 
+    <checkRuleBacktrackFailure()>
+  }
 <else>
-	matchSymbol(input, Token.DOWN, null); 
-	<checkRuleBacktrackFailure()>
-	<children:element()>
-	matchSymbol(input, Token.UP, null); 
-	<checkRuleBacktrackFailure()>
+  matchSymbol( input, Token.DOWN, null ); 
+  <checkRuleBacktrackFailure()>
+  <children:element()>
+  matchSymbol( input, Token.UP, null ); 
+  <checkRuleBacktrackFailure()>
 <endif>
-<if(!rewriteMode)>
-  _adaptor.addChild(root_<enclosingTreeLevel>, root_<treeLevel>);
-<endif>
+<if(!rewriteMode)>  _adaptor.addChild( root_<enclosingTreeLevel>, root_<treeLevel> );<endif>
   _last = _save_last_<treeLevel>;
-}<\n>
+<if(backtracking)>}<endif><\n>
 >>
 
 // TOKEN AST STUFF
@@ -112,28 +107,29 @@ _last = input.LT(1);
  *  setting of _last
  */
 tokenRefBang(token,label,elementIndex,terminalOptions) ::= <<
-_last = input.LT(1);
+_last = input.LT( 1 );
 <super.tokenRef(...)>
 >>
 
 /** ID auto construct */
 tokenRef(token,label,elementIndex,terminalOptions) ::= <<
-_last = input.LT(1);
+_last = input.LT( 1 );
 <super.tokenRef(...)>
 <if(!rewriteMode)>
-<if(backtracking)>if(<actions.(actionScope).synpredgate>) {<endif>
+<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
 <if(terminalOptions.node)>
-  <label>_tree = new <terminalOptions.node>(<label>);
+  <label>_tree = new <terminalOptions.node>( <label> );
 <else>
-  <label>_tree = _adaptor.dupNode(<label>);
+  <label>_tree = _adaptor.dupNode( <label> );
 <endif><\n>
-  _adaptor.addChild(root_<treeLevel>, <label>_tree);
+  _adaptor.addChild( root_<treeLevel>, <label>_tree );
 <if(backtracking)>}<endif>
 <else> <! rewrite mode !>
-<if(backtracking)>if(<actions.(actionScope).synpredgate>)<endif>
-  if(_first_<treeLevel> == null) 
+<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
+  if ( _first_<treeLevel> == null ) {
     _first_<treeLevel> = <label>;
-<endif>
+  }
+<if(backtracking)>}<endif><endif>
 >>
 
 /** label+=TOKEN auto construct */
@@ -144,18 +140,17 @@ tokenRefAndListLabel(token,label,elementIndex,terminalOptions) ::= <<
 
 /** ^(ID ...) auto construct */
 tokenRefRuleRoot(token,label,elementIndex,terminalOptions) ::= <<
-_last = input.LT(1);
+_last = input.LT( 1 );
 <super.tokenRef(...)>
 <if(!rewriteMode)>
-<if(backtracking)>if(<actions.(actionScope).synpredgate>) {<endif>
+<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
 <if(terminalOptions.node)>
-  <label>_tree = new <terminalOptions.node>(<label>);
+  <label>_tree = new <terminalOptions.node>( <label> );
 <else>
-  <label>_tree = _adaptor.dupNode(<label>);
+  <label>_tree = _adaptor.dupNode( <label> );
 <endif><\n>
-  root_<treeLevel> = _adaptor.becomeRoot(<label>_tree, root_<treeLevel>);
-<if(backtracking)>}<endif>
-<endif>
+  root_<treeLevel> = _adaptor.becomeRoot( <label>_tree, root_<treeLevel> );
+<if(backtracking)>}<endif><endif>
 >>
 
 /** Match ^(label+=TOKEN ...) auto construct */
@@ -169,34 +164,34 @@ wildcard(token,label,elementIndex,terminalOptions) ::= <<
 _last = input.LT(1);
 <super.wildcard(...)>
 <if(!rewriteMode)>
-<if(backtracking)>if(<actions.(actionScope).synpredgate>) {<endif>
-  <label>_tree = _adaptor.dupTree(<label>);
-  _adaptor.addChild(root_<treeLevel>, <label>_tree);
+<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
+  <label>_tree = _adaptor.dupTree( <label> );
+  _adaptor.addChild( root_<treeLevel>, <label>_tree );
 <if(backtracking)>}<endif>
 <else> <! rewrite mode !>
-<if(backtracking)>if(<actions.(actionScope).synpredgate>)<endif>
-  if(_first_<treeLevel> == null) 
+<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
+  if ( _first_<treeLevel> == null ) {
     _first_<treeLevel> = <label>;
-<endif>
+  }
+<if(backtracking)>}<endif><endif>
 >>
 
 // SET AST
 
 matchSet(s,label,terminalOptions,elementIndex,postmatchCode) ::= <<
-_last = input.LT(1);
+_last = input.LT( 1 );
 <super.matchSet(postmatchCode={
 <if(!rewriteMode)>
-<if(backtracking)>if(<actions.(actionScope).synpredgate>) {<endif>
+<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
 <if(terminalOptions.node)>
-  <label>_tree = new <terminalOptions.node>(<label>);
+  <label>_tree = new <terminalOptions.node>( <label> );
 <else>
-  <label>_tree = _adaptor.dupNode(<label>);
+  <label>_tree = _adaptor.dupNode( <label> );
 <endif><\n>
-  _adaptor.addChild(root_<treeLevel>, <label>_tree);
+  _adaptor.addChild( root_<treeLevel>, <label>_tree );
 <if(backtracking)>\}<endif>
 <endif>
-}, ...
-)>
+},...)>
 >>
 
 matchRuleBlockSet(s,label,terminalOptions,elementIndex,postmatchCode,treeLevel="0") ::= <<
@@ -205,39 +200,36 @@ matchRuleBlockSet(s,label,terminalOptions,elementIndex,postmatchCode,treeLevel="
 >>
 
 matchSetBang(s,label,terminalOptions,elementIndex,postmatchCode) ::= <<
-_last = input.LT(1);
+_last = input.LT( 1 );
 <super.matchSet(...)>
 >>
 
 matchSetRuleRoot(s,label,terminalOptions,elementIndex,debug) ::= <<
 <super.matchSet(postmatchCode={
 <if(!rewriteMode)>
-<if(backtracking)>if(<actions.(actionScope).synpredgate>) {<endif>
+<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
 <if(terminalOptions.node)>
-  <label>_tree = new <terminalOptions.node>(<label>);
+  <label>_tree = new <terminalOptions.node>( <label> );
 <else>
-  <label>_tree = _adaptor.dupNode(<label>);
+  <label>_tree = _adaptor.dupNode( <label> );
 <endif><\n>
-  root_<treeLevel> = _adaptor.becomeRoot(<label>_tree, root_<treeLevel>);
+  root_<treeLevel> = _adaptor.becomeRoot( <label>_tree, root_<treeLevel> );
 <if(backtracking)>\}<endif>
 <endif>
-}, ...
-)>
+}, ...)>
 >>
 
 // RULE REF AST
 
 /** rule auto construct */
 ruleRef(rule,label,elementIndex,args,scope) ::= <<
-_last = input.LT(1);
+_last = input.LT( 1 );
 <super.ruleRef(...)>
-<if(backtracking)>if(<actions.(actionScope).synpredgate>) <endif>
-<if(!rewriteMode)>
-  _adaptor.addChild(root_<treeLevel>, <label>.tree);
-<else> <! rewrite mode !>
-  if(_first_<treeLevel> == null) 
+<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<endif>
+<if(!rewriteMode)>  _adaptor.addChild( root_<treeLevel>, <label>.tree );<else> <! rewrite mode !>  if ( _first_<treeLevel> == null ) {
     _first_<treeLevel> = <label>.tree;
-<endif>
+  }
+<if(backtracking)>}<endif><endif>
 >>
 
 /** x+=rule auto construct */
@@ -248,11 +240,11 @@ ruleRefAndListLabel(rule,label,elementIndex,args,scope) ::= <<
 
 /** ^(rule ...) auto construct */
 ruleRefRuleRoot(rule,label,elementIndex,args,scope) ::= <<
-_last = input.LT(1);
+_last = input.LT( 1 );
 <super.ruleRef(...)>
-<if(!rewriteMode)>
-<if(backtracking)>if(<actions.(actionScope).synpredgate>)<\n>  <endif>root_<treeLevel> = _adaptor.becomeRoot(<label>.tree, root_<treeLevel>);
-<endif>
+<if(!rewriteMode)><if(backtracking)>if( <actions.(actionScope).synpredgate> ) {
+  <endif>root_<treeLevel> = _adaptor.becomeRoot( <label>.tree, root_<treeLevel> );
+<if(backtracking)>}<endif><endif>
 >>
 
 /** ^(x+=rule ...) auto construct */
@@ -263,44 +255,40 @@ ruleRefRuleRootAndListLabel(rule,label,elementIndex,args,scope) ::= <<
 
 /** rule when output=AST and tracking for rewrite */
 ruleRefTrack(rule,label,elementIndex,args,scope) ::= <<
-_last = input.LT(1);
+_last = input.LT( 1 );
 <super.ruleRefTrack(...)>
 >>
 
 /** x+=rule when output=AST and tracking for rewrite */
 ruleRefTrackAndListLabel(rule,label,elementIndex,args,scope) ::= <<
-_last = input.LT(1);
+_last = input.LT( 1 );
 <super.ruleRefTrackAndListLabel(...)>
 >>
 
 /** ^(rule ...) rewrite */
 ruleRefRuleRootTrack(rule,label,elementIndex,args,scope) ::= <<
-_last = input.LT(1);
+_last = input.LT( 1 );
 <super.ruleRefRootTrack(...)>
 >>
 
 /** ^(x+=rule ...) rewrite */
 ruleRefRuleRootTrackAndListLabel(rule,label,elementIndex,args,scope) ::= <<
-_last = input.LT(1);
+_last = input.LT( 1 );
 <super.ruleRefRuleRootTrackAndListLabel(...)>
 >>
 
 /** Streams for token refs are tree nodes now; override to
  *  change nextToken to nextNode.
  */
-createRewriteNodeFromElement(token,terminalOptions,scope) ::= <%
-<if(terminalOptions.node)>
-new <terminalOptions.node>(stream_<token>.nextNode())
-<else>
-stream_<token>.nextNode()
-<endif>
-%>
+createRewriteNodeFromElement(token,terminalOptions,scope) ::= <<
+<if(terminalOptions.node)>new <terminalOptions.node>( stream_<token>.nextNode() )<else>stream_<token>.nextNode()<endif>
+>>
 
 ruleCleanUp() ::= <<
 <super.ruleCleanUp()>
 <if(!rewriteMode)>
-<if(backtracking)>if(<actions.(actionScope).synpredgate>) {<\n>  <endif>
-  retval.tree = _adaptor.rulePostProcessing(root_0);
+<if(backtracking)>if ( <actions.(actionScope).synpredgate> ) {<\n>  <endif>
+  retval.tree = _adaptor.rulePostProcessing( root_0 );
 <if(backtracking)>}<endif>
 <endif>
 >>

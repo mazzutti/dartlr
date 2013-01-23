@@ -35,19 +35,19 @@
 
 @genericParser.members() ::= <<
 <if(grammar.grammarIsRoot)>
-	static const List\<String> ruleNames = const \<String>[
-	  "invalidRule", <grammar.allImportedRules:{rST | "<rST.name>"}; wrap="\n    ", separator=", ">
-	];<\n>
+  static const List\<String> ruleNames = const \<String>[
+    "invalidRule", <grammar.allImportedRules:{rST | "<rST.name>"}; wrap="\n    ", separator=", ">
+  ];<\n>
 <endif>
-	static const List\<bool> decisionCanBacktrack = const \<bool>[
-	  false,
-	  <grammar.decisions:{d | <d.dfa.hasSynPred; null="false">}; wrap="\n    ", separator=", ">
-	];<\n>
+  static const List\<bool> decisionCanBacktrack = const \<bool>[
+    false,
+    <grammar.decisions:{d | <d.dfa.hasSynPred; null="false">}; wrap="\n    ", separator=", ">
+  ];<\n>
 <if(grammar.grammarIsRoot)> <! grammar imports other grammar(s) !>
   int _ruleLevel = 0;
   int get ruleLevel => _ruleLevel;
   void incRuleLevel() { _ruleLevel++; }
-  void decRuleLevel() {_ruleLevel--;}<\n>
+  void decRuleLevel() { _ruleLevel--; }<\n>
 <if(profile)>
   <ctorForProfilingRootGrammar()>
 <else>
@@ -61,118 +61,115 @@
   <ctorForDelegateGrammar()>
 <endif>
 <if(profile)>
-bool alreadyParsedRule(IntStream input, int ruleIndex) {
-	int stopIndex = getRuleMemoization(ruleIndex, input.index());
-  debugListener.examineRuleMemoization(input, ruleIndex, 
-    stopIndex, <grammar.composite.rootGrammar.recognizerName>.ruleNames[ruleIndex]);
-  return super.alreadyParsedRule(input, ruleIndex);
+bool alreadyParsedRule( IntStream input, int ruleIndex ) {
+  int stopIndex = getRuleMemoization( ruleIndex, input.index() );
+  debugListener.examineRuleMemoization( input, ruleIndex, stopIndex, <grammar.composite.rootGrammar.recognizerName>.ruleNames[ruleIndex] );
+  return super.alreadyParsedRule( input, ruleIndex );
 }<\n>
-void memoize(IntStream input,int ruleIndex, int ruleStartIndex) {
-  debugListener.memoize(input, ruleIndex, ruleStartIndex, 
-    <grammar.composite.rootGrammar.recognizerName>.ruleNames[ruleIndex]);
-  super.memoize(input, ruleIndex, ruleStartIndex);
+void memoize( IntStream input,int ruleIndex, int ruleStartIndex ) {
+  debugListener.memoize( input, ruleIndex, ruleStartIndex, <grammar.composite.rootGrammar.recognizerName>.ruleNames[ruleIndex] );
+  super.memoize( input, ruleIndex, ruleStartIndex );
 }<\n>
 <endif>
-	bool _evalPredicate(bool result, String predicate) {
-	  debugListener.semanticPredicate(result, predicate);
-	  return result;
-	}<\n><\n>
+bool _evalPredicate( bool result, String predicate ) {
+  debugListener.semanticPredicate( result, predicate );
+  return result;
+}<\n><\n>
 >>
 
 ctorForRootGrammar() ::= <<
-<name>.async(<inputStreamType> input, 
-   {int port:DebugEventSocketProxy.DEFAULT_DEBUGGER_PORT, 
-       RecognizerSharedState state:null, Function callback:null}) 
-          :super.fromRecognizerSharedState(input, state) {
-  <grammar.directDelegates:{g|<g:delegateName()> = new <g.recognizerName>(input, dbg, state, <grammar.delegators:{g|, <g:delegateName()>}>);}; separator="\n">
+<name>.async( <inputStreamType> input, {int port:DebugEventSocketProxy.DEFAULT_DEBUGGER_PORT, RecognizerSharedState state:null, Function callback:null} ) 
+  :super.fromRecognizerSharedState( input, state ) {
+  <grammar.directDelegates:{g|<g:delegateName()> = new <g.recognizerName>( input, dbg, state, <grammar.delegators:{g|, <g:delegateName()>}> );}; separator="\n">
   <@finally()>
   <parserCtorBody()>
   <createListenerAndHandshake()>
   <if(cyclicDFAs)>dfas = new Map\<String, DFA\>();<endif>
   <cyclicDFAs:createDFA()>
-  (debugListener as DebugEventSocketProxy).handshake();
+  ( debugListener as DebugEventSocketProxy ).handshake();
 }<\n><\n>
 >>
 
 ctorForProfilingRootGrammar() ::= <<
-	<name>(<inputStreamType> input, [DebugEventListener dbg, RecognizerSharedState state]) : super(input, ((dbg == null)? new Profiler(null): dbg , state) {
-	  Profiler p = dbg;
-	  p.parser = this;
-	  <parserCtorBody()>
-	  <grammar.directDelegates:
-	   {g|<g:delegateName()> = new <g.recognizerName>(input, dbg, state, <grammar.delegators:{g|, <g:delegateName()>}>);}; separator="\n">
-	  <@finally()>
-	}
+<name>( <inputStreamType> input, [DebugEventListener dbg, RecognizerSharedState state] ) 
+  : super( input, ( ( dbg == null )? new Profiler( null ): dbg ) , state ) {
+  Profiler p = dbg;
+  p.parser = this;
+  <parserCtorBody()>
+  <grammar.directDelegates:{g|<g:delegateName()> = new <g.recognizerName>( input, dbg, state, <grammar.delegators:{g|, <g:delegateName()>}> );}; separator="\n">
+  <@finally()>
+}
 <\n>
 >>
 
 /** Basically we don't want to set any dbg listeners are root will have it. */
 ctorForDelegateGrammar() ::= <<
-	<name>(<inputStreamType> input, [DebugEventListener dbg, RecognizerSharedState state<grammar.delegators:{g|, <g.recognizerName> <g:delegateName()>}>]) 
-	  :super(input, dbg, state) {
-	  <parserCtorBody()>
-	  <grammar.directDelegates:
-	   {g|<g:delegateName()> = new <g.recognizerName>(input, this, state<grammar.delegators:{g|, <g:delegateName()>}>);}; separator="\n">
-	}<\n>
+<name>( <inputStreamType> input, [DebugEventListener dbg, RecognizerSharedState state<grammar.delegators:{g|, <g.recognizerName> <g:delegateName()>}>] ) 
+  : super( input, dbg, state ) {
+  <parserCtorBody()>
+  <grammar.directDelegates:{g|<g:delegateName()> = new <g.recognizerName>( input, this, state<grammar.delegators:{g|, <g:delegateName()>}> );}; separator="\n">
+}<\n>
 >>
 
 ctorForPredefinedListener() ::= <<
-	<name>(<inputStreamType> input, [DebugEventListener dbg]) 
-	    <@superClassRef>:super(input, dbg, new RecognizerSharedState())<@end> {
+<name>( <inputStreamType> input, [DebugEventListener dbg] ) 
+  <@superClassRef>: super( input, dbg, new RecognizerSharedState() )<@end> {
 <if(profile)>
-	  Profiler p = dbg;
-	  p.parser = this;
+  Profiler p = dbg;
+  p.parser = this;
 <endif>
-	  <parserCtorBody()>
-	  <grammar.directDelegates:{g|<g:delegateName()> = new <g.recognizerName>(input, dbg, state, <grammar.delegators:{g|, <g:delegateName()>}>);}; separator="\n">
-	  <@finally()>
-	  <if(cyclicDFAs)>dfas = new Map\<String, DFA\>();<endif>
-    <cyclicDFAs:createDFA()>
-  }<\n>
+  <parserCtorBody()>
+  <grammar.directDelegates:{g|<g:delegateName()> = new <g.recognizerName>( input, dbg, state, <grammar.delegators:{g|, <g:delegateName()>}> );}; separator="\n">
+  <@finally()>
+  <if(cyclicDFAs)>dfas = new Map\<String, DFA\>();<endif>
+  <cyclicDFAs:createDFA()>
+}<\n>
 >>
 
 createListenerAndHandshake() ::= <<
 <if(TREE_PARSER)>
-debugListener = 
-   new DebugEventSocketProxy(this, input.treeAdaptor, port, callback);
+debugListener = new DebugEventSocketProxy( this, input.treeAdaptor, port, callback );
 <else>
-debugListener = 
-   new DebugEventSocketProxy(this, null, port, callback);
+debugListener = new DebugEventSocketProxy( this, null, port, callback );
 <endif>
 >>
 
 @genericParser.superClassName() ::= "Debug<@super.superClassName()>"
 
 @rule.preamble() ::= <<
-try { debugListener.enterRule("<ruleName>", grammarFileName);
-if(ruleLevel == 0) {debugListener.commence();}
-incRuleLevel();
-debugListener.location(<ruleDescriptor.tree.line>, <ruleDescriptor.tree.charPositionInLine>);<\n>
+try { 
+  debugListener.enterRule( "<ruleName>", grammarFileName );
+  if ( ruleLevel == 0 ) {
+    debugListener.commence();
+  }
+  incRuleLevel();
+  debugListener.location( <ruleDescriptor.tree.line>, <ruleDescriptor.tree.charPositionInLine> );
 >>
 
 @rule.postamble() ::= <<
-debugListener.location(<ruleDescriptor.EORNode.line>, <ruleDescriptor.EORNode.charPositionInLine>);<\n>
-}
-finally {
-  debugListener.exitRule("<ruleName>", grammarFileName);
+  debugListener.location( <ruleDescriptor.EORNode.line>, <ruleDescriptor.EORNode.charPositionInLine> );
+} finally {
+  debugListener.exitRule( "<ruleName>", grammarFileName );
   decRuleLevel();
-  if(ruleLevel == 0) {debugListener.terminate();}
+  if(ruleLevel == 0) {
+    debugListener.terminate();
+  }
 }<\n>
 >>
 
-@synpred.start() ::= "debugListener.beginBacktrack(state.backtracking);"
+@synpred.start() ::= "debugListener.beginBacktrack( state.backtracking );"
 
-@synpred.stop() ::= "debugListener.endBacktrack(state.backtracking, success);"
+@synpred.stop() ::= "debugListener.endBacktrack( state.backtracking, success );"
 
 // Common debug event triggers used by region overrides below
 
-enterSubRule() ::= "try {debugListener.enterSubRule(<decisionNumber>);<\n>"
+enterSubRule() ::= "try {<\n>  debugListener.enterSubRule( <decisionNumber> );<\n>"
 
-exitSubRule() ::= "} finally {debugListener.exitSubRule(<decisionNumber>);}<\n>"
-enterDecision() ::= "try {debugListener.enterDecision(<decisionNumber>, decisionCanBacktrack[<decisionNumber>]);<\n>"
-exitDecision() ::= "} finally {<\n>  debugListener.exitDecision(<decisionNumber>);<\n>}"
+exitSubRule() ::= "} finally {<\n>  debugListener.exitSubRule( <decisionNumber> );<\n>}<\n>"
+enterDecision() ::= "try {<\n>  debugListener.enterDecision( <decisionNumber>, decisionCanBacktrack[<decisionNumber>] );<\n>"
+exitDecision() ::= "} finally {<\n>  debugListener.exitDecision( <decisionNumber> );<\n>}"
 
-enterAlt(n) ::= "debugListener.enterAlt(<n>);<\n>"
+enterAlt(n) ::= "debugListener.enterAlt( <n> );<\n>"
 
 // Region overrides that tell various constructs to add debugging triggers
 
@@ -198,7 +195,7 @@ enterAlt(n) ::= "debugListener.enterAlt(<n>);<\n>"
 
 @positiveClosureBlock.postdecision() ::= "<exitDecision()>"
 
-@positiveClosureBlock.earlyExitException() ::= "debugListener.recognitionException(eee);"
+@positiveClosureBlock.earlyExitException() ::= "debugListener.recognitionException( eee );"
 
 @closureBlock.preloop() ::= "<enterSubRule()>"
 
@@ -209,35 +206,32 @@ enterAlt(n) ::= "debugListener.enterAlt(<n>);<\n>"
 
 @altSwitchCase.prealt() ::= "<enterAlt(altNum)>" // altNum is arg of altSwitchCase
 
-@element.prematch() ::=
-    "debugListener.location(<e.line>,<e.pos>);" // e is arg of element
+@element.prematch() ::= "debugListener.location( <e.line>, <e.pos> );" // e is arg of element
 
-@matchSet.mismatchedSetException() ::=
-    "debugListener.recognitionException(mse);"
+@matchSet.mismatchedSetException() ::= "debugListener.recognitionException( mse );"
 
-@dfaState.noViableAltException() ::= "debugListener.recognitionException(nvae);"
+@dfaState.noViableAltException() ::= "debugListener.recognitionException( nvae );"
 
-@dfaStateSwitch.noViableAltException() ::= "debugListener.recognitionException(nvae);"
+@dfaStateSwitch.noViableAltException() ::= "debugListener.recognitionException( nvae );"
 
 dfaDecision(decisionNumber,description) ::= <<
 try {
   isCyclicDecision = true;
   <super.dfaDecision(...)>
-} on NoViableAltException catch(nvae) {
-  debugListener.recognitionException(nvae);
+} on NoViableAltException catch( nvae ) {
+  debugListener.recognitionException( nvae );
   throw nvae;
 }
 >>
 
 @dfaClass.errorMethod() ::= <<
-void error(NoViableAltException nvae) {
-  (recognizer as DebugParser)
-    .debugListener.recognitionException(nvae);
+void error( NoViableAltException nvae ) {
+  ( recognizer as DebugParser ).debugListener.recognitionException( nvae );
 }
 >>
 
 /** Force predicate validation to trigger an event */
 evalPredicate(pred,description) ::= <<
-_evalPredicate(<pred>,r"<description>")
+_evalPredicate( <pred>, r"<description>" )
 >>
 

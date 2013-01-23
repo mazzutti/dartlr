@@ -23,7 +23,7 @@ class ANTLRFileStream extends ANTLRStringStream {
   ANTLRFileStream(path, [Encoding encoding=Encoding.UTF_8]) : super(""){
     if (path == null) throw new ArgumentError("path must not be null");
     if (path is String) {
-      _path = new Path.fromNative(path);
+      _path = new Path.raw(path);
     } else if (path is Path){ 
       _path = path;
     } else {

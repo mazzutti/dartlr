@@ -179,9 +179,9 @@ class TokenRewriteStream extends CommonTokenStream {
         i = op.execute(buf);
     }    
     if (end == _tokens.length - 1) {
-      Iterator it = indexToOp.values.iterator();
-      while (it.hasNext) {
-        _RewriteOperation op = it.next();
+      Iterator it = indexToOp.values.iterator;
+      while (it.moveNext()) {
+        _RewriteOperation op = it.current;
         if (op.index >= _tokens.length - 1)          
           buf.add(op.text);
       }

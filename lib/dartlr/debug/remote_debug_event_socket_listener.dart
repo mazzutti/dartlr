@@ -283,11 +283,11 @@ class RemoteDebugEventSocketListener {
       }
       List<String> st = evt.split("\t");
       int i = 0;
-      Iterator iter = st.iterator();
-      while (iter.hasNext) {
+      Iterator iter = st.iterator;
+      while (iter.moveNext()) {
         if(i >= MAX_EVENT_ELEMENTS)
           return elements;
-        elements.add(iter.next());
+        elements.add(iter.current);
         i++;
       }
       if(str != null)

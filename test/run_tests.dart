@@ -5,6 +5,7 @@
 library dartlr_test_runner;
 
 import "dart:io";
+import "dart:async";
 import "package:unittest/unittest.dart";
 import "package:dartlr/dartlr.dart";
 import "package:logging/logging.dart";
@@ -65,7 +66,7 @@ import "functional/t053hetero_test.dart" as t053hetero;
 import "functional/t056lexer_test.dart" as t056lexer;
 import "functional/t057autoAST_test.dart" as t057autoAST;
 import "functional/t058rewriteAST_test.dart" as t058rewriteAST;
-import "functional/t059debug_test.dart" as t059debug;
+//import "functional/t059debug_test.dart" as t059debug;
 import "functional/t100parser_test.dart" as t100parser;
 import "functional/t101parser_test.dart" as t101parser;
 import "functional/t102parser_test.dart" as t102parser;
@@ -133,7 +134,7 @@ class TestRunner {
     t056lexer.main();
     t057autoAST.main();
     t058rewriteAST.main();
-    t059debug.main();
+//    t059debug.main();
     t100parser.main();
     t101parser.main();
     t102parser.main();
