@@ -87,7 +87,7 @@ options {k=1;}
 function_definition
 scope Symbols; // put parameters and locals into same scope for now
 @init {
-  $Symbols::types = new HashSet();
+  $Symbols::types = new Set();
 }
 	:	declaration_specifiers? declarator
 		(	declaration+ compound_statement	// K&R style
@@ -434,7 +434,7 @@ labeled_statement
 compound_statement
 scope Symbols; // blocks have a scope of symbols
 @init {
-  $Symbols::types = new HashSet();
+  $Symbols::types = new Set();
 }
 	: '{' declaration* statement_list? '}'
 	;
