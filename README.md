@@ -1,6 +1,6 @@
 **ANTLR 3 runtime for Dart**
-  <br>by Tiago Mazzutti (tiagomzt@gmail.com)  
-  [https://github.com/tiagomazzutti/dartlr](https://github.com/tiagomazzutti/dartlr)	
+  <p>by Tiago Mazzutti</p>
+  <p>[https://github.com/tiagomazzutti/dartlr](https://github.com/tiagomazzutti/dartlr)</p>	
 
 # DESCRIPTION
 
