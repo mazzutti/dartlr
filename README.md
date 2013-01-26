@@ -1,6 +1,6 @@
 **ANTLR 3 runtime for Dart**
 
-# DESCRIPTION
+## DESCRIPTION
 
 Fully-featured ANTLR 3 parser generation for Dart.
 
@@ -32,13 +32,13 @@ ANTLR provides for other language targets, such as Java and Python. It contains:
   and input translation.
 
 
-# HOW TO BUILD
+## HOW TO BUILD
 In order to use dartlr you have to create a custom antlr3 build. In contrast to
 other languages code generation for Dart isn't part of the standard antlr3 code
 repository yet.
 
 
-## Get antlr3 and build it 
+### Get antlr3 and build it 
   * Clone it from github
 
 ```bash
@@ -61,7 +61,7 @@ $> mvn -Dmaven.test.skip=true -Dgpg.skip=true package assembly:assembly
 ```
   If the third step fails, run it again. 
 
-## Create symbolic links to the files supplied by dartlr
+### Create symbolic links to the files supplied by dartlr
 
 ```bash
 $> cd antlr3
@@ -71,7 +71,7 @@ $> ln -s /path/to/dartlr/antlr-templates tool/target/classes/org/antlr/codegen/t
 $> ln -s /path/to/dartlr/antlr-codegen/DartTarget.java tool/src/main/java/org/antlr/codegen/DartTarget.java
 ```
 
-## Build again
+### Build again
 
 ```bash
 $> mvn -Dmaven.test.skip=true -Dgpg.skip=true package assembly:assembly 
@@ -80,7 +80,7 @@ $> mvn -Dmaven.test.skip=true -Dgpg.skip=true package assembly:assembly
 This should create the file `tool/target/antlr-master-{version}-SNAPSHOT-completejar.jar` which includes support for
 Dart code generation.
 
-## Test it
+### Test it
   * Create a trivial grammar in the file `trivial.g`
 
 ```antlr
@@ -100,7 +100,7 @@ $> java org.antlr.Tool trivial.g
 ```
 This should create the files `trivial.dart` and `trivial.tokens`.
 
-# USAGE
+## USAGE
 
 1. Write an ANTLR grammar specification for a language
 
@@ -193,12 +193,12 @@ main() {
 }
 ```
 
-# REPORTING BUGS
+## REPORTING BUGS
 
 Please submit bug reports to <br>
 [https://github.com/tiagomazzutti/dartlr/issues/new](https://github.com/tiagomazzutti/dartlr/issues/new) 
 
-# LICENSE
+## LICENSE
 
 This license applies to all parts of ANTLR Dart backend that are not 
 externally maintained libraries. 
