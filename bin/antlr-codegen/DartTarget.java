@@ -352,9 +352,11 @@ public class DartTarget extends Target {
       this.visitor = visitor;
     }
 
-    protected void walkListST(List<ST> l) {
+    protected void walkListST(List<?> l) {
       if (l == null) return;
-      for (ST st : l) walk(st);
+      for (Object st : l) {
+        if (l instanceof ST) walkST((ST)st);
+      }
     }
 
     protected void walkST(ST st) {
