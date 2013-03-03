@@ -2,6 +2,7 @@ library dartlr_backend;
 
 import "dart:io";
 import "dart:collection";
+import "dart:async";
 
 import 'dartlr_common.dart';
 export 'dartlr_common.dart';
