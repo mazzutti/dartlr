@@ -1,6 +1,6 @@
 // Copyright (c) 2012, the ANTLR Dart backend project authors.  Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE 
+// BSD-style license that can be found in the LICENSE
 
 library dartlr_tests;
 
@@ -175,8 +175,8 @@ part "../out/t058rewriteAST83Lexer.dart";
 part "../out/t058rewriteAST83Parser.dart";
 
 
-main() {  
-  
+main() {
+
   test("testDelete_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("abc 34");
     t058rewriteAST1Lexer lexer = new t058rewriteAST1Lexer(cstream);
@@ -184,8 +184,8 @@ main() {
     t058rewriteAST1Parser parser = new t058rewriteAST1Parser(tstream);
     var ret = parser.a();
     expect((ret.tree as Tree), equals(null));
-  });  
-  
+  });
+
   test("testSingleToken_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("abc");
     t058rewriteAST2Lexer lexer = new t058rewriteAST2Lexer(cstream);
@@ -194,8 +194,8 @@ main() {
     var ret = parser.a();
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("abc"));
-  }); 
-  
+  });
+
   test("testSingleTokenToNewNode_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("abc");
     t058rewriteAST3Lexer lexer = new t058rewriteAST3Lexer(cstream);
@@ -205,7 +205,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("x"));
   });
-  
+
   test("testSingleTokenToNewNodeRoot_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("abc");
     t058rewriteAST4Lexer lexer = new t058rewriteAST4Lexer(cstream);
@@ -215,7 +215,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(x INT)"));
   });
-  
+
   test("testSingleTokenToNewNode2_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("abc");
     t058rewriteAST5Lexer lexer = new t058rewriteAST5Lexer(cstream);
@@ -225,7 +225,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("ID"));
   });
-  
+
   test("testSingleCharLiteral_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("c");
     t058rewriteAST6Lexer lexer = new t058rewriteAST6Lexer(cstream);
@@ -235,7 +235,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("c"));
   });
-  
+
   test("testSingleCharLiteral_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("ick");
     t058rewriteAST7Lexer lexer = new t058rewriteAST7Lexer(cstream);
@@ -245,7 +245,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("ick"));
   });
-  
+
   test("testSingleRule_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("abc");
     t058rewriteAST8Lexer lexer = new t058rewriteAST8Lexer(cstream);
@@ -255,7 +255,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("abc"));
   });
-  
+
   test("testReorderTokens_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("abc 34");
     t058rewriteAST9Lexer lexer = new t058rewriteAST9Lexer(cstream);
@@ -265,7 +265,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("34 abc"));
   });
-  
+
   test("testReorderTokenAndRule_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("abc 34");
     t058rewriteAST10Lexer lexer = new t058rewriteAST10Lexer(cstream);
@@ -275,7 +275,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("34 abc"));
   });
-  
+
   test("testTokenTree_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("abc 34");
     t058rewriteAST11Lexer lexer = new t058rewriteAST11Lexer(cstream);
@@ -285,7 +285,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(34 abc)"));
   });
-  
+
   test("testTokenTreeAfterOtherStuff_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("void abc 34");
     t058rewriteAST12Lexer lexer = new t058rewriteAST12Lexer(cstream);
@@ -295,7 +295,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("void (34 abc)"));
   });
-  
+
   test("testNestedTokenTreeWithOuterLoop_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a 1 b 2");
     t058rewriteAST13Lexer lexer = new t058rewriteAST13Lexer(cstream);
@@ -305,7 +305,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(DUH a (DUH 1)) (DUH b (DUH 2))"));
   });
-  
+
   test("testOptionalSingleToken_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("abc");
     t058rewriteAST14Lexer lexer = new t058rewriteAST14Lexer(cstream);
@@ -315,7 +315,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("abc"));
   });
-  
+
   test("testClosureSingleToken_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a b");
     t058rewriteAST15Lexer lexer = new t058rewriteAST15Lexer(cstream);
@@ -325,7 +325,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("a b"));
   });
-  
+
   test("testPositiveClosureSingleToken_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a b");
     t058rewriteAST16Lexer lexer = new t058rewriteAST16Lexer(cstream);
@@ -335,7 +335,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("a b"));
   });
-  
+
   test("testOptionalSingleRule_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("abc");
     t058rewriteAST17Lexer lexer = new t058rewriteAST17Lexer(cstream);
@@ -345,7 +345,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("abc"));
   });
-  
+
   test("testClosureSingleRule_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a b");
     t058rewriteAST18Lexer lexer = new t058rewriteAST18Lexer(cstream);
@@ -355,7 +355,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("a b"));
   });
-  
+
   test("testClosureOfLabel_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a b");
     t058rewriteAST19Lexer lexer = new t058rewriteAST19Lexer(cstream);
@@ -365,7 +365,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("a b"));
   });
-  
+
   test("testOptionalLabelNoListLabel_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a");
     t058rewriteAST20Lexer lexer = new t058rewriteAST20Lexer(cstream);
@@ -375,7 +375,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("a"));
   });
-  
+
   test("testPositiveClosureSingleRule_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a b");
     t058rewriteAST21Lexer lexer = new t058rewriteAST21Lexer(cstream);
@@ -385,7 +385,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("a b"));
   });
-  
+
   test("testSinglePredicateT_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("abc");
     t058rewriteAST22Lexer lexer = new t058rewriteAST22Lexer(cstream);
@@ -395,7 +395,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("abc"));
   });
-  
+
   test("testSinglePredicateF_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("abc");
     t058rewriteAST23Lexer lexer = new t058rewriteAST23Lexer(cstream);
@@ -404,7 +404,7 @@ main() {
     var ret = parser.a();
     expect((ret.tree as Tree), equals(null));
   });
-  
+
   test("testMultiplePredicate_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a 2");
     t058rewriteAST24Lexer lexer = new t058rewriteAST24Lexer(cstream);
@@ -414,7 +414,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("2"));
   });
-  
+
   test("testMultiplePredicateTrees_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a 2");
     t058rewriteAST25Lexer lexer = new t058rewriteAST25Lexer(cstream);
@@ -424,7 +424,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(2 a)"));
   });
-  
+
   test("testSimpleTree_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("-34");
     t058rewriteAST26Lexer lexer = new t058rewriteAST26Lexer(cstream);
@@ -434,7 +434,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(- 34)"));
   });
-  
+
   test("testSimpleTree2_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("+ 34");
     t058rewriteAST27Lexer lexer = new t058rewriteAST27Lexer(cstream);
@@ -444,7 +444,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(34 +)"));
   });
-  
+
   test("testNestedTrees_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("var a:int; b:float;");
     t058rewriteAST28Lexer lexer = new t058rewriteAST28Lexer(cstream);
@@ -454,7 +454,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(var (: a int) (: b float))"));
   });
-  
+
   test("testImaginaryTokenCopy_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a,b,c");
     t058rewriteAST29Lexer lexer = new t058rewriteAST29Lexer(cstream);
@@ -464,7 +464,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(VAR a) (VAR b) (VAR c)"));
   });
-  
+
   test("testTokenUnreferencedOnLeftButDefined_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a");
     t058rewriteAST30Lexer lexer = new t058rewriteAST30Lexer(cstream);
@@ -474,7 +474,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("ID"));
   });
-  
+
   test("testImaginaryTokenCopySetText_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a,b,c");
     t058rewriteAST31Lexer lexer = new t058rewriteAST31Lexer(cstream);
@@ -484,7 +484,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(var a) (var b) (var c)"));
   });
-  
+
   test("testImaginaryTokenNoCopyFromToken_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("{a b c}");
     t058rewriteAST32Lexer lexer = new t058rewriteAST32Lexer(cstream);
@@ -494,7 +494,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("({ a b c)"));
   });
-  
+
   test("testImaginaryTokenNoCopyFromTokenSetText_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("{a b c}");
     t058rewriteAST33Lexer lexer = new t058rewriteAST33Lexer(cstream);
@@ -504,7 +504,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(block a b c)"));
   });
-  
+
   test("testMixedRewriteAndAutoAST_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a 1 2");
     t058rewriteAST34Lexer lexer = new t058rewriteAST34Lexer(cstream);
@@ -514,7 +514,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(2 1 a)"));
   });
-  
+
   test("testSubruleWithRewrite_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a 1 2 3");
     t058rewriteAST35Lexer lexer = new t058rewriteAST35Lexer(cstream);
@@ -524,7 +524,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("1 a 2 3"));
   });
-  
+
   test("testSubruleWithRewrite2_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("int a; int b=3;");
     t058rewriteAST36Lexer lexer = new t058rewriteAST36Lexer(cstream);
@@ -534,7 +534,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(TYPE int a) (TYPE int b 3)"));
   });
-  
+
   test("testNestedRewriteShutsOffAutoAST_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a b c d; 42");
     t058rewriteAST37Lexer lexer = new t058rewriteAST37Lexer(cstream);
@@ -544,7 +544,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("d 42"));
   });
-  
+
   test("testRewriteActions_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("3");
     t058rewriteAST38Lexer lexer = new t058rewriteAST38Lexer(cstream);
@@ -554,7 +554,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(9 3)"));
   });
-  
+
   test("testRewriteActions2_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("3");
     t058rewriteAST39Lexer lexer = new t058rewriteAST39Lexer(cstream);
@@ -564,7 +564,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("9 3"));
   });
-  
+
   test("testRefToOldValue_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("3+4+5");
     t058rewriteAST40Lexer lexer = new t058rewriteAST40Lexer(cstream);
@@ -574,7 +574,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(+ (+ 3 4) 5)"));
   });
-  
+
   test("testCopySemanticsForRules_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("3");
     t058rewriteAST41Lexer lexer = new t058rewriteAST41Lexer(cstream);
@@ -584,7 +584,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(3 3)"));
   });
-  
+
   test("testCopySemanticsForRules2_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("int a,b,c;");
     t058rewriteAST42Lexer lexer = new t058rewriteAST42Lexer(cstream);
@@ -594,7 +594,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(int a) (int b) (int c)"));
   });
-  
+
   test("testCopySemanticsForRules3_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("public int a,b,c;");
     t058rewriteAST43Lexer lexer = new t058rewriteAST43Lexer(cstream);
@@ -604,7 +604,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(int public a) (int public b) (int public c)"));
   });
-  
+
   test("testCopySemanticsForRules3Double_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("public int a,b,c;");
     t058rewriteAST44Lexer lexer = new t058rewriteAST44Lexer(cstream);
@@ -615,7 +615,7 @@ main() {
     expect(out, equals("(int public a) (int public b) "
       "(int public c) (int public a) (int public b) (int public c)"));
   });
-  
+
   test("testCopySemanticsForRules4_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("public int a,b,c;");
     t058rewriteAST45Lexer lexer = new t058rewriteAST45Lexer(cstream);
@@ -626,7 +626,7 @@ main() {
     expect(out, equals("(int (MOD public) a) "
       "(int (MOD public) b) (int (MOD public) c)"));
   });
-  
+
   test("testCopySemanticsLists_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a,b,c;");
     t058rewriteAST46Lexer lexer = new t058rewriteAST46Lexer(cstream);
@@ -636,7 +636,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("a b c a b c"));
   });
-  
+
   test("testCopyRuleLabel_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a");
     t058rewriteAST47Lexer lexer = new t058rewriteAST47Lexer(cstream);
@@ -646,7 +646,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("a a"));
   });
-  
+
   test("testCopyRuleLabel2_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a");
     t058rewriteAST48Lexer lexer = new t058rewriteAST48Lexer(cstream);
@@ -656,7 +656,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(a a)"));
   });
-  
+
   test("testQueueingOfTokens_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("int a,b,c;");
     t058rewriteAST49Lexer lexer = new t058rewriteAST49Lexer(cstream);
@@ -666,7 +666,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(int a b c)"));
   });
-  
+
   test("testCopyOfTokens_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("int a;");
     t058rewriteAST50Lexer lexer = new t058rewriteAST50Lexer(cstream);
@@ -676,7 +676,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("int a int a"));
   });
-  
+
   test("testTokenCopyInLoop_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("int a,b,c;");
     t058rewriteAST51Lexer lexer = new t058rewriteAST51Lexer(cstream);
@@ -686,7 +686,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(int a) (int b) (int c)"));
   });
-  
+
   test("testTokenCopyInLoopAgainstTwoOthers_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("int a:1,b:2,c:3;");
     t058rewriteAST52Lexer lexer = new t058rewriteAST52Lexer(cstream);
@@ -696,7 +696,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(int a 1) (int b 2) (int c 3)"));
   });
-  
+
   test("testListRefdOneAtATime_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a b c");
     t058rewriteAST53Lexer lexer = new t058rewriteAST53Lexer(cstream);
@@ -706,7 +706,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("a b c"));
   });
-  
+
   test("testSplitListWithLabels_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a b c");
     t058rewriteAST54Lexer lexer = new t058rewriteAST54Lexer(cstream);
@@ -716,7 +716,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("a VAR b c"));
   });
-  
+
   test("testComplicatedMelange_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a a b b b c c c d");
     t058rewriteAST55Lexer lexer = new t058rewriteAST55Lexer(cstream);
@@ -726,7 +726,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("a a b b b c c c d"));
   });
-  
+
   test("testRuleLabel_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a");
     t058rewriteAST56Lexer lexer = new t058rewriteAST56Lexer(cstream);
@@ -736,7 +736,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("a"));
   });
-  
+
   test("testAmbiguousRule_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("abc 34");
     t058rewriteAST57Lexer lexer = new t058rewriteAST57Lexer(cstream);
@@ -746,7 +746,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("34"));
   });
-  
+
   test("testRuleListLabel_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a b");
     t058rewriteAST58Lexer lexer = new t058rewriteAST58Lexer(cstream);
@@ -756,7 +756,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("a b"));
   });
-  
+
   test("testRuleListLabel2_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a b");
     t058rewriteAST59Lexer lexer = new t058rewriteAST59Lexer(cstream);
@@ -766,7 +766,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("a b"));
   });
-  
+
   test("testOptional_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a");
     t058rewriteAST60Lexer lexer = new t058rewriteAST60Lexer(cstream);
@@ -776,7 +776,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("a"));
   });
-  
+
   test("testOptional2_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a b");
     t058rewriteAST61Lexer lexer = new t058rewriteAST61Lexer(cstream);
@@ -786,7 +786,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("a b"));
   });
-  
+
   test("testOptional3_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a b");
     t058rewriteAST62Lexer lexer = new t058rewriteAST62Lexer(cstream);
@@ -796,7 +796,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("a b"));
   });
-  
+
   test("testOptional4_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a b");
     t058rewriteAST63Lexer lexer = new t058rewriteAST63Lexer(cstream);
@@ -806,7 +806,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("a b"));
   });
-  
+
   test("testOptional5_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a");
     t058rewriteAST64Lexer lexer = new t058rewriteAST64Lexer(cstream);
@@ -816,7 +816,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("a"));
   });
-  
+
   test("testArbitraryExprType_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a b");
     t058rewriteAST65Lexer lexer = new t058rewriteAST65Lexer(cstream);
@@ -825,7 +825,7 @@ main() {
     var ret = parser.a();
     expect((ret.tree as Tree), equals(null));
   });
-  
+
   test("testSet_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("2 a 34 de");
     t058rewriteAST66Lexer lexer = new t058rewriteAST66Lexer(cstream);
@@ -835,7 +835,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("2 34 a de"));
   });
-  
+
   test("testSet2_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("2");
     t058rewriteAST67Lexer lexer = new t058rewriteAST67Lexer(cstream);
@@ -845,15 +845,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("2"));
   });
-  
-  test("testSetWithLabel_t058rewriteAST", () {
-    var cstream = new ANTLRStringStream("2");
-    t058rewriteAST68Lexer lexer = new t058rewriteAST68Lexer(cstream);
-    CommonTokenStream tstream = new CommonTokenStream(lexer);
-    t058rewriteAST68Parser parser = new t058rewriteAST68Parser(tstream);
-    expectThrow(parser.a);
-  });
-  
+
   test("testRewriteAction_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("25");
     t058rewriteAST69Lexer lexer = new t058rewriteAST69Lexer(cstream);
@@ -863,7 +855,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("25.0"));
   });
-  
+
   test("testOptionalSubruleWithoutRealElements_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("modulo abc (x y)");
     t058rewriteAST70Lexer lexer = new t058rewriteAST70Lexer(cstream);
@@ -873,7 +865,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("(modulo abc (PARMS x y))"));
   });
-  
+
   test("testCardinality_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a b 3 4 5");
     t058rewriteAST71Lexer lexer = new t058rewriteAST71Lexer(cstream);
@@ -884,9 +876,9 @@ main() {
       Expect.fail("This shouldn't be executed!");
     } catch (e) {
       expect(e.message, equals("token ID"));
-    }    
+    }
   });
-  
+
   test("testCardinality2_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("a b");
     t058rewriteAST72Lexer lexer = new t058rewriteAST72Lexer(cstream);
@@ -894,12 +886,12 @@ main() {
     t058rewriteAST72Parser parser = new t058rewriteAST72Parser(tstream);
     try {
       parser.a();
-      Expect.fail("This shouldn't be executed!");
+      fail("This shouldn't be executed!");
     } catch (e) {
       expect(e.message, equals("token ID"));
-    }    
+    }
   });
-  
+
   test("testCardinality3_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("3");
     t058rewriteAST73Lexer lexer = new t058rewriteAST73Lexer(cstream);
@@ -907,12 +899,12 @@ main() {
     t058rewriteAST73Parser parser = new t058rewriteAST73Parser(tstream);
     try {
       parser.a();
-      Expect.fail("This shouldn't be executed!");
+      fail("This shouldn't be executed!");
     } catch ( e) {
       expect(e.message, equals("token ID"));
-    }    
+    }
   });
-  
+
   test("testLoopCardinality_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("3");
     t058rewriteAST74Lexer lexer = new t058rewriteAST74Lexer(cstream);
@@ -920,12 +912,12 @@ main() {
     t058rewriteAST74Parser parser = new t058rewriteAST74Parser(tstream);
     try {
       parser.a();
-      Expect.fail("This shouldn't be executed!");
+      fail("This shouldn't be executed!");
     } catch (e) {
       assert(e is RewriteEarlyExitException);
-    }    
+    }
   });
-  
+
   test("testWildcard_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("abc 34");
     t058rewriteAST75Lexer lexer = new t058rewriteAST75Lexer(cstream);
@@ -935,7 +927,7 @@ main() {
     String out = (ret.tree as Tree).toStringTree();
     expect(out, equals("34"));
   });
-  
+
   test("testExtraTokenInSimpleDecl_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("int 34 x=1;");
     t058rewriteAST76Lexer lexer = new t058rewriteAST76Lexer(cstream);
@@ -947,7 +939,7 @@ main() {
     expect(out, equals("(EXPR int x 1)"));
     expect(parser.reportedErrors, equals(expected));
   });
-  
+
   test("testMissingIDInSimpleDecl_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("int =1;");
     t058rewriteAST77Lexer lexer = new t058rewriteAST77Lexer(cstream);
@@ -959,7 +951,7 @@ main() {
     expect(out, equals("(EXPR int <missing ID> 1)"));
     expect(parser.reportedErrors, equals(expected));
   });
-  
+
   test("testMissingSetInSimpleDecl_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("x=1;");
     t058rewriteAST78Lexer lexer = new t058rewriteAST78Lexer(cstream);
@@ -971,7 +963,7 @@ main() {
     expect(out, equals("(EXPR <error: x> x 1)"));
     expect(parser.reportedErrors, equals(expected));
   });
-  
+
   test("testMissingTokenGivesErrorNode_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("abc");
     t058rewriteAST79Lexer lexer = new t058rewriteAST79Lexer(cstream);
@@ -983,7 +975,7 @@ main() {
     expect(out, equals("abc <missing INT>"));
     expect(parser.reportedErrors, equals(expected));
   });
-  
+
   test("testExtraTokenGivesErrorNode_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("abc ick 34");
     t058rewriteAST80Lexer lexer = new t058rewriteAST80Lexer(cstream);
@@ -995,7 +987,7 @@ main() {
     expect(out, equals("abc 34"));
     expect(parser.reportedErrors, equals(expected));
   });
-  
+
   test("testMissingFirstTokenGivesErrorNode_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("34");
     t058rewriteAST81Lexer lexer = new t058rewriteAST81Lexer(cstream);
@@ -1007,7 +999,7 @@ main() {
     expect(out, equals("<missing ID> 34"));
     expect(parser.reportedErrors, equals(expected));
   });
-  
+
   test("testMissingFirstTokenGivesErrorNode2_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("34");
     t058rewriteAST82Lexer lexer = new t058rewriteAST82Lexer(cstream);
@@ -1019,7 +1011,7 @@ main() {
     expect(out, equals("<missing ID> 34"));
     expect(parser.reportedErrors, equals(expected));
   });
-  
+
   test("testNoViableAltGivesErrorNode_t058rewriteAST", () {
     var cstream = new ANTLRStringStream("*");
     t058rewriteAST83Lexer lexer = new t058rewriteAST83Lexer(cstream);

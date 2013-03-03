@@ -67,7 +67,7 @@ public class DartTarget extends Target {
           dump(level + 1, (ST) value);
         } else if (value instanceof AttributeList) {
           log(level, String.format("aggregate key: %s", key));
-          dump(level + 1, (AttributeList<?>) value);
+          dump(level + 1, (AttributeList) value);
         } else {
           log(level,
               String.format("aggregate key: %s, type: %s, value: %s", key, value.getClass(), value));
@@ -75,7 +75,7 @@ public class DartTarget extends Target {
       }
     }
 
-    protected void dump(int level, AttributeList<?> l) {
+    protected void dump(int level, AttributeList l) {
       for (int i = 0; i < l.size(); i++) {
         Object attr = l.get(i);
         if (attr == null)
@@ -86,7 +86,7 @@ public class DartTarget extends Target {
         } else if (attr instanceof ST) {
           dump(level + 1, (ST) attr);
         } else if (attr instanceof AttributeList) {
-          dump(level + 1, (AttributeList<?>) attr);
+          dump(level + 1, (AttributeList) attr);
         } else if (attr instanceof Aggregate) {
           dump(level + 1, (Aggregate) attr);
         } else {
@@ -113,7 +113,7 @@ public class DartTarget extends Target {
           dump(level + 1, (ST) attr);
         } else if (attr instanceof AttributeList) {
           log(level + 1, String.format("attr: name: %s -> AttributeList", key));
-          dump(level + 1, (AttributeList<?>) attr);
+          dump(level + 1, (AttributeList) attr);
         } else if (attr instanceof Aggregate) {
           log(level + 1, String.format("attr: name: %s -> Aggregate", key));
           dump(level + 1, (Aggregate) attr);
@@ -279,7 +279,7 @@ public class DartTarget extends Target {
       if (value instanceof Aggregate) {
     	 rewriteException((Aggregate)value);
       } else if (value instanceof AttributeList) {
-    	  for (Object ex: (AttributeList<?>)value) {
+    	  for (Object ex: (AttributeList)value) {
     		  if (ex == null) continue;
     		  if (! (ex instanceof Aggregate)) continue;
     		  rewriteException((Aggregate)ex);
@@ -352,34 +352,38 @@ public class DartTarget extends Target {
       this.visitor = visitor;
     }
 
-    public void walk(List<ST> l) {
+    protected void walkListST(List<?> l) {
       if (l == null) return;
-      for (ST st : l) walk(st);
-    }
-
-    public void walk(ST st) {
-      visitor.visit(st);
-      if (st.getAttributes() == null) return;
-      for (String key : st.getAttributes().keySet()) dispatch(st.getAttribute(key));
-    }
-
-    protected void dispatch(Object v) {
-      if (v == null) return;
-      if (v instanceof ST) {
-        walk((ST) v);
-      } else if (v instanceof AttributeList) {
-        walk((AttributeList<?>) v);
-      } else if (v instanceof Aggregate) {
-        walk((Aggregate) v);
+      for (Object st : l) {
+        if (l instanceof ST) walkST((ST)st);
       }
     }
 
-    protected void walk(Aggregate a) {
-      for (Object v : a.properties.values()) dispatch(v);
+    protected void walkST(ST st) {
+      visitor.visit(st);
+      if (st.getAttributes() == null) return;
+      for (String key : st.getAttributes().keySet()) walk(st.getAttribute(key));
     }
 
-    protected void walk(AttributeList<?> l) {
-      for (Object v : l) dispatch(v);
+    protected void walkAggregate(Aggregate a) {
+      for (Object v : a.properties.values()) walk(v);
+    }
+
+    protected void walkAttributeList(AttributeList l) {
+      for (Object v : l) walk(v);
+    }
+
+    public void walk(Object v) {
+      if (v == null) return;
+      if (v instanceof ST) {
+        walkST((ST) v);
+      } else if (v instanceof AttributeList) {
+        walkAttributeList((AttributeList) v);
+      } else if (v instanceof Aggregate) {
+        walkAggregate((Aggregate) v);
+      } else if (v instanceof List<?>) {
+        walkListST((List<ST>)v);
+      }
     }
   }
 

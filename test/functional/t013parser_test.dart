@@ -28,7 +28,9 @@ main() {
     Lexer lexer = new t013parserLexer(cstream);
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t013parserParser parser = new t013parserParser(tstream);
-    Function function = () => parser.document();
-    expectThrow(function);    
+    expect(
+        () => parser.document(),  
+        throwsA(new isInstanceOf<Error>())
+    );    
   });
 }

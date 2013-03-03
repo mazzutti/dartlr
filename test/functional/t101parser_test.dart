@@ -10,24 +10,24 @@ import "package:dartlr/dartlr.dart";
 part "../out/t101parserLexer.dart";
 part "../out/t101parserParser.dart";
 
-main() {  
-  
-  test('testValid_t001parser', () {
-    ANTLRStringStream cstream = new ANTLRStringStream(r"/\$*/"); 
+main() {
+
+  test('testValid_t101parser', () {
+    ANTLRStringStream cstream = new ANTLRStringStream(r"/\$*/");
     Lexer lexer = new t101parserLexer(cstream);
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t101parserParser parser = new t101parserParser(tstream);
-   
+
     parser.expr();
     expect(0, equals(parser.reportedErrors.length));
   });
-  
-  test('testMalformedInput_t001parser', () {
-    ANTLRStringStream cstream = new ANTLRStringStream(r"///"); 
+
+  test('testMalformedInput_t101parser', () {
+    ANTLRStringStream cstream = new ANTLRStringStream(r"///");
     Lexer lexer = new t101parserLexer(cstream);
     CommonTokenStream tstream = new CommonTokenStream(lexer);
     t101parserParser parser = new t101parserParser(tstream);
     Function function = () => parser.expr();
-    expectThrow(function);    
+    expect(() => parser.expr(), throwsA(new isInstanceOf<Object>()));
   });
 }

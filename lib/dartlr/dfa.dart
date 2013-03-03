@@ -15,7 +15,7 @@ part of dartlr_common;
  *  lexer's Tokens rule DFA has 326 states roughly.
  */
 class DFA {
-  
+
   List<int> _eot;
   List<int> _eof;
   List<int> _min;
@@ -24,25 +24,25 @@ class DFA {
   List<int> _special;
   List<List<int>> _transition;
   int _decisionNumber;
-  
+
   /** Which recognizer encloses this DFA?  Needed to check backtracking */
   BaseRecognizer _recognizer;
 
   static const bool debug = false;
 
   DFA([this._recognizer]);
-  
-  Logger get logger => new Logger("${_recognizer.recognizerClassName}:DFA"); 
-  
+
+  Logger get logger => new Logger("${_recognizer.recognizerClassName}:DFA");
+
   set decisionNumber(int dn) => _decisionNumber = dn;
   set eot(List<int> eot) => _eot = eot;
-  set eof(List<int> eof) => _eof = eof;  
-  set min(List<int> min) => _min = min;   
+  set eof(List<int> eof) => _eof = eof;
+  set min(List<int> min) => _min = min;
   set max(List<int> max) => _max = max;
-  set accept(List<int> accept) => _accept = accept;  
-  set special(List<int> special) => _special = special;  
+  set accept(List<int> accept) => _accept = accept;
+  set special(List<int> special) => _special = special;
   set transition(List<List<int>> transition) => _transition = transition;
-  
+
   /** From the input stream, predict what alternative will succeed
    *  using this DFA (representing the covering regular approximation
    *  to the underlying CFL).  Return an alternative number 1..n.  Throw
@@ -51,17 +51,17 @@ class DFA {
   int predict(IntStream input) {
     if (debug)
       print("Enter DFA.predict for decision ${_decisionNumber}");
-    int mark = input.mark();    
+    int mark = input.mark();
     int s = 0;
     try {
       while (true) {
-        if (debug) 
+        if (debug)
           print("DFA ${_decisionNumber} state $s LA(1)="
             "${input.LA(1)}(${input.LA(1)}), index=${input.index}");
         int specialState = _special[s];
         if (specialState >= 0) {
           if (debug)
-            print("DFA ${_decisionNumber} state $s is special state $specialState");       
+            print("DFA ${_decisionNumber} state $s is special state $specialState");
           s = specialStateTransition(specialState,input);
           if (debug)
             print("DFA ${_decisionNumber} returns from special state $specialState to $s");
@@ -72,17 +72,17 @@ class DFA {
           input.consume();
           continue;
         }
-        if (_accept[s] >= 1) {         
-          if (debug) 
+        if (_accept[s] >= 1) {
+          if (debug)
             print("accept; predict ${_accept[s]} from state $s");
           return _accept[s];
-        }       
+        }
         int c = input.LA(1);
         if (c >= _min[s] && c <= _max[s]) {
           int snext = _transition[s][c - _min[s]];
           if (snext < 0) {
            if (_eot[s] >= 0) {
-              if (debug) 
+              if (debug)
                 logger.log(Level.ALL, "EOT transition");
               s = _eot[s];
               input.consume();
@@ -102,7 +102,7 @@ class DFA {
           continue;
         }
         if (c == Token.EOF && _eof[s] >= 0) {
-          if (debug) 
+          if (debug)
             logger.log(Level.ALL, "accept via EOF; predict "
               "${_accept[_eof[s]]} from ${_eof[s]}");
           return _accept[_eof[s]];
@@ -113,7 +113,7 @@ class DFA {
          logger.log(Level.ALL, "eot[$s]=${_eot[s]}");
          logger.log(Level.ALL, "eof[$s]=${_eof[s]}");
          for (int p = 0; p < _transition[s].length; p++)
-           logger.log(Level.ALL, "${_transition[s][p]} ");         
+           logger.log(Level.ALL, "${_transition[s][p]} ");
         }
         _noViableAlt(s,input);
         return 0;
@@ -141,41 +141,41 @@ class DFA {
   int specialStateTransition(int s, IntStream input) => -1;
 
   String get description => "n/a";
-  
+
   BaseRecognizer get recognizer => _recognizer;
-  
+
   /** Given a String that has a run-length-encoding of some ints
    *  like "\1\2\3\9", convert to List<int> [2,9,9,9].
    */
-  static List<int> unpackEncodedString(String encodedString) { 
+  static List<int> unpackEncodedString(String encodedString) {
     int size = 0;
     for (int i = 0; i < encodedString.length; i += 2)
-      size += encodedString.charCodeAt(i);
+      size += encodedString.codeUnitAt(i);
     List data = new List(size);
     int di = 0;
     for (int i = 0; i < encodedString.length; i += 2) {
-      int n = encodedString.charCodeAt(i);     
-      int v = encodedString.charCodeAt(i + 1);      
+      int n = encodedString.codeUnitAt(i);
+      int v = encodedString.codeUnitAt(i + 1);
       if(v == 0xffff) v = -1;
       for (int j = 1; j <= n; j++)
         data[di++] = v;
-    }    
-    return data;
-  }
-  
-  static List unpackEncodedStringToUnsignedChars(String encodedString) {    
-    int size = 0;
-    for (int i = 0; i < encodedString.length; i += 2)
-      size += encodedString.charCodeAt(i);    
-    List data = new List(size);
-    int di = 0;
-    for (int i = 0; i < encodedString.length; i += 2) {
-      int n = encodedString.charCodeAt(i);
-      int v = encodedString.charCodeAt(i + 1);   
-      for (int j = 1; j <= n; j++)
-        data[di++] = v;     
     }
     return data;
   }
- 
+
+  static List unpackEncodedStringToUnsignedChars(String encodedString) {
+    int size = 0;
+    for (int i = 0; i < encodedString.length; i += 2)
+      size += encodedString.codeUnitAt(i);
+    List data = new List(size);
+    int di = 0;
+    for (int i = 0; i < encodedString.length; i += 2) {
+      int n = encodedString.codeUnitAt(i);
+      int v = encodedString.codeUnitAt(i + 1);
+      for (int j = 1; j <= n; j++)
+        data[di++] = v;
+    }
+    return data;
+  }
+
 }

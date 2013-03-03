@@ -23,9 +23,9 @@ options {
    */
   reportError(e, [st=null]) {
     StringBuffer sb = new StringBuffer();
-    sb..add("lexer error: ")..add(e.toString());
+    sb..write("lexer error: ")..write(e.toString());
     if (st != null) {
-       sb..add("\n")..add(st.toString());
+       sb..write("\n")..write(st.toString());
     }
     print(sb.toString());
     throw new RuntimeError(sb.toString());
@@ -47,8 +47,8 @@ KEYWORD:
    KEYWORD_CHAR+;
    
 WS:  (' ' | '\t' | '\n' | '\r' | '\f') {$channel=HIDDEN;};
-LBRAC: '[' {this.inKeywords=true; this.inIdents = false;};
-RBRAC: ']' {this.inKeywords=false; this.inIdents = true;};
+LBRAC: '[' {inKeywords=true; inIdents = false;};
+RBRAC: ']' {inKeywords=false; inIdents = true;};
 
 prog
   : IDENT+ 

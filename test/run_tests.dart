@@ -61,7 +61,7 @@ import "functional/t047treeparser_test.dart" as t047treeparser;
 import "functional/t048rewrite_test.dart" as t048rewrite;
 import "functional/t049treeparser_test.dart" as t049treeparser;
 import "functional/t051treeRewriteAST_test.dart" as t051treeRewriteAST;
-import "functional/t052import_test.dart" as t052import;
+//import "functional/t052import_test.dart" as t052import;
 import "functional/t053hetero_test.dart" as t053hetero;
 import "functional/t056lexer_test.dart" as t056lexer;
 import "functional/t057autoAST_test.dart" as t057autoAST;
@@ -129,7 +129,7 @@ class TestRunner {
     t048rewrite.main();
     t049treeparser.main();
     t051treeRewriteAST.main();
-    t052import.main();
+//    t052import.main();
     t053hetero.main();
     t056lexer.main();
     t057autoAST.main();
@@ -140,21 +140,21 @@ class TestRunner {
     t102parser.main();
     t103rulecatch.main();
     t104rulecatch.main();
-    
+
     dfa.main();
-    bitSet.main();   
+    bitSet.main();
     antlr_file_stream_test.main();
-  }  
+  }
 }
 
 main() {
-  
+
   Logger root = Logger.root;
   hierarchicalLoggingEnabled = true;
   root.level = Level.ALL;
   root.on.record.add((LogRecord record) {
     print('${record.time}: ${record.loggerName}: ${record.level}: ${record.message}');
   });
-  
+
   new TestRunner().run();
 }

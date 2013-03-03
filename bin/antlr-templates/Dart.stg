@@ -75,7 +75,7 @@ class <grammar.recognizerName> extends <@superClassName><superClass><@end> {
   
   <evalPredicates; separator="\n">
   
-  <if(cyclicDFAs)>Map\<String, DFA\> dfas;<endif>
+  <if(cyclicDFAs)>Map\<String, DFA> dfas;<endif>
 
   // delegates
   <grammar.delegates: {g| <g.recognizerName> <g:delegateName()>;}; separator="\n">
@@ -86,7 +86,7 @@ class <grammar.recognizerName> extends <@superClassName><superClass><@end> {
 
   <grammar.recognizerName>( [CharStream input<grammar.delegators:{g|, <g.recognizerName> <g:delegateName()>}>] ) 
     : super.fromRecognizerSharedState( input, new RecognizerSharedState() ) {
-    <if(cyclicDFAs)>dfas = new Map\<String, DFA\>();<endif>
+    <if(cyclicDFAs)>dfas = new Map\<String, DFA>();<endif>
     <actions.lexer.init>
     <grammar.directDelegates:{g|<g:delegateName()> = new <g.recognizerName>.fromRecognizerSharedState( input, state<trunc(g.delegators):{p|, <p:delegateName()>}>, this );}; separator="\n">
     <grammar.delegators: {g|this.<g:delegateName()> = <g:delegateName()>;}; separator="\n">
@@ -97,7 +97,7 @@ class <grammar.recognizerName> extends <@superClassName><superClass><@end> {
 
   <grammar.recognizerName>.fromRecognizerSharedState( CharStream input, RecognizerSharedState state<grammar.delegators:{g|, <g.recognizerName> <g: delegateName()>}> ) 
     : super.fromRecognizerSharedState( input,state ) {
-    <if(cyclicDFAs)>dfas = new Map\<String, DFA\>();<endif>
+    <if(cyclicDFAs)>dfas = new Map\<String, DFA>();<endif>
     <actions.lexer.init>
     <cyclicDFAs:createDFA()>
 <if(memoize)>
@@ -203,7 +203,7 @@ genericParser(grammar, name, scopes, tokens, tokenNames, rules, numRules,
 class <grammar.recognizerName> extends <@superClassName><superClass><@end> {
 
 <if(grammar.grammarIsRoot)>
-  static const List\<String\> tokens = const [
+  static const List\<String> tokens = const [
     "\<invalid>", "\<EOR>", "\<DOWN>", "\<UP>", <tokenNames; wrap="\n    ", separator=", ">
   ];
 
@@ -215,7 +215,7 @@ class <grammar.recognizerName> extends <@superClassName><superClass><@end> {
   <last(grammar.delegators):{g|<g.recognizerName> gParent;}>      
   <scopes:{it |<if(it.isDynamicGlobalScope)><membersForGAScope(it)><endif>}>
   <evalPredicates; separator="\n">
-  <if(cyclicDFAs)>Map\<String, DFA\> dfas;<endif>
+  <if(cyclicDFAs)>Map\<String, DFA> dfas;<endif>
 
   <rules:declareScopeListMember()>
   <@declTreeFields()>
@@ -224,7 +224,7 @@ class <grammar.recognizerName> extends <@superClassName><superClass><@end> {
   <grammar.recognizerName>( <inputStreamType> input<grammar.delegators:{g|, <g.recognizerName> <g:delegateName()>}> ) 
     : super.fromRecognizerSharedState( input, new RecognizerSharedState() ) {
     <@initTreeFields>
-    <if(cyclicDFAs)>dfas = new Map\<String, DFA\>();<endif>
+    <if(cyclicDFAs)>dfas = new Map\<String, DFA>();<endif>
     <rules:initScopeListMember()>
     <actions.parser.init>
     <scopes:{it |<if(it.isDynamicGlobalScope)><initMembersForGAScope(it)><endif>}>
@@ -240,7 +240,7 @@ class <grammar.recognizerName> extends <@superClassName><superClass><@end> {
   <grammar.recognizerName>.fromRecognizerSharedState( <inputStreamType> input, RecognizerSharedState state<grammar.delegators:{g|, <g.recognizerName> <g:delegateName()>}> ) 
     : super.fromRecognizerSharedState( input, state ) {
     <@initTreeFieldsFromRecState>
-    <if(cyclicDFAs)>dfas = new Map\<String, DFA\>();<endif>
+    <if(cyclicDFAs)>dfas = new Map\<String, DFA>();<endif>
     <rules:initScopeListMember()>
     <actions.parser.init>
     <scopes:{it |<if(it.isDynamicGlobalScope)><initMembersForGAScope(it)><endif>}>
@@ -253,7 +253,7 @@ class <grammar.recognizerName> extends <@superClassName><superClass><@end> {
   }
   <@end>
 
-  List\<String\> get tokenNames => <grammar.composite.rootGrammar.recognizerName>.tokens;
+  List\<String> get tokenNames => <grammar.composite.rootGrammar.recognizerName>.tokens;
 
   String get grammarFileName => "<grammar.name>.g";
 
@@ -1008,25 +1008,25 @@ static const String DFA_<grammar.recognizerName>_<dfa.decisionNumber>_minS = "<d
 static const String DFA_<grammar.recognizerName>_<dfa.decisionNumber>_maxS = "<dfa.javaCompressedMax; wrap="\"\n    \"">";
 static const String DFA_<grammar.recognizerName>_<dfa.decisionNumber>_acceptS = "<dfa.javaCompressedAccept; wrap="\"\n    \"">";
 static const String DFA_<grammar.recognizerName>_<dfa.decisionNumber>_specialS = "<dfa.javaCompressedSpecial; wrap="\"\n    \"">";
-static const List\<String\> DFA_<grammar.recognizerName>_<dfa.decisionNumber>_transitionS = const [
+static const List\<String> DFA_<grammar.recognizerName>_<dfa.decisionNumber>_transitionS = const [
   <dfa.javaCompressedTransition:{s|"<s; wrap="\"\n\"">"}; separator=",\n">
 ];
 
-static List\<int\> DFA_<grammar.recognizerName>_<dfa.decisionNumber>_eot = DFA.unpackEncodedString( DFA_<grammar.recognizerName>_<dfa.decisionNumber>_eotS );
+static List\<int> DFA_<grammar.recognizerName>_<dfa.decisionNumber>_eot = DFA.unpackEncodedString( DFA_<grammar.recognizerName>_<dfa.decisionNumber>_eotS );
 
-static List\<int\> DFA_<grammar.recognizerName>_<dfa.decisionNumber>_eof = DFA.unpackEncodedString( DFA_<grammar.recognizerName>_<dfa.decisionNumber>_eofS );
+static List\<int> DFA_<grammar.recognizerName>_<dfa.decisionNumber>_eof = DFA.unpackEncodedString( DFA_<grammar.recognizerName>_<dfa.decisionNumber>_eofS );
 
-static List\<int\> DFA_<grammar.recognizerName>_<dfa.decisionNumber>_min = DFA.unpackEncodedStringToUnsignedChars( DFA_<grammar.recognizerName>_<dfa.decisionNumber>_minS );
+static List\<int> DFA_<grammar.recognizerName>_<dfa.decisionNumber>_min = DFA.unpackEncodedStringToUnsignedChars( DFA_<grammar.recognizerName>_<dfa.decisionNumber>_minS );
 
-static List\<int\> DFA_<grammar.recognizerName>_<dfa.decisionNumber>_max = DFA.unpackEncodedStringToUnsignedChars( DFA_<grammar.recognizerName>_<dfa.decisionNumber>_maxS );
+static List\<int> DFA_<grammar.recognizerName>_<dfa.decisionNumber>_max = DFA.unpackEncodedStringToUnsignedChars( DFA_<grammar.recognizerName>_<dfa.decisionNumber>_maxS );
 
-static List\<int\> DFA_<grammar.recognizerName>_<dfa.decisionNumber>_accept = DFA.unpackEncodedString( DFA_<grammar.recognizerName>_<dfa.decisionNumber>_acceptS );
+static List\<int> DFA_<grammar.recognizerName>_<dfa.decisionNumber>_accept = DFA.unpackEncodedString( DFA_<grammar.recognizerName>_<dfa.decisionNumber>_acceptS );
 
-static List\<int\> DFA_<grammar.recognizerName>_<dfa.decisionNumber>_special = DFA.unpackEncodedString( DFA_<grammar.recognizerName>_<dfa.decisionNumber>_specialS );
+static List\<int> DFA_<grammar.recognizerName>_<dfa.decisionNumber>_special = DFA.unpackEncodedString( DFA_<grammar.recognizerName>_<dfa.decisionNumber>_specialS );
 
-static List\<List\<int\>\> DFA_<grammar.recognizerName>_<dfa.decisionNumber>_transition = () {
+static List\<List\<int>\> DFA_<grammar.recognizerName>_<dfa.decisionNumber>_transition = () {
   int numStates = DFA_<grammar.recognizerName>_<dfa.decisionNumber>_transitionS.length;
-  List\<List\<int\>\> _DFA<dfa.decisionNumber>_transition = new List\<List\<int\>\>.fixedLength( numStates );
+  List\<List\<int>\> _DFA<dfa.decisionNumber>_transition = new List\<List\<int>\>.fixedLength( numStates );
   for ( int i = 0; i \< numStates; i++ ) {
     _DFA<dfa.decisionNumber>_transition[i] = DFA.unpackEncodedString( DFA_<grammar.recognizerName>_<dfa.decisionNumber>_transitionS[i] );
   }
