@@ -10,10 +10,10 @@ abstract class CharStream extends IntStream {
   static const int EOF = -1;  
 
   /** ANTLR tracks the line information automatically */
-  int line;
+  int get line;
   
   /** The index of the character relative to the beginning of the line 0..n-1 */
-  int charPositionInLine;
+  int get charPositionInLine;
   
   /** For infinite streams, you don't need this; primarily I'm providing
    *  a useful interface for action code.  Just make sure actions don't
@@ -26,6 +26,5 @@ abstract class CharStream extends IntStream {
    *  lexer code.  I'd prefer to return a char here type-wise, but it's
    *  probably better to be 32-bit clean and be consistent with LA.
    */
-  int LT(int i);  
-  
+  int LT(int i);    
 }
