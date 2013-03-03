@@ -10,8 +10,8 @@ import "package:dartlr/dartlr.dart";
 part "../out/t048rewrite.dart";
 
 
-main() {  
-  
+main() {
+
   TokenRewriteStream _parse(String xinput) {
     ANTLRStringStream cstream = new ANTLRStringStream(xinput);
     t048rewrite lexer = new t048rewrite(cstream);
@@ -19,7 +19,7 @@ main() {
     tstream.fill();
     return tstream;
   }
-  
+
   test('testInsertBeforeIndex0_t048rewrite', () {
     var tokens = _parse("abc");
     tokens.insertBefore(0,"0");
@@ -27,7 +27,7 @@ main() {
     String expected = "0abc";
     expect(result, equals(expected));
   });
-  
+
   test('testInsertAfterLastIndex_t048rewrite', () {
     var tokens = _parse("abc");
     tokens.insertAfter(2,"x");
@@ -35,7 +35,7 @@ main() {
     String expected = "abcx";
     expect(result, equals(expected));
   });
-  
+
   test('test2InsertBeforeAfterMiddleIndex_t048rewrite', () {
     var tokens = _parse("abc");
     tokens.insertBefore(1,"x");
@@ -44,7 +44,7 @@ main() {
     String expected = "axbxc";
     expect(result, equals(expected));
   });
-  
+
   test('testReplaceIndex0x_t048rewrite', () {
     var tokens = _parse("abc");
     tokens.replace(0,"x");
@@ -52,7 +52,7 @@ main() {
     String expected = "xbc";
     expect(result, equals(expected));
   });
-  
+
   test('testReplaceLastIndex_t048rewrite', () {
     var tokens = _parse("abc");
     tokens.replace(2,"x");
@@ -60,7 +60,7 @@ main() {
     String expected = "abx";
     expect(result, equals(expected));
   });
-  
+
   test('testReplaceMiddleIndex_t048rewrite', () {
     var tokens = _parse("abc");
     tokens.replace(1,"x");
@@ -68,7 +68,7 @@ main() {
     String expected = "axc";
     expect(result, equals(expected));
   });
-  
+
   test('testReplaceMiddleIndex_t048rewrite', () {
     var tokens = _parse("abc");
     tokens.replace(1,"x");
@@ -77,7 +77,7 @@ main() {
     String expected = "ayc";
     expect(result, equals(expected));
   });
-  
+
   test('testReplaceThenDeleteMiddleIndex_t048rewrite', () {
     var tokens = _parse("abc");
     tokens.replace(1,"x");
@@ -86,7 +86,7 @@ main() {
     String expected = "ac";
     expect(result, equals(expected));
   });
-  
+
   test('testReplaceThenInsertSameIndex_t048rewrite', () {
     var tokens = _parse("abc");
     tokens.replace(0,"x");
@@ -95,7 +95,7 @@ main() {
     String expected = "0xbc";
     expect(result, equals(expected));
   });
-  
+
   test('testReplaceThen2InsertSameIndex_t048rewrite', () {
     var tokens = _parse("abc");
     tokens.replace(0,"x");
@@ -105,27 +105,27 @@ main() {
     String expected = "zyxbc";
     expect(result, equals(expected));
   });
-  
+
   test('testInsertThenReplaceSameIndex_t048rewrite', () {
-    var tokens = _parse("abc");    
+    var tokens = _parse("abc");
     tokens.insertBefore(0,"0");
     tokens.replace(0,"x");
     var result = tokens.toString();
     String expected = "0xbc";
     expect(result, equals(expected));
   });
-  
+
   test('test2InsertMiddleIndex_t048rewrite', () {
-    var tokens = _parse("abc");    
+    var tokens = _parse("abc");
     tokens.insertBefore(1,"x");
     tokens.insertBefore(1,"y");
     var result = tokens.toString();
     String expected = "ayxbc";
     expect(result, equals(expected));
   });
-  
+
   test('test2InsertThenReplaceIndex0_t048rewrite', () {
-    var tokens = _parse("abc");    
+    var tokens = _parse("abc");
     tokens.insertBefore(0,"x");
     tokens.insertBefore(0,"y");
     tokens.replace(0,"z");
@@ -133,66 +133,66 @@ main() {
     String expected = "yxzbc";
     expect(result, equals(expected));
   });
-  
+
   test('testReplaceThenInsertBeforeLastIndex_t048rewrite', () {
-    var tokens = _parse("abc");    
+    var tokens = _parse("abc");
     tokens.replace(2,"x");
-    tokens.insertBefore(2,"y");    
+    tokens.insertBefore(2,"y");
     var result = tokens.toString();
     String expected = "abyx";
     expect(result, equals(expected));
   });
-  
+
   test('testInsertThenReplaceLastIndex_t048rewrite', () {
     var tokens = _parse("abc");
-    tokens.insertBefore(2,"y"); 
-    tokens.replace(2,"x");       
+    tokens.insertBefore(2,"y");
+    tokens.replace(2,"x");
     var result = tokens.toString();
     String expected = "abyx";
     expect(result, equals(expected));
   });
-  
+
   test('testReplaceThenInsertLastIndex_t048rewrite', () {
     var tokens = _parse("abc");
     tokens.replace(2,"x");
-    tokens.insertAfter(2,"y");    
+    tokens.insertAfter(2,"y");
     var result = tokens.toString();
     String expected = "abxy";
     expect(result, equals(expected));
   });
-  
+
   test('testReplaceRangeThenInsertInMiddle_t048rewrite', () {
     var tokens = _parse("abcccba");
     tokens.replace(2,"x",4);
-    tokens.insertBefore(3,"y");           
-    expectThrow(tokens.toString);
+    tokens.insertBefore(3,"y");
+    expect(() => tokens.toString(), throwsA(new isInstanceOf<Object>()));
   });
-  
+
   test('testReplaceRangeThenInsertAtLeftEdge_t048rewrite', () {
     var tokens = _parse("abcccba");
     tokens.replace(2,"x",4);
-    tokens.insertBefore(2,"y");           
+    tokens.insertBefore(2,"y");
     var result = tokens.toString();
     String expected = "abyxba";
     expect(result, equals(expected));
   });
-  
+
   test('testReplaceRangeThenInsertAtRightEdge_t048rewrite', () {
     var tokens = _parse("abcccba");
     tokens.replace(2,"x",4);
-    tokens.insertBefore(4,"y");           
-    expectThrow(tokens.toString);
+    tokens.insertBefore(4,"y");
+    expect(() => tokens.toString(), throwsA(new isInstanceOf<Object>()));
   });
-  
+
   test('testReplaceRangeThenInsertAfterRightEdge_t048rewrite', () {
     var tokens = _parse("abcccba");
     tokens.replace(2,"x",4);
-    tokens.insertAfter(4,"y");           
+    tokens.insertAfter(4,"y");
     var result = tokens.toString();
     String expected = "abxyba";
     expect(result, equals(expected));
   });
-  
+
   test('testReplaceAll_t048rewrite', () {
     var tokens = _parse("abcccba");
     tokens.replace(0,"x",6);
@@ -200,7 +200,7 @@ main() {
     String expected = "x";
     expect(result, equals(expected));
   });
-  
+
   test('testReplaceSubsetThenFetch_t048rewrite', () {
     var tokens = _parse("abcccba");
     tokens.replace(2,"xyz",4);
@@ -208,7 +208,7 @@ main() {
     String expected = "abxyzba";
     expect(result, equals(expected));
   });
-  
+
   test('testReplaceThenReplaceSuperset_t048rewrite', () {
     var tokens = _parse("abcccba");
     tokens.replace(2,"xyz",4);
@@ -217,14 +217,14 @@ main() {
     String expected = "abfooa";
     expect(result, equals(expected));
   });
-  
+
   test('testReplaceThenReplaceLowerIndexedSuperset_t048rewrite', () {
     var tokens = _parse("abcccba");
     tokens.replace(2,"xyz",4);
     tokens.replace(1,"foo",3);
-    expectThrow(tokens.toString);
+    expect(() => tokens.toString(), throwsA(new isInstanceOf<Object>()));
   });
-  
+
   test('testReplaceSingleMiddleThenOverlappingSuperset_t048rewrite', () {
     var tokens = _parse("abcccba");
     tokens.replace(2,"xyz",2);
@@ -233,5 +233,5 @@ main() {
     String expected = "foocba";
     expect(result, equals(expected));
   });
-  
+
 }

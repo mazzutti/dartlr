@@ -10,17 +10,17 @@ part of dartlr_common;
  *  of speed.
  */
 abstract class Lexer extends BaseRecognizer implements TokenSource {
- 
+
   /** Where is the lexer drawing characters from? */
   CharStream _input;
-  
+
   Lexer(this._input);
 
   Lexer.fromRecognizerSharedState
    (this._input, RecognizerSharedState state) : super(state);
-   
+
   CharStream get input => _input;
-  
+
   int get HIDDEN => Token.HIDDEN_CHANNEL;
 
   reset() {
@@ -42,13 +42,13 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
   Token nextToken() {
     while(true) {
       state.token = null;
-      state.channel = Token.DEFAULT_CHANNEL;      
-      state.tokenStartCharIndex = _input.index; 
-      state.tokenStartCharPositionInLine = _input.charPositionInLine;     
-      state.tokenStartLine = _input.line;      
+      state.channel = Token.DEFAULT_CHANNEL;
+      state.tokenStartCharIndex = _input.index;
+      state.tokenStartCharPositionInLine = _input.charPositionInLine;
+      state.tokenStartLine = _input.line;
       state.text = null;
       if(_input.LA(1) == CharStream.EOF) {
-        Token eof = new CommonToken.fromCharStream(_input,Token.EOF, 
+        Token eof = new CommonToken.fromCharStream(_input,Token.EOF,
             Token.DEFAULT_CHANNEL, _input.index , _input.index);
         eof.line = line;
         eof.charPositionInLine = charPositionInLine;
@@ -56,22 +56,22 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
       }
       try {
         mTokens();
-        if(state.token == null){          
-          emit();       
+        if(state.token == null){
+          emit();
         }else if(state.token == Token.SKIP_TOKEN)
-          continue;       
+          continue;
         return state.token;
-      } on MismatchedRangeException catch(re) {        
-        reportError(re);        
-      } on MismatchedTokenException catch(re) {        
-        reportError(re);        
-      } on RecognitionException catch(re) {        
+      } on MismatchedRangeException catch(re) {
+        reportError(re);
+      } on MismatchedTokenException catch(re) {
+        reportError(re);
+      } on RecognitionException catch(re) {
         reportError(re);
         recover(re);
       }
     }
   }
-  
+
   /** Instruct the lexer to skip creating a token for current lexer rule
   *  and look for another token.  nextToken() knows to keep looking when
   *  a lexer rule finishes with token set to SKIP_TOKEN.  Recall that
@@ -81,10 +81,10 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
   skip() {
     state.token = Token.SKIP_TOKEN;
   }
-  
+
   /** This is the lexer entry point that sets instance var 'token' */
   mTokens();
- 
+
   /** Set the char stream and reset the lexer */
   set charStream(CharStream input) {
     _input = null;
@@ -93,7 +93,7 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
   }
 
   CharStream get charStream => _input;
-  
+
   String get sourceName => _input.sourceName;
 
   /** Currently does not support multiple emits per nextToken invocation
@@ -103,7 +103,7 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
    */
   Token emit([Token token]) {
     if(token == null) {
-      Token t = new CommonToken.fromCharStream(_input, state.type, 
+      Token t = new CommonToken.fromCharStream(_input, state.type,
         state.channel, state.tokenStartCharIndex, charIndex - 1);
       t.line = state.tokenStartLine;
       t.text = state.text;
@@ -119,13 +119,13 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
     if(s is String) {
       int i = 0;
       while(i < s.length) {
-        if(_input.LA(1) != s.charCodeAt(i)) {
+        if(_input.LA(1) != s.codeUnitAt(i)) {
           if(state.backtracking > 0) {
-            state.failed = true;            
+            state.failed = true;
             return;
           }
           MismatchedTokenException me =
-            new MismatchedTokenException(s.charCodeAt(i), _input);
+            new MismatchedTokenException(s.codeUnitAt(i), _input);
           recover(me);
           throw me;
         }
@@ -141,12 +141,12 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
         }
         MismatchedTokenException mte =
           new MismatchedTokenException(s, _input);
-        recover(mte); 
+        recover(mte);
         throw mte;
       }
       _input.consume();
       state.failed = false;
-    }    
+    }
   }
 
   matchAny([IntStream input]) {
@@ -171,10 +171,10 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
   int get line => _input.line;
 
   int get charPositionInLine =>  _input.charPositionInLine;
-  
+
   /** What is the index of the current character of lookahead? */
   int get charIndex => _input.index;
-  
+
   /** Return the text matched so far for the current token or any
    *  text override.
    */
@@ -225,7 +225,7 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
        " set ${getCharErrorDisplay(mre.a)}..${getCharErrorDisplay(mre.b)}";
     }
     else
-      msg = super.getErrorMessage(e, tokenNames);   
+      msg = super.getErrorMessage(e, tokenNames);
     return msg;
   }
 
@@ -233,7 +233,7 @@ abstract class Lexer extends BaseRecognizer implements TokenSource {
   static const int _TAB = 9; /* \t */
   static const int _LF = 10; /* \r */
   String getCharErrorDisplay(int c) {
-    String s = "";    
+    String s = "";
     switch(c) {
       case Token.EOF : s = "<EOF>"; break;
       case _CR: s = "\\n"; break;

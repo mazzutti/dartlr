@@ -5,55 +5,53 @@
 part of dartlr_common;
 
 /** A pretty quick CharStream that pulls all data from an list
- *  directly.  Every method call counts in the lexer.  
+ *  directly.  Every method call counts in the lexer.
  */
 class ANTLRStringStream implements CharStream {
- 
+
   /** The data being scanned */
   List<int> data;
-  
+
   /** How many characters are actually in the buffer */
-  int size;
-  
+  int get size => data.length;
+
   /** 0..n-1 index into string of next char */
   int _p = 0;
-  
+
   /** line number 1..n within the input */
   int line = 1;
-  
+
   /** The index of the character relative to the beginning of the line 0..n-1 */
   int charPositionInLine = 0;
-  
+
   /** tracks how deep mark() calls are nested */
   int _markDepth = 0;
-  
+
   /** A list of [CharStreamState] objects that tracks the stream state
    *  values _line, charPositionInLine, and _p that can change as you
    *  move through the input stream.  Indexed from 1..markDepth.
      *  A null is kept @ index 0.  Create upon first call to mark().
    */
   List _markers;
-  
+
   /** Track the last mark() call result value for use in rewind(). */
   int _lastMarker;
-  
+
   /** What is name or source of this char stream? */
   String _name;
 
   /** Copy data in string to a local char array
-   * Throws an [AssertionError] if input is null. 
+   * Throws an [AssertionError] if input is null.
    */
   ANTLRStringStream([String input=""]) {
     if(input == null) throw new ArgumentError("input must not be null");
-    data = input.charCodes;
-    size = input.length;
+    data = input.codeUnits;
   }
-  
-  ANTLRStringStream.fromList(List<int> data, int numberOfActualCharsInArray) {    
+
+  ANTLRStringStream.fromList(List<int> data, int numberOfActualCharsInArray) {
     data = data;
-    size = numberOfActualCharsInArray;
   }
-  
+
   int LT(int i) => LA(i);
 
   /** Return the current input symbol index 0..n where n indicates the
@@ -61,9 +59,9 @@ class ANTLRStringStream implements CharStream {
    *  be returned from LA(1).
    */
   int get index => _p;
-  
+
   //int get size => _n;
-  
+
   String get sourceName => _name;
 
   /** Reset the stream so that it's in the same state it was
@@ -77,28 +75,28 @@ class ANTLRStringStream implements CharStream {
     _markDepth = 0;
   }
 
-  consume() {   
+  consume() {
     if(_p < size) {
       charPositionInLine++;
-      if (data[_p] == '\n'.charCodeAt(0)) {       
+      if (data[_p] == '\n'.codeUnitAt(0)) {
         line++;
         charPositionInLine = 0;
       }
-      _p++;      
+      _p++;
     }
   }
 
   int LA(int i) {
     if (i == 0) return 0;
-    if (i < 0) {      
-      i++; 
-      if ((_p + i - 1) < 0 ) 
-        return CharStream.EOF;    
+    if (i < 0) {
+      i++;
+      if ((_p + i - 1) < 0 )
+        return CharStream.EOF;
     }
-    if ((_p + i - 1) >= size )         
+    if ((_p + i - 1) >= size )
             return CharStream.EOF;
     return data[_p + i - 1];
-  } 
+  }
 
   int mark() {
     if (_markers == null ) {
@@ -123,7 +121,7 @@ class ANTLRStringStream implements CharStream {
 
   rewind([int marker]) {
     if(marker == null) marker = _lastMarker;
-    CharStreamState state = _markers[marker]; 
+    CharStreamState state = _markers[marker];
     seek(state.p);
     line = state.line;
     charPositionInLine = state.charPositionInLine;
@@ -134,7 +132,7 @@ class ANTLRStringStream implements CharStream {
     _markDepth = marker;
     _markDepth--;
   }
-  
+
   /** consume() ahead until _p == index; can't just set _p = index as we must
    *  update line and charPositionInLine.
    */
@@ -142,15 +140,15 @@ class ANTLRStringStream implements CharStream {
     if (index <= _p ) {
       _p = index;
       return;
-    }   
+    }
     while (_p < index) {
       consume();
     }
   }
 
-  String substring(int start, int stop) => 
-    new String.fromCharCodes(data.getRange(start, stop - start + 1));   
+  String substring(int start, int stop) =>
+    new String.fromCharCodes(data.getRange(start, stop - start + 1));
 
   String toString() => new String.fromCharCodes(data);
-  
+
 }

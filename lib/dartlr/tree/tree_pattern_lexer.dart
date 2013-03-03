@@ -5,7 +5,7 @@
 part of dartlr_common;
 
 class TreePatternLexer {
-  
+
   static const int EOF = -1;
   static const int BEGIN = 1;
   static const int END = 2;
@@ -17,39 +17,39 @@ class TreePatternLexer {
 
   /** The tree pattern to lex like "(A B C)" */
   String _pattern;
-  
+
   /** Index into input string */
   int _p = -1;
-  
+
   /** Current char */
   int _c;
-  
+
   /** How long is the pattern in char? */
   int _n;
-  
+
   /** Set when token type is ID or ARG */
   StringBuffer sval;
   bool error = false;
 
   TreePatternLexer(this._pattern) {
     _n = _pattern.length;
-    sval = new StringBuffer(); 
-    _consume();    
+    sval = new StringBuffer();
+    _consume();
   }
 
   int nextToken() {
     sval.clear();
     while (_c != EOF ) {
-      if (_c == ' '.charCodeAt(0) || _c == '\n'.charCodeAt(0) 
+      if (_c == ' '.charCodeAt(0) || _c == '\n'.charCodeAt(0)
           || _c == '\r'.charCodeAt(0) || _c == '\t'.charCodeAt(0) ) {
         _consume();
         continue;
       }
-      if ((_c >= 'a'.charCodeAt(0) && _c <= 'z'.charCodeAt(0)) 
+      if ((_c >= 'a'.charCodeAt(0) && _c <= 'z'.charCodeAt(0))
          || (_c >= 'A'.charCodeAt(0) && _c <= 'Z'.charCodeAt(0)) || _c == '_'.charCodeAt(0)) {
         sval.add(new String.fromCharCodes([_c]));
         _consume();
-        while ((_c >= 'a'.charCodeAt(0) && _c <= 'z'.charCodeAt(0)) 
+        while ((_c >= 'a'.charCodeAt(0) && _c <= 'z'.charCodeAt(0))
           || (_c >= 'A'.charCodeAt(0) && _c <= 'Z'.charCodeAt(0)) ||
             (_c >= '0'.charCodeAt(0) && _c <= '9'.charCodeAt(0)) || _c == '_'.charCodeAt(0)) {
           sval.add(new String.fromCharCodes([_c]));
@@ -105,7 +105,7 @@ class TreePatternLexer {
     if (_p >= _n)
       _c = EOF;
     else
-      _c = _pattern.charCodeAt(_p);    
+      _c = _pattern.charCodeAt(_p);
   }
-  
+
 }
