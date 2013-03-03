@@ -5,12 +5,12 @@
 part of dartlr_backend;
 
 class SerializedGrammar {
-    
+
   static const String COOKIE = r"$ANTLR";
   static const int FORMAT_VERSION = 1;
   String name;
   int type;
-  List rules;    
+  List rules;
 
   SerializedGrammar(String filename)  {
     print("loading $filename");
@@ -20,7 +20,7 @@ class SerializedGrammar {
   }
 
   _readFile(RandomAccessFile input) {
-      String cookie = _readString(input); 
+      String cookie = _readString(input);
       if (!(cookie == COOKIE)) throw new FileIOException("not a serialized grammar file");
       int version = input.readByteSync();
       int grammarType = input.readByteSync();
@@ -56,7 +56,7 @@ class SerializedGrammar {
 
   Block _readBlock(RandomAccessFile input) {
     int nalts = input.readByteSync();
-    List<List> alts = new List(nalts);    
+    List<List> alts = new List(nalts);
     for (int i = 0; i < nalts; i++) {
       List alt = _readAlt(input);
       alts[i] = alt;
@@ -67,18 +67,18 @@ class SerializedGrammar {
   List _readAlt(RandomAccessFile input) {
       List alt = new List();
       int A = input.readByteSync();
-      if (A != 'A'.charCodeAt(0)) 
+      if (A != 'A'.codeUnitAt(0))
         throw new FileIOException("missing A on start of alt");
       int cmd = input.readByteSync();
-      while (cmd != ';'.charCodeAt(0)) {
+      while (cmd != ';'.codeUnitAt(0)) {
           switch (cmd) {
               case 116: /* t */
                   int ttype = input.readByteSync();
-                  alt.add(new TokenRef(ttype));                  
+                  alt.add(new TokenRef(ttype));
                   break;
               case 114  /* r */:
                   int ruleIndex = input.readByteSync();
-                  alt.add(new RuleRef(ruleIndex));                 
+                  alt.add(new RuleRef(ruleIndex));
                   break;
               case 46 /* . */:
                   break;
@@ -89,13 +89,13 @@ class SerializedGrammar {
               case 126 /* ~ */:
                   int notThisTokenType = input.readByteSync();
                   break;
-              case 66 /* B */: 
+              case 66 /* B */:
                   Block b = _readBlock(input);
                   alt.add(b);
                   break;
           }
           cmd = input.readByteSync();
-      }      
+      }
       return alt;
   }
 
@@ -103,7 +103,7 @@ class SerializedGrammar {
       int c = input.readByteSync();
       StringBuffer buf = new StringBuffer();
       while ( c!=';' ) {
-          buf.add(c);
+          buf.write(c);
           c = input.readByteSync();
       }
       return buf.toString();
@@ -111,58 +111,58 @@ class SerializedGrammar {
 
   String toString() {
     StringBuffer buf = new StringBuffer();
-    buf.add("${type} grammar $name");
-    buf.add(rules);
+    buf.write("${type} grammar $name");
+    buf.write(rules);
     return buf.toString();
   }
 }
 
 class Rule {
-  
+
   String name;
   Block block;
-  
+
   Rule(this.name, this.block);
-  
+
   String toString() => "${name}:${block}";
-  
+
 }
 
 class Block {
-  
+
   List<List> alts;
-  
+
   Block(this.alts);
-  
+
   String toString() {
     StringBuffer buf = new StringBuffer();
-    buf.add("(");
+    buf.write("(");
     for (int i = 0; i < alts.length; i++) {
       List alt = alts[i];
-      if (i > 0) buf.add("|");
-      buf.add(alt.toString());
+      if (i > 0) buf.write("|");
+      buf.write(alt.toString());
     }
-    buf.add(")");
+    buf.write(")");
     return buf.toString();
-  }  
+  }
 }
 
 class TokenRef {
-  
+
   int ttype;
-  
+
   TokenRef(this.ttype);
-  
+
   String toString() => new String.fromCharCodes([ttype]);
-  
+
 }
 
 class RuleRef {
-  
+
   int ruleIndex;
-  
+
   RuleRef(this.ruleIndex);
-  
+
   String toString() => new String.fromCharCodes([ruleIndex]);
-  
+
 }
