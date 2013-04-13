@@ -49,7 +49,7 @@ class ANTLRStringStream implements CharStream {
   }
 
   ANTLRStringStream.fromList(List<int> data, int numberOfActualCharsInArray) {
-    data = data;
+    this.data = data;
   }
 
   int LT(int i) => LA(i);
