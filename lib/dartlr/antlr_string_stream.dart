@@ -147,7 +147,7 @@ class ANTLRStringStream implements CharStream {
   }
 
   String substring(int start, int stop) =>
-    new String.fromCharCodes(data.getRange(start, stop - start + 1));
+    new String.fromCharCodes(data.sublist(start, stop + 1));
 
   String toString() => new String.fromCharCodes(data);
 
